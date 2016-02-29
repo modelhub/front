@@ -1,0 +1,26 @@
+{
+  "name": "modelhub",
+  "description": "Repository for shared LMV UI Components",
+  "main": "",
+  "authors": [],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-mocks": "~1.4.7",
+    "moment": "~2.10.6",
+    "requirejs": "~2.1.20",
+    "requirejs-text": "~2.0.14",
+    "angular-route": "~1.4.7",
+    "interact": "~1.2.6"
+  }
+}

@@ -1,0 +1,10 @@
+@import "../../global";
+
+cp-documents {
+  input[type='file']{
+    display: none;
+  }
+  > * {
+    @include fill($width: 50%)
+  }
+}

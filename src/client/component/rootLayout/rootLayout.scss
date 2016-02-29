@@ -1,0 +1,16 @@
+@import "../../global";
+
+cp-root-layout {
+  cp-header{
+    @include fill($height: 50px);
+  }
+  > ng-view{
+    @include fill($height: calc(100% - 50px));
+  }
+}
+
+html, body, cp-root-layout{
+  @include default();
+  @include fill();
+  @include theme();
+}

@@ -1,0 +1,21 @@
+<div class="cp-def">
+    <div class="cp-def">{{txt('documentHeading', file.info.name, file.versions[0].objectInfo.status)}}</div>
+    <div class="cp-def cp-row">
+        &nbsp;&nbsp;&nbsp;&nbsp;{{txt('3D')}}
+        <select ng-change="sheetSelected(file.versions[0].urn, selectedSvf, false)" ng-model="selectedSvf" ng-options="sheet as sheet.name for sheet in getSheets(file.versions[0].objectInfo).svf">
+            <option value="">{{txt('pleaseSelect')}}</option>
+        </select>
+    </div>
+    <div class="cp-def cp-row">
+        &nbsp;&nbsp;&nbsp;&nbsp;{{txt('2D')}}
+        <select ng-change="sheetSelected(file.versions[0].urn, selectedF2d, false)" ng-model="selectedF2d" ng-options="sheet as sheet.name for sheet in getSheets(file.versions[0].objectInfo).f2d">
+            <option value="">{{txt('pleaseSelect')}}</option>
+        </select>
+    </div>
+    <div class="cp-def cp-row">
+        &nbsp;&nbsp;&nbsp;&nbsp;{{txt('LF')}}
+        <select ng-change="sheetSelected(file.versions[0].urn, selectedLeaflet, true)" ng-model="selectedLeaflet" ng-options="sheet as sheet.name for sheet in getSheets(file.versions[0].objectInfo).leaflet">
+            <option value="">{{txt('pleaseSelect')}}</option>
+        </select>
+    </div>
+</div>

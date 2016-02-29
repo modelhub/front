@@ -1,0 +1,38 @@
+{
+  "log": {
+    "type": "console",
+    "printToStdOut": true,
+    "lineSpacing": 0,
+    "dir": ["data", "log"]
+  },
+
+  "web": {
+    "host": "modelhub.autodesk.com",
+    "port": 8080,
+    "sessionName": "ty",
+    "sessionMaxAge": 432000,
+    "sessionKeyPairs": ["6329064d6ad44386a4177f38659b0a9c", "622627ccd142406c8947b17c8ab6788e"],
+    "publicDir": ["..", "client"],
+    "certFile": [],
+    "keyFile": [],
+    "openIdProvider": "https://accounts.autodesk.com",
+    "stormWallRoutePrefix": "/openid",
+    "stormEyeRoutePrefix": "/api"
+  },
+
+  "vadaClient": {
+    "key": "vzZyhg9MZwhZhptG6JqCeR6gQorM8xvW",
+    "secret": "Xc900b546fdb941f"
+  },
+
+  "userStore": {
+    "dir": ["data", "users"]
+  },
+
+  "objectStore": {
+    "ossBucketName": "transient_01",
+    "ossBucketPolicy": "transient",
+    "dir": ["data", "objects"],
+    "getObjectItemPath": "/api/v1/getSheetItem"
+  }
+}

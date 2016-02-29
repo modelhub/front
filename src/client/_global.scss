@@ -1,0 +1,73 @@
+/**
+ * START CONSTANTS
+ */
+$txtColor: #808080;
+$lightTxtColor: #FFFFFF;
+$linkColor: #52A3DB;
+$greySplitter: #CCCCCC;
+$greyBackground: #F6F6F6;
+$darkBackground: #333333;
+$selectedBlue: #D1E9F8;
+$smallBoxShadow: 3px 3px 1px #888888;
+$txtFontFamily: "Arial";
+/**
+ * END CONSTANTS
+ */
+
+/**
+ * START MIXINS
+ */
+@mixin default($position: relative, $display: inline-flex, $flexDirection: column, $margin: 0, $border: 0, $padding: 0, $overflow: hidden){
+  position: $position;
+  display: $display;
+  flex-direction: $flexDirection;
+  margin: $margin;
+  border: $border;
+  padding: $padding;
+  overflow: $overflow;
+}
+
+@mixin fill($width: 100%, $height: 100%){
+  width: $width;
+  height: $height;
+}
+
+@mixin theme($color: $txtColor, $background: rgba(0,0,0,0), $fontFamily: $txtFontFamily, $fontSize: 14px, $fontWeight: normal){
+  color: $color;
+  background: $background;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+}
+
+@mixin modal($height: 100%, $width: 100%, $top: 0, $left: 0) {
+  position: absolute;
+  height: $height;
+  width: $width;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+@mixin close {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTZBOUY2N0U0RkE1MTFFNUI2NDY4MUFEOTQ2MDQxRTYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTZBOUY2N0Y0RkE1MTFFNUI2NDY4MUFEOTQ2MDQxRTYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2QTg1N0VGRjRGQTUxMUU1QjY0NjgxQUQ5NDYwNDFFNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2QTg1N0YwMDRGQTUxMUU1QjY0NjgxQUQ5NDYwNDFFNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pm/EIzIAAACnSURBVHjaYvz//z8DJYCJgUJAsQEsyJyzZ88mAKkAIE4wNjb+gCYnAKQOAPEEoNwCXC7IB2J/kEKoBnTN+lA12F0ABI5AvB+IDaCGOEDFYZovQNXAASN6LEBtgxlyESoM14zuNUZs0YhmCAMuzYRigREHG78BaAF2AYr10QMWqwFYNDtCMU5D0F1wAD3AoP5GMQSfAROAeAN6gKEZMoFgLAytzAQQYADLu1AYc1IZJQAAAABJRU5ErkJggg==');
+  float: right;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin fonts(){
+  @font-face {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  }
+}
+/**
+ * END MIXINS
+ */

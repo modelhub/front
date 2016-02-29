@@ -1,0 +1,24 @@
+﻿{
+  "langs": ["en"],
+
+  "documentHeading": {
+    "en": "Name: {0}, Translation Status: {1}"
+  },
+
+  "pleaseSelect": {
+    "en": "---Please select---"
+  },
+
+  "3D": {
+    "en": "3D:"
+  },
+
+  "2D": {
+    "en": "2D:"
+  },
+
+  "LF": {
+    "en": "LF:"
+  }
+
+}
