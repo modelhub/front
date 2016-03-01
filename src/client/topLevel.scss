@@ -1,29 +1,27 @@
 @import "global";
 
-.cp-def{
+.mh-def{
   @include default();
 }
 
-.cp-fill{
+.mh-fill{
   @include fill();
 }
 
-.cp-row{
+.mh-row{
   flex-direction: row;
 }
 
-.cp-link{
+.mh-link{
   color: $linkColor;
   cursor: pointer;
 }
 
-.cp-theme{
+.mh-theme{
   @include theme();
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
-
-@include fonts();
 

@@ -107,15 +107,6 @@ module.exports = function(grunt){
                 }
             }
         },
-		
-		jshint: {
-			client: ['src/client/**/*.js',
-						'!src/client/lib/**/*.js',
-                        '!src/client/resource/**/*.js'],
-			options: {
-				asi: true
-			}
-		},
 
         processhtml: {
             clientIndex: {
@@ -175,13 +166,12 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-json-minify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
 
 
     grunt.registerTask('buildServer', ['exec:buildServer', 'copy:serverExe', 'copy:confJson']);
     grunt.registerTask('cleanServer', ['clean:server']);
 
-    grunt.registerTask('buildClient', [/*'jshint:client', */'copy:fullClient', 'clean:buildCss', 'exec:compileBuildSass', 'htmlmin:build', 'json-minify:build', 'requirejs:compileMain', 'uglify:mainJsBuild', 'processhtml:clientIndex', 'clean:allClientBuildExcept_index_robot_favicon_main_resources']);
+    grunt.registerTask('buildClient', ['copy:fullClient', 'clean:buildCss', 'exec:compileBuildSass', 'htmlmin:build', 'json-minify:build', 'requirejs:compileMain', 'uglify:mainJsBuild', 'processhtml:clientIndex', 'clean:allClientBuildExcept_index_robot_favicon_main_resources']);
     grunt.registerTask('testClient', ['exec:testClient']);
     grunt.registerTask('testClientCI', ['exec:testClientCI']);
     grunt.registerTask('cleanClientBuild', ['clean:clientBuild']);
@@ -205,7 +195,5 @@ module.exports = function(grunt){
     grunt.registerTask('cleanE2e', ['clean:e2e']);
 
     grunt.registerTask('nuke', ['cleanAllBuild', 'cleanClientTest', 'cleanSass', 'cleanE2e']);
-	
-    grunt.registerTask('lint', ['jshint:client']);
 
 };

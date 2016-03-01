@@ -14,7 +14,7 @@ define('loader/loader', [
 
     return function(ngModule){
         ngModule
-            .directive('cpLoader', function(){
+            .directive('mhLoader', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

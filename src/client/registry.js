@@ -34,7 +34,7 @@ define('registry', [
     settings,
     viewer
 ){
-    var registry = ng.module('cp.registry', []);
+    var registry = ng.module('mh.registry', []);
     [].slice.call(arguments).forEach(function(arg){
         if(arg !== ng){
             arg(registry);

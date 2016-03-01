@@ -1,7 +1,7 @@
 @import "../../global";
 
-cp-root-layout {
-  cp-header{
+mh-root-layout {
+  mh-header{
     @include fill($height: 50px);
   }
   > ng-view{
@@ -9,7 +9,7 @@ cp-root-layout {
   }
 }
 
-html, body, cp-root-layout{
+html, body, mh-root-layout{
   @include default();
   @include fill();
   @include theme();

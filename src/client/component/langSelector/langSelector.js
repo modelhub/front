@@ -13,7 +13,7 @@ define('langSelector/langSelector', [
 
     return function(ngModule){
         ngModule
-            .directive('cpLangSelector', function(){
+            .directive('mhLangSelector', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

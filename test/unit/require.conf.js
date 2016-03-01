@@ -12,11 +12,7 @@ requirejs.config({
     paths: {
         ng: '../lib/angular/angular',
         ngRoute: '../lib/angular-route/angular-route',
-        d3: '../lib/d3/d3',
-        drs: '../lib/drag-resize-snap.js',
-        c3: '../lib/c3/c3',
         moment: '../lib/moment/min/moment-with-locales',
-        interact : '../lib/interact/interact',
         text: '../lib/requirejs-text/text',
         registry: '../registry',
         service: '../service',
@@ -30,8 +26,7 @@ requirejs.config({
         },
         ngMock:{
             deps: ['ng']
-        },
-        drs: {'exports' : 'drs'}
+        }
     },
     deps: tests,
     callback: window.__karma__.start

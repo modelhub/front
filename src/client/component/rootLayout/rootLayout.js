@@ -11,7 +11,7 @@ define('rootLayout/rootLayout', [
 
     return function(ngModule){
         ngModule
-            .directive('cpRootLayout', function(){
+            .directive('mhRootLayout', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

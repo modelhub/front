@@ -1,15 +1,12 @@
 src/**/*.css
 !src/client/resource/**/*.css
 src/**/*.exe
-src/server/data/
+src/client/lib/
 build/
 node_modules/
-src/client/lib/
 test/unit/coverage
 test/unit/results
 test/e2e/results
-src/client/**/*.build.js
-pkg/*
 
 npm-debug.log
 *.DS_Store

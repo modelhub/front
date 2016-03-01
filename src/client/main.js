@@ -7,15 +7,15 @@ require([
 ){
     var app = ng.module('app', [
             'ngRoute',
-            'cp.registry'
+            'mh.registry'
         ]);
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/documents', {
-                template: '<cp-documents class="cp-def cp-row cp-fill" ng-cloak></cp-documents>'
+                template: '<mh-documents class="mh-def mh-row mh-fill" ng-cloak></mh-documents>'
             })
             .when('/settings', {
-                template: '<cp-settings class="cp-def cp-row cp-fill" ng-cloak></cp-settings>'
+                template: '<mh-settings class="mh-def mh-row mh-fill" ng-cloak></mh-settings>'
             })
             .when('/modal', {
                 template: '<test-docs ng-cloak></test-docs>'

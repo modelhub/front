@@ -1,9 +1,9 @@
 front
 ===========
 
-A simple project written with [**Angular**](https://angularjs.org/), [**Require**](http://requirejs.org/)
-and [**SASS**](http://sass-lang.com/) on the client side and [**Go**](http://golang.org/) with [**Gorilla Toolkit**](http://www.gorillatoolkit.org/)
-on the server side. The project is configured as a single page web app. The project comes with:
+The front end and **main** repo for modelhub, it is written with [**Angular**](https://angularjs.org/), [**Require**](http://requirejs.org/)
+and [**SASS**](http://sass-lang.com/) on the client side with a [**Go**](http://golang.org/) server and [**MySql**](https://www.mysql.com/) database.
+The project is configured as a single page web app. The project comes with:
 
 * Automated build and testing tasks
 * Unit tests
@@ -14,18 +14,21 @@ on the server side. The project is configured as a single page web app. The proj
 1. Install the following dependencies, the specified version numbers are versions known to work, try the latest available 
    versions at the time of installation, if they don't work fall back to the specified versions. An effort should be made
    to resolve any build issues with the latest dependencies when they arise so the project does not stagnate and fall behind:
+    * [MySql](https://www.mysql.com/) v5.7.10
     * [Go](https://golang.org/doc/install) v1.5.1
     * [Node](https://nodejs.org/) v5.0.0
 
-2. run:
+2. Run the `db.sql` script from `github.com/modelhub/core/sql` on your MySql instance to set up the modelhub db.
+
+3. Run:
     ```sh
-    git clone https://gihub.com/modelhub/front $GOPATH/src/gihub.com/modelhub/front
+    go get github.com/modelhub/front
     cd $GOPATH/src/gihub.com/modelhub/front
     npm install -g grunt-cli
     npm install
     grunt buildServer
     grunt watchSass
-    ```
+    ``` 
     Then open another terminal in the same location and run:
     ```sh
     grunt startDevServer
@@ -36,15 +39,14 @@ on the server side. The project is configured as a single page web app. The proj
     server.exe
     ```
 
-3. Local request redirection is required, for local development to send `modelhub.autodesk.com` to `127.0.0.1`
+4. Local request redirection is required, for local development to send `modelhub.autodesk.com` to `127.0.0.1`
 
-4. Open a browser and navigate to `modelhub.autodesk.com:8080`, if you're looking at a valid web page congratz, if not, better luck next time.
+5. Open a browser and navigate to `modelhub.autodesk.com:8080`, if you're looking at a valid web page congratz, if not, better luck next time.
 
 When pulling latest changes it is not always necessary but probably good practice to follow these steps:
 
     1. stop the server
     2. run `npm install` to ensure all npm and bower dependencies are present and up to date
-    3. delete the `src/server/data` directory in case there has been a change to the data schema
     4. ensure `watchSass` grunt task is running
     5. run `buildServer` grunt task in case any server changes have been made
     6. restart the server
@@ -65,9 +67,6 @@ There is a grunt task to cover all the basic requirements of development, run th
 
 * `buildAll` is a convenience command for `buildServer` and `buildClient`
 * `cleanAllBuild` is a convenience command for `cleanServer` and `cleanClientBuild`
-
-
-* `lint` will run JSHint linting 
 
 
 * `watchSass` will start node-sass auto compilation of all sass files in the `src\client` directory

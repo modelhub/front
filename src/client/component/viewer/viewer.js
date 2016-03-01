@@ -14,7 +14,7 @@ define('viewer/viewer', [
 
     return function(ngModule){
         ngModule
-            .directive('cpViewer', function(){
+            .directive('mhViewer', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

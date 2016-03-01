@@ -1,7 +1,0 @@
-@import "../../global";
-
-cp-file-object {
-  > * {
-    @include fill($width: 100%)
-  }
-}
