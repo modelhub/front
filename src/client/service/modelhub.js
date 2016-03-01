@@ -16,8 +16,8 @@ define('service/modelhub', [
                                 }else{
                                     $http.post('/api/v1/user/getCurrent')
                                         .then(function (resp) {
-                                            currentUser = ng.clone(resp.data);
-                                            userCache[currentUser.id] = ng.clone(resp.data);
+                                            currentUser = ng.copy(resp.data);
+                                            userCache[currentUser.id] = ng.copy(resp.data);
                                             success(currentUser);
                                         }, error);
                                 }

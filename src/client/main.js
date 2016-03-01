@@ -14,14 +14,8 @@ require([
             .when('/documents', {
                 template: '<mh-documents class="mh-def mh-row mh-fill" ng-cloak></mh-documents>'
             })
-            .when('/settings', {
-                template: '<mh-settings class="mh-def mh-row mh-fill" ng-cloak></mh-settings>'
-            })
-            .when('/modal', {
-                template: '<test-docs ng-cloak></test-docs>'
-            })
             .otherwise({
-                redirectTo: '/documents'
+                redirectTo: '/'
             });
     }]);
 

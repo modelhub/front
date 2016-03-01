@@ -1,7 +1,6 @@
 define('registry', [
     'ng',
     //services
-    'service/currentUser',
     'service/i18n',
     'service/lmvLoader',
     'service/modelhub',
@@ -13,7 +12,6 @@ define('registry', [
 ], function(
     ng,
     //services
-    currentUser,
     i18n,
     lmvLoader,
     modelhub,
