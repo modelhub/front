@@ -18,22 +18,27 @@ define('rootLayout/rootLayout', [
                     scope: {},
                     controller: ['modelhub', function(modelhub) {
 
-                        modelhub.user.getCurrent(function(currentUser){
+                        var currentUser;
+
+                        modelhub.user.getCurrent().then(function(cu){
+                            currentUser = cu;
                             console.log(currentUser)
                         },function(err){
                             console.log(err)
-                        });
+                        }).then(function(){
 
-                        modelhub.user.setProperty("uiTheme", "light", function(data){
-                            console.log(data)
-                        },function(err){
-                            console.log(err)
-                        });
+                            modelhub.user.setProperty("uiTheme", "light").then(function(data){
+                                console.log(data)
+                            },function(err){
+                                console.log(err)
+                            });
 
-                        modelhub.user.get(["11e5dff27e92b949a8d100ffb04b82ac"], function(currentUser){
-                            console.log(currentUser)
-                        },function(err){
-                            console.log(err)
+                            modelhub.user.get([currentUser.id]).then(function(users){
+                                console.log(users)
+                            },function(err){
+                                console.log(err)
+                            });
+
                         });
                     }]
                 };

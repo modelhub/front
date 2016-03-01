@@ -5,52 +5,80 @@ define('service/modelhub', [
 ){
     return function(ngModule){
         ngModule
-            .service('modelhub', ['$http', function($http){
+            .service('modelhub', ['$http', '$q', function($http, $q){
                 var currentUser,
                     userCache = {},
                     modelhub = {
+
                         user: {
-                            getCurrent: function(success, error){
-                                if(currentUser){
-                                    success(currentUser);
-                                }else{
-                                    $http.post('/api/v1/user/getCurrent')
-                                        .then(function (resp) {
-                                            currentUser = ng.copy(resp.data);
-                                            userCache[currentUser.id] = ng.copy(resp.data);
-                                            success(currentUser);
-                                        }, error);
-                                }
+
+                            getCurrent: function(){
+                                return $q(function(resolve, reject){
+                                    if(currentUser){
+                                        resolve(ng.copy(currentUser));
+                                    }else{
+                                        $http.post('/api/v1/user/getCurrent')
+                                            .then(function (resp) {
+                                                currentUser = ng.copy(resp.data);
+                                                userCache[currentUser.id] = ng.copy(resp.data);
+                                                resolve( ng.copy(resp.data));
+                                            }, reject);
+                                    }
+                                });
                             },
-                            setProperty: function(property, value, success, error){
-                                $http.post('/api/v1/user/setProperty', {property: property, value: value}).then(function(resp){success(resp.data);}, error)
+
+                            setProperty: function(property, value){
+                                return $q(function(resolve, reject){
+                                    $http.post('/api/v1/user/setProperty', {property: property, value: value})
+                                        .then(function(resp){
+                                            resolve(resp.data);
+                                        }, reject);
+                                });
                             },
-                            get: function(ids, success, error){
-                                if(ids && ids.length === 1 && userCache[ids[0]] && userCache[ids[0]].description) {
-                                    success(ng.clone(userCache[ids[0]]));
-                                }else{
-                                    unCachedIds = [];
+
+                            get: function(ids){
+                                return $q(function(resolve, reject){
+                                    var results = [];
+                                    var unCachedIds = [];
                                     for(var i = 0, l = ids.length; i < l; i++){
                                         if(!userCache[ids[i]]){
                                             unCachedIds.push(ids[i])
                                         }
                                     }
-                                    $http.post('/api/v1/user/get', {ids: unCachedIds})
-                                        .then(function(resp){
-                                            success(resp.data);
-                                        }, error)
-                                }
+                                    if (unCachedIds.length > 0) {
+                                        $http.post('/api/v1/user/get', {ids: unCachedIds})
+                                            .then(function(resp){
+                                                if(resp && resp.data && resp.data.length > 0) {
+                                                    for(var i = 0, l = resp.data.length; i < l; i++){
+                                                        userCache[resp.data[i].id] = ng.copy(resp.data[i]);
+                                                    }
+                                                }
+                                                for(var i = 0, l = ids.length; i < l; i++){
+                                                    results.push(ng.copy(userCache[ids[i]]));
+                                                }
+                                                reolve(results);
+                                            }, reject);
+                                    }
+                                    for(var i = 0, l = ids.length; i < l; i++){
+                                        results.push(ng.copy(userCache[ids[i]]));
+                                    }
+                                    resolve(results);
+                                });
                             }
                         },
+
                         project: {
 
                         },
+
                         treeNode: {
 
                         },
+
                         documentVersion: {
 
                         },
+
                         sheet: {
 
                         }
