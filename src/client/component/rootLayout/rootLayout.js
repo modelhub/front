@@ -16,25 +16,43 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['modelhub', function(modelhub) {
+                    controller: ['api', function(api) {
 
                         var currentUser;
 
-                        modelhub.user.getCurrent().then(function(cu){
+                        api.v1.user.getCurrent().then(function(cu){
                             currentUser = cu;
                             console.log(currentUser)
                         },function(err){
                             console.log(err)
                         }).then(function(){
 
-                            modelhub.user.setProperty("uiTheme", "light").then(function(data){
+                            api.v1.user.setProperty("uiTheme", "light").then(function(data){
                                 console.log(data)
                             },function(err){
                                 console.log(err)
                             });
 
-                            modelhub.user.get([currentUser.id]).then(function(users){
+                            api.v1.user.setProperty("description", "Đāŋiĕł yo ho ho "+ Date.now()).then(function(data){
+                                console.log(data)
+                            },function(err){
+                                console.log(err)
+                            }).then(function(){
+                                api.v1.user.getDescription(currentUser.id).then(function(data){
+                                    console.log(data)
+                                },function(err){
+                                    console.log(err)
+                                })
+                            }, function(err){});
+
+                            api.v1.user.get([currentUser.id]).then(function(users){
                                 console.log(users)
+                            },function(err){
+                                console.log(err)
+                            });
+
+                            api.v1.user.search("Đāŋiĕł", 0, 5, "fullNameAsc").then(function(result){
+                                console.log(result)
                             },function(err){
                                 console.log(err)
                             });

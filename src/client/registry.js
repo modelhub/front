@@ -3,7 +3,7 @@ define('registry', [
     //services
     'service/i18n',
     'service/lmvLoader',
-    'service/modelhub',
+    'service/api',
     //components
     'langSelector/langSelector',
     'loader/loader',
@@ -14,7 +14,7 @@ define('registry', [
     //services
     i18n,
     lmvLoader,
-    modelhub,
+    api,
     //components
     langSelector,
     loader,
