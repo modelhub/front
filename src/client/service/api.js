@@ -203,7 +203,10 @@ define('service/api', [
                                 }
                             },
 
-                            treeNode: {},
+                            treeNode: {
+
+                                
+                            },
 
                             documentVersion: {},
 

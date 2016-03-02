@@ -65,7 +65,7 @@ define('rootLayout/rootLayout', [
                             console.log("api.v1.project.create: ", err);
                         }).then(function(){
 
-                            api.v1.project.setName(project.id, "project name EDITED "+Date.now()).then(function(data){
+                            api.v1.project.setName(project.id, "my project name EDITED "+Date.now()).then(function(data){
                                 console.log("api.v1.project.setName: ", data);
                             },function(err){
                                 console.log("api.v1.project.setName: ", err);
@@ -119,10 +119,22 @@ define('rootLayout/rootLayout', [
                                             console.log("api.v1.project.getMembershipInvites: ", err);
                                         });
 
+                                        api.v1.project.getInUserInviteContext(ashId, "any", 0, 5, "nameAsc").then(function(results){
+                                            console.log("api.v1.project.getInUserInviteContext: ", results);
+                                        }, function(err){
+                                            console.log("api.v1.project.getInUserInviteContext: ", err);
+                                        });
+
                                     });
 
                                 });
 
+                            });
+
+                            api.v1.project.getInUserContext(currentUser.id, "any", 0, 5, "nameAsc").then(function(results){
+                                console.log("api.v1.project.getInUserContext: ", results);
+                            }, function(err){
+                                console.log("api.v1.project.getInUserContext: ", err);
                             });
 
                             api.v1.project.get([project.id]).then(function(data){
