@@ -116,7 +116,79 @@ define('service/api', [
                                 }
                             },
 
-                            project: {},
+                            project: {
+
+                                create: function (name, description, image) {
+                                    name = name || "";
+                                    description = description || "";
+                                    return $q(function (resolve, reject) {
+                                        var data = new FormData();
+                                        data.append('name', name);
+                                        data.append('description', description);
+                                        if(image) {
+                                            data.append('file', image);
+                                        }
+                                        $http.post('/api/v1/project/create', data, {
+                                                headers: {'Content-Type': undefined },
+                                                transformRequest: angular.identity
+                                            }).then(function(resp){
+                                                resolve(resp.data);
+                                            }, reject);
+                                    });
+                                },
+
+                                setName: function (id, name) {
+                                    return $q(function (resolve, reject) {
+                                        $http.post('/api/v1/project/setName', {id: id, name: name})
+                                            .then(function (resp) {
+                                                resolve();
+                                            }, reject);
+                                    });
+                                },
+
+                                setDescription: function (id, description) {
+                                    return $q(function (resolve, reject) {
+                                        $http.post('/api/v1/project/setDescription', {id: id, description: description})
+                                            .then(function (resp) {
+                                                resolve();
+                                            }, reject);
+                                    });
+                                },
+
+                                setImage: function (id, image) {
+                                    return $q(function (resolve, reject) {
+                                        var data = new FormData();
+                                        data.append('id', id);
+                                        if(image) {
+                                            data.append('file', image);
+                                        }
+                                        $http.post('/api/v1/project/setImage', data, {
+                                            headers: {'Content-Type': undefined},
+                                            transformRequest: angular.identity
+                                        }).then(function (resp) {
+                                            resolve();
+                                        }, reject);
+                                    });
+                                },
+
+                                addUsers: function (id, role, users) {
+                                    return $q(function (resolve, reject) {
+                                        $http.post('/api/v1/project/addUsers', {id: id, role: role, users: users})
+                                            .then(function (resp) {
+                                                resolve();
+                                            }, reject);
+                                    });
+                                },
+
+                                removeUsers: function (id, users) {
+                                    return $q(function (resolve, reject) {
+                                        $http.post('/api/v1/project/removeUsers', {id: id, users: users})
+                                            .then(function (resp) {
+                                                resolve();
+                                            }, reject);
+                                    });
+                                }
+                            },
 
                             treeNode: {},
 

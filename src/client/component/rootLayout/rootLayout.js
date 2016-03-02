@@ -18,43 +18,77 @@ define('rootLayout/rootLayout', [
                     scope: {},
                     controller: ['api', function(api) {
 
-                        var currentUser;
+                        var currentUser,
+                            ashId = "11e5e0846843e5eea8d100ffb04b82ac", //these ids are specifc to the modelhub db instances
+                            bobId = "11e5e0838373ed45a8d100ffb04b82ac",
+                            catId = "11e5e0831fb6e4aaa8d100ffb04b82ac";
 
                         api.v1.user.getCurrent().then(function(cu){
                             currentUser = cu;
-                            console.log(currentUser)
+                            console.log("api.v1.user.getCurrent: ", currentUser);
                         },function(err){
-                            console.log(err)
+                            console.log("api.v1.user.getCurrent: ", err);
                         }).then(function(){
 
-                            api.v1.user.setProperty("uiTheme", "light").then(function(data){
-                                console.log(data)
-                            },function(err){
-                                console.log(err)
-                            });
-
                             api.v1.user.setProperty("description", "Đāŋiĕł yo ho ho "+ Date.now()).then(function(data){
-                                console.log(data)
+                                console.log("api.v1.user.setProperty: ", data);
                             },function(err){
-                                console.log(err)
+                                console.log("api.v1.user.setProperty: ", err);
                             }).then(function(){
                                 api.v1.user.getDescription(currentUser.id).then(function(data){
-                                    console.log(data)
+                                    console.log("api.v1.user.getDescription: ", data);
                                 },function(err){
-                                    console.log(err)
+                                    console.log("api.v1.user.getDescription: ", err);
                                 })
-                            }, function(err){});
-
-                            api.v1.user.get([currentUser.id]).then(function(users){
-                                console.log(users)
-                            },function(err){
-                                console.log(err)
                             });
 
-                            api.v1.user.search("Đāŋiĕł", 0, 5, "fullNameAsc").then(function(result){
-                                console.log(result)
+                            api.v1.user.get([ashId, bobId, catId]).then(function(users){
+                                console.log("api.v1.user.get: ", users);
+                            }, function(err){
+                                console.log("api.v1.user.get: ", err);
+                            });
+
+                            api.v1.user.search("autodesk", 0, 2, "fullNameDesc").then(function(result){
+                                console.log("api.v1.user.search: ", result);
                             },function(err){
-                                console.log(err)
+                                console.log("api.v1.user.search: ", err);
+                            });
+
+                        });
+
+                        var project;
+
+                        api.v1.project.create("my new project", "just for testing", null).then(function(p){
+                            project = p;
+                            console.log("api.v1.project.create: ", project);
+                        },function(err){
+                            console.log("api.v1.project.create: ", err);
+                        }).then(function(){
+
+                            api.v1.project.setName(project.id, "project name EDITED "+Date.now()).then(function(data){
+                                console.log("api.v1.project.setName: ", data);
+                            },function(err){
+                                console.log("api.v1.project.setName: ", err);
+                            });
+
+                            api.v1.project.setDescription(project.id, "just for testing EDITED "+Date.now()).then(function(data){
+                                console.log("api.v1.project.setDescription: ", data);
+                            },function(err){
+                                console.log("api.v1.project.setDescription: ", err);
+                            });
+
+                            api.v1.project.setImage(project.id, null).then(function(data){
+                                console.log("api.v1.project.setImage: ", data);
+                            },function(err){
+                                console.log("api.v1.project.setImage: ", err);
+                            });
+
+                            api.v1.project.addUsers(project.id, "admin", [ashId, bobId, catId]).then(function(data){
+                                console.log("api.v1.project.addUsers: ", data);
+                            },function(err){
+                                console.log("api.v1.project.addUsers: ", err);
+                            }).then(function(){
+
                             });
 
                         });
