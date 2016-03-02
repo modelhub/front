@@ -12,6 +12,22 @@ define('service/api', [
                     pendingUserPromisesV1 = {},
                     promiseIdSrc = 0,
                     newPromiseId = function(){return ''+promiseIdSrc++;},
+                    doJsonReq = function(path, data){
+                        return $q(function (resolve, reject) {
+                            $http.post(path, data)
+                                .then(function (resp) {
+                                    resolve(resp.data);
+                                }, reject);
+                        });
+                    },
+                    doNullReq = function(path, data){
+                        return $q(function (resolve, reject) {
+                            $http.post(path, data)
+                                .then(function () {
+                                    resolve();
+                                }, reject);
+                        });
+                    },
                     api = {
 
                         v1: {
@@ -42,21 +58,11 @@ define('service/api', [
                                 },
 
                                 setProperty: function (property, value) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/user/setProperty', {property: property, value: value})
-                                            .then(function (resp) {
-                                                resolve();
-                                            }, reject);
-                                    });
+                                    return doNullReq('/api/v1/user/setProperty', {property: property, value: value});
                                 },
 
                                 getDescription: function (id) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/user/getDescription', {id: id})
-                                            .then(function (resp) {
-                                                resolve(resp.data);
-                                            }, reject);
-                                    });
+                                    return doJsonReq('/api/v1/user/getDescription', {id: id});
                                 },
 
                                 get: function (ids) {
@@ -107,12 +113,7 @@ define('service/api', [
                                 },
 
                                 search: function (search, offset, limit, sortBy) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/user/search', {search: search, offset: offset, limit: limit, sortBy: sortBy})
-                                            .then(function (resp) {
-                                                resolve(resp.data);
-                                            }, reject);
-                                    });
+                                    return doJsonReq('/api/v1/user/search', {search: search, offset: offset, limit: limit, sortBy: sortBy});
                                 }
                             },
 
@@ -138,21 +139,11 @@ define('service/api', [
                                 },
 
                                 setName: function (id, name) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/project/setName', {id: id, name: name})
-                                            .then(function (resp) {
-                                                resolve();
-                                            }, reject);
-                                    });
+                                    return doNullReq('/api/v1/project/setName', {id: id, name: name});
                                 },
 
                                 setDescription: function (id, description) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/project/setDescription', {id: id, description: description})
-                                            .then(function (resp) {
-                                                resolve();
-                                            }, reject);
-                                    });
+                                    return doNullReq('/api/v1/project/setDescription', {id: id, description: description});
                                 },
 
                                 setImage: function (id, image) {
@@ -165,28 +156,50 @@ define('service/api', [
                                         $http.post('/api/v1/project/setImage', data, {
                                             headers: {'Content-Type': undefined},
                                             transformRequest: angular.identity
-                                        }).then(function (resp) {
+                                        }).then(function () {
                                             resolve();
                                         }, reject);
                                     });
                                 },
 
                                 addUsers: function (id, role, users) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/project/addUsers', {id: id, role: role, users: users})
-                                            .then(function (resp) {
-                                                resolve();
-                                            }, reject);
-                                    });
+                                    return doNullReq('/api/v1/project/addUsers', {id: id, role: role, users: users});
                                 },
 
                                 removeUsers: function (id, users) {
-                                    return $q(function (resolve, reject) {
-                                        $http.post('/api/v1/project/removeUsers', {id: id, users: users})
-                                            .then(function (resp) {
-                                                resolve();
-                                            }, reject);
-                                    });
+                                    return doNullReq('/api/v1/project/removeUsers', {id: id, users: users});
+                                },
+
+                                acceptInvite: function (id) {
+                                    return doNullReq('/api/v1/project/acceptInvite', {id: id});
+                                },
+
+                                declineInvite: function (id) {
+                                    return doNullReq('/api/v1/project/declineInvite', {id: id});
+                                },
+
+                                getMemberships: function (id, role, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/project/getMemberships', {id: id, role: role, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                getMembershipInvites: function (id, role, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/project/getMembershipInvites', {id: id, role: role, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                get: function (ids) {
+                                    return doJsonReq('/api/v1/project/get', {ids: ids});
+                                },
+
+                                getInUserContext: function (user, role, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/project/getInUserContext', {user: user, role: role, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                getInUserInviteContext: function (user, role, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/project/getInUserInviteContext', {user: user, role: role, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                search: function (search, role, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/project/search', {search: search, role: role, offset: offset, limit: limit, sortBy: sortBy});
                                 }
                             },
 

@@ -89,6 +89,46 @@ define('rootLayout/rootLayout', [
                                 console.log("api.v1.project.addUsers: ", err);
                             }).then(function(){
 
+                                api.v1.project.getMemberships(project.id, "any", 0, 5, "fullNameAsc").then(function(results){
+                                    console.log("api.v1.project.getMemberships: ", results);
+                                }, function(err){
+                                    console.log("api.v1.project.getMemberships: ", err);
+                                });
+
+                                api.v1.project.getMembershipInvites(project.id, "any", 0, 5, "fullNameAsc").then(function(results){
+                                    console.log("api.v1.project.getMembershipInvites: ", results);
+                                }, function(err){
+                                    console.log("api.v1.project.getMembershipInvites: ", err);
+                                }).then(function(){
+
+                                    api.v1.project.removeUsers(project.id, [bobId, catId]).then(function(data){
+                                        console.log("api.v1.project.removeUsers: ", data);
+                                    }, function(err){
+                                        console.log("api.v1.project.removeUsers: ", err);
+                                    }).then(function(){
+
+                                        api.v1.project.getMemberships(project.id, "any", 0, 5, "fullNameAsc").then(function(results){
+                                            console.log("api.v1.project.getMemberships: ", results);
+                                        }, function(err){
+                                            console.log("api.v1.project.getMemberships: ", err);
+                                        });
+
+                                        api.v1.project.getMembershipInvites(project.id, "any", 0, 5, "fullNameAsc").then(function(results){
+                                            console.log("api.v1.project.getMembershipInvites: ", results);
+                                        }, function(err){
+                                            console.log("api.v1.project.getMembershipInvites: ", err);
+                                        });
+
+                                    });
+
+                                });
+
+                            });
+
+                            api.v1.project.get([project.id]).then(function(data){
+                                console.log("api.v1.project.get: ", data);
+                            }, function(err){
+                                console.log("api.v1.project.get: ", err);
                             });
 
                         });
