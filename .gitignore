@@ -1,7 +1,6 @@
 src/**/*.css
 !src/client/resource/**/*.css
 src/**/*.exe
-src/client/lib/
 build/
 node_modules/
 test/unit/coverage
