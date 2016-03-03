@@ -5,6 +5,7 @@ define('registry', [
     'service/i18n',
     'service/lmvLoader',
     //components
+    'header/header',
     'langSelector/langSelector',
     'loader/loader',
     'rootLayout/rootLayout',
@@ -16,6 +17,7 @@ define('registry', [
     i18n,
     lmvLoader,
     //components
+    header,
     langSelector,
     loader,
     rootLayout,
