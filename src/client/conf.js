@@ -6,6 +6,7 @@ require.config({
         'text': '../lib/requirejs-text/text',
         'registry': '../registry',
         'service': '../service',
+        'constant': '../constant',
         'styler': '../styler',
         'topLevelCss': '../topLevel.css'
     },

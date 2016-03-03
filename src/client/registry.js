@@ -1,5 +1,7 @@
 define('registry', [
     'ng',
+    //constants
+    'constant/event',
     //services
     'service/api',
     'service/i18n',
@@ -12,6 +14,8 @@ define('registry', [
     'viewer/viewer'
 ], function(
     ng,
+    //constants
+    event,
     //services
     api,
     i18n,

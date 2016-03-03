@@ -16,9 +16,21 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', function($location) {
+                    controller: ['$location', '$scope', '$window', function($location, $scope, $window) {
 
-                        var knownTypes = ['user', 'project', 'folder', 'document', 'documentVersion'];
+                        var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'globalSearch'],
+                            pathSegments = $location.path().split('/'),
+                            base = pathSegments[1],
+                            baseArg = pathSegments[2];
+
+                        if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
+                            $window.location.assign('#/user/me');
+                            base = 'user';
+                            baseArg = 'me';
+                        }
+
+                        $scope.base = base;
+                        $scope.baseArg = baseArg;
 
                     }]
                 };
