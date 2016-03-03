@@ -20,12 +20,14 @@ define('service/api', [
                                 }, reject);
                         });
                     },
-                    doNullReq = function(path, data){
+                    doFormReq = function(path, data){
                         return $q(function (resolve, reject) {
-                            $http.post(path, data)
-                                .then(function () {
-                                    resolve();
-                                }, reject);
+                            $http.post(path, data, {
+                                headers: {'Content-Type': undefined },
+                                transformRequest: angular.identity
+                            }).then(function (resp) {
+                                    resolve(resp.data);
+                            }, reject);
                         });
                     },
                     api = {
@@ -58,7 +60,7 @@ define('service/api', [
                                 },
 
                                 setProperty: function (property, value) {
-                                    return doNullReq('/api/v1/user/setProperty', {property: property, value: value});
+                                    return doJsonReq('/api/v1/user/setProperty', {property: property, value: value});
                                 },
 
                                 getDescription: function (id) {
@@ -122,60 +124,46 @@ define('service/api', [
                                 create: function (name, description, image) {
                                     name = name || "";
                                     description = description || "";
-                                    return $q(function (resolve, reject) {
-                                        var data = new FormData();
-                                        data.append('name', name);
-                                        data.append('description', description);
-                                        if(image) {
-                                            data.append('file', image);
-                                        }
-                                        $http.post('/api/v1/project/create', data, {
-                                                headers: {'Content-Type': undefined },
-                                                transformRequest: angular.identity
-                                            }).then(function(resp){
-                                                resolve(resp.data);
-                                            }, reject);
-                                    });
+                                    var data = new FormData();
+                                    data.append('name', name);
+                                    data.append('description', description);
+                                    if(image) {
+                                        data.append('file', image);
+                                    }
+                                    return doFormReq('/api/v1/project/create', data);
                                 },
 
                                 setName: function (id, name) {
-                                    return doNullReq('/api/v1/project/setName', {id: id, name: name});
+                                    return doJsonReq('/api/v1/project/setName', {id: id, name: name});
                                 },
 
                                 setDescription: function (id, description) {
-                                    return doNullReq('/api/v1/project/setDescription', {id: id, description: description});
+                                    return doJsonReq('/api/v1/project/setDescription', {id: id, description: description});
                                 },
 
                                 setImage: function (id, image) {
-                                    return $q(function (resolve, reject) {
-                                        var data = new FormData();
-                                        data.append('id', id);
-                                        if(image) {
-                                            data.append('file', image);
-                                        }
-                                        $http.post('/api/v1/project/setImage', data, {
-                                            headers: {'Content-Type': undefined},
-                                            transformRequest: angular.identity
-                                        }).then(function () {
-                                            resolve();
-                                        }, reject);
-                                    });
+                                    var data = new FormData();
+                                    data.append('id', id);
+                                    if(image) {
+                                        data.append('file', image);
+                                    }
+                                    return doFormReq('/api/v1/project/setImage', data);
                                 },
 
                                 addUsers: function (id, role, users) {
-                                    return doNullReq('/api/v1/project/addUsers', {id: id, role: role, users: users});
+                                    return doJsonReq('/api/v1/project/addUsers', {id: id, role: role, users: users});
                                 },
 
                                 removeUsers: function (id, users) {
-                                    return doNullReq('/api/v1/project/removeUsers', {id: id, users: users});
+                                    return doJsonReq('/api/v1/project/removeUsers', {id: id, users: users});
                                 },
 
                                 acceptInvite: function (id) {
-                                    return doNullReq('/api/v1/project/acceptInvite', {id: id});
+                                    return doJsonReq('/api/v1/project/acceptInvite', {id: id});
                                 },
 
                                 declineInvite: function (id) {
-                                    return doNullReq('/api/v1/project/declineInvite', {id: id});
+                                    return doJsonReq('/api/v1/project/declineInvite', {id: id});
                                 },
 
                                 getMemberships: function (id, role, offset, limit, sortBy) {
@@ -205,12 +193,100 @@ define('service/api', [
 
                             treeNode: {
 
+                                createFolder: function (parent, name) {
+                                    return doJsonReq('/api/v1/treeNode/createFolder', {parent: parent, name: name});
+                                },
+
+                                createDocument: function (parent, name, uploadComment, file) {
+                                    name = name || "";
+                                    uploadComment = uploadComment || "";
+                                    var data = new FormData();
+                                    data.append('parent', parent);
+                                    data.append('name', name);
+                                    data.append('uploadComment', uploadComment);
+                                    data.append('file', file);
+                                    return doFormReq('/api/v1/treeNode/createDocument', data);
+                                },
+
+                                createViewerState: function() {
+                                    //TODO
+                                },
+
+                                setName: function (id, name) {
+                                    return doJsonReq('/api/v1/treeNode/setName', {id: id, name: name});
+                                },
+
+                                move: function (parent, ids) {
+                                    return doJsonReq('/api/v1/treeNode/move', {parent: parent, ids: ids});
+                                },
+
+                                get: function (ids) {
+                                    return doJsonReq('/api/v1/treeNode/get', {ids: ids});
+                                },
+
+                                getChildren: function (id, nodeType, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/treeNode/getChildren', {id: id, nodeType: nodeType, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                getParents: function (id) {
+                                    return doJsonReq('/api/v1/treeNode/getParents', {id: id});
+                                },
+
+                                globalSearch: function (search, nodeType, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/treeNode/globalSearch', {search: search, nodeType: nodeType, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                projectSearch: function (project, search, nodeType, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/treeNode/projectSearch', {project: project, search: search, nodeType: nodeType, offset: offset, limit: limit, sortBy: sortBy});
+                                }
                                 
                             },
 
-                            documentVersion: {},
+                            documentVersion: {
 
-                            sheet: {}
+                                create: function (document, uploadComment, file) {
+                                    name = name || "";
+                                    uploadComment = uploadComment || "";
+                                    var data = new FormData();
+                                    data.append('document', document);
+                                    data.append('uploadComment', uploadComment);
+                                    data.append('file', file);
+                                    return doFormReq('/api/v1/documentVersion/create', data);
+                                },
+
+                                get: function (ids) {
+                                    return doJsonReq('/api/v1/documentVersion/get', {ids: ids});
+                                },
+
+                                getForDocument: function (document, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/documentVersion/getForDocument', {document: document, offset: offset, limit: limit, sortBy: sortBy});
+                                }
+
+                            },
+
+                            sheet: {
+
+                                setName: function (id, name) {
+                                    return doJsonReq('/api/v1/sheet/setName', {id: id, name: name});
+                                },
+
+                                get: function (ids) {
+                                    return doJsonReq('/api/v1/sheet/get', {ids: ids});
+                                },
+
+                                getForDocumentVersion: function (documentVersion, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/sheet/getForDocumentVersion', {documentVersion: documentVersion, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                globalSearch: function (search, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/sheet/globalSearch', {search: search, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                projectSearch: function (project, search, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/sheet/globalSearch', {project: project, search: search, offset: offset, limit: limit, sortBy: sortBy});
+                                }
+
+                            }
                         }
                     };
 
