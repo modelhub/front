@@ -15,7 +15,7 @@ mh-root-layout {
 }
 
 html, body, mh-root-layout{
-  @include default($display: absolute);
+  @include default($display: block);
   @include fill();
   @include theme();
 }
