@@ -32,6 +32,9 @@ define('rootLayout/rootLayout', [
                         $scope.base = base;
                         $scope.baseArg = baseArg;
 
+                        $scope.showViewer = false;
+                        $scope.showUploads = false;
+
                     }]
                 };
             });

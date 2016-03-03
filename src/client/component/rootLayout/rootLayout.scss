@@ -7,10 +7,15 @@ mh-root-layout {
   > :not(mh-header){
     @include fill($height: calc(100% - 50px));
   }
+
+  mh-viewer, mh-uploads{
+    position: absolute;
+    top: 100%;
+  }
 }
 
 html, body, mh-root-layout{
-  @include default();
+  @include default($display: absolute);
   @include fill();
   @include theme();
 }
