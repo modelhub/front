@@ -1,9 +1,9 @@
 define('registry', [
     'ng',
     //services
+    'service/api',
     'service/i18n',
     'service/lmvLoader',
-    'service/api',
     //components
     'langSelector/langSelector',
     'loader/loader',
@@ -12,9 +12,9 @@ define('registry', [
 ], function(
     ng,
     //services
+    api,
     i18n,
     lmvLoader,
-    api,
     //components
     langSelector,
     loader,

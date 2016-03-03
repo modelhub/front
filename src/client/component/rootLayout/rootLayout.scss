@@ -4,7 +4,7 @@ mh-root-layout {
   mh-header{
     @include fill($height: 50px);
   }
-  > ng-view{
+  > :not(mh-header){
     @include fill($height: calc(100% - 50px));
   }
 }
