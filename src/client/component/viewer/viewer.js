@@ -19,7 +19,7 @@ define('viewer/viewer', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', '$rootScope', 'lmvLoader', function($scope, $rootScope, lmvLoader){
+                    controller: ['$scope', '$rootScope', 'EVENT', 'lmvLoader', function($scope, $rootScope, EVENT, lmvLoader){
                         $scope.viewerID = 'viewer-' + viewerIDSrc++;
                         var firstInitAttemptTime = Date.now(),
                             init;
@@ -35,7 +35,12 @@ define('viewer/viewer', [
                                 //ready to init now
                                 var viewerEl = document.getElementById($scope.viewerID);
                                 var viewer = new Autodesk.Viewing.Viewer3D(viewerEl, {});
-                                Autodesk.Viewing.Initializer(null, function(){viewer.initialize();});
+                                Autodesk.Viewing.Initializer(null, function(){
+                                    viewer.initialize();
+                                    viewer.highlight = highlight;
+                                    viewer.impl.createOverlayScene('redHighlightOverlay', new THREE.MeshBasicMaterial({ color: 'red' }));
+                                    viewer.impl.createOverlayScene('greenHighlightOverlay', new THREE.MeshBasicMaterial({ color: 'green' }));
+                                });
 
                                 /**
                                  * START CUSTOM HIGHLIGHT FUNC
@@ -97,17 +102,7 @@ define('viewer/viewer', [
                                  */
 
                                 $scope.$on('load_sheet', function(e, sheetFetchData) {
-                                    viewer.finish();
-                                    viewer = new Autodesk.Viewing.Viewer3D(viewerEl, {});
-                                    Autodesk.Viewing.Initializer(null, function(){
-                                        viewer.initialize();
-
-                                        viewer.highlight = highlight;
-                                        viewer.impl.createOverlayScene('redHighlightOverlay', new THREE.MeshBasicMaterial({ color: 'red' }));
-                                        viewer.impl.createOverlayScene('greenHighlightOverlay', new THREE.MeshBasicMaterial({ color: 'green' }));
-
-                                        viewer.load('/api/v1/getSheetItem/' + sheetFetchData.urn);
-                                    });
+                                    viewer.load('/api/v1/getSheetItem/' + sheetFetchData.urn);
                                 });
 
 

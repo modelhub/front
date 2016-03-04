@@ -11,6 +11,7 @@ define('registry', [
     'langSelector/langSelector',
     'loader/loader',
     'rootLayout/rootLayout',
+    'user/user',
     'viewer/viewer'
 ], function(
     ng,
@@ -25,6 +26,7 @@ define('registry', [
     langSelector,
     loader,
     rootLayout,
+    user,
     viewer
 ){
     var registry = ng.module('mh.registry', []);

@@ -1,0 +1,12 @@
+{
+  "langs": ["en"],
+
+  "viewer": {
+    "en": "Viewer"
+  },
+
+  "uploads": {
+    "en": "Uploads"
+  }
+
+}

@@ -1,4 +1,42 @@
 @import "../../global";
 
-mh-lang-selector {
+mh-header {
+  background: $background1;
+  color: $color1;
+  font-size: 15px;
+  font-weight: bold;
+  min-height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  .tabs {
+    align-items: stretch;
+    height: 100%;
+    > * {
+      border-right: 1px solid $splitter1;
+      cursor: pointer;
+      justify-content: center;
+      @include fill($width: 70px);
+      &:hover {
+        background: $background1Highlight;
+      }
+      &.active {
+        background: $background1Active;
+      }
+      > * {
+        user-select: none;
+        text-align: center;
+      }
+    }
+  }
+  .user-avatar {
+    @include fill(40px, 40px);
+    background: #fff;
+    border-radius: 2px;
+    margin-right: 5px;
+    img {
+      @include fill(34px, 34px);
+      margin: 3px 3px;
+      border-radius: 2px;
+    }
+  }
 }

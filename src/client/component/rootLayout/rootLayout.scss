@@ -10,7 +10,12 @@ mh-root-layout {
 
   mh-viewer, mh-uploads{
     position: absolute;
-    top: 100%;
+    top: 50px;
+    left: 0;
+    visibility: hidden;
+    &.show {
+      visibility: visible;
+    }
   }
 }
 

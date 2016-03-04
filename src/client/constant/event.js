@@ -3,7 +3,7 @@ define('constant/event', [
 ){
     return function(ngModule){
         ngModule
-            .constant('MH_EVENT', {
+            .constant('EVENT', {
                 LOAD_SHEET: 'LOAD_SHEET',
                 UNLOAD_SHEET: 'UNLOAD_SHEET',
                 SHOW_VIEWER: 'SHOW_VIEWER',

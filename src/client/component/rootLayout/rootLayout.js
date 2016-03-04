@@ -16,7 +16,7 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$scope', '$window', function($location, $scope, $window) {
+                    controller: ['$location', '$scope', '$window', 'EVENT', function($location, $scope, $window, EVENT) {
 
                         var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'globalSearch'],
                             pathSegments = $location.path().split('/'),
@@ -34,6 +34,22 @@ define('rootLayout/rootLayout', [
 
                         $scope.showViewer = false;
                         $scope.showUploads = false;
+
+                        $scope.$on(EVENT.SHOW_VIEWER, function(){
+                            $scope.showViewer = true;
+                        });
+
+                        $scope.$on(EVENT.HIDE_VIEWER, function(){
+                            $scope.showViewer = false;
+                        });
+
+                        $scope.$on(EVENT.SHOW_UPLOADS, function(){
+                            $scope.showUploads = true;
+                        });
+
+                        $scope.$on(EVENT.HIDE_UPLOADS, function(){
+                            $scope.showUploads = false;
+                        });
 
                     }]
                 };
