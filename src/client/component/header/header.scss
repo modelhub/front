@@ -9,13 +9,12 @@ mh-header {
   justify-content: space-between;
   align-items: center;
   .tabs {
-    align-items: stretch;
     height: 100%;
     > * {
       border-right: 1px solid $splitter1;
       cursor: pointer;
       justify-content: center;
-      @include fill($width: 70px);
+      width: 70px;
       &:hover {
         background: $background1Highlight;
       }
