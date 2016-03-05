@@ -17,10 +17,11 @@ define('viewer/viewer', [
                     template: tpl,
                     scope: {},
                     controller: ['$element', '$scope', '$rootScope', 'EVENT', 'lmv', function($element, $scope, $rootScope, EVENT, lmv){
+                        $scope.state = 'initialising'
                         lmv($element[0].getElementsByClassName('lmv')[0]).then(function(viewer){
-                            console.log(viewer);
-                        }, function(err){
-                            console.log(err);
+                            $scope.state = 'ready';
+                        }, function(){
+                            $scope.state = 'error';
                         });
                     }]
                 };

@@ -1,8 +1,8 @@
-define('uploads/uploads', [
+define('document/document', [
     'styler',
-    'text!uploads/uploads.css',
-    'text!uploads/uploads.html',
-    'text!uploads/uploads.txt.json'
+    'text!document/document.css',
+    'text!document/document.html',
+    'text!document/document.txt.json'
 ], function(
     styler,
     style,
@@ -14,13 +14,13 @@ define('uploads/uploads', [
 
     return function(ngModule){
         ngModule
-            .directive('mhUploads', function(){
+            .directive('mhDocument', function(){
                 return {
                     restrict: 'E',
                     template: tpl,
                     scope: {},
                     controller: ['$scope', 'i18n', function($scope, i18n){
-
+                        
                         i18n($scope, txt);
 
                     }]

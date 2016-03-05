@@ -9,10 +9,15 @@ define('registry', [
     'service/lmvLoader',
     'service/nav',
     //components
+    'document/document',
+    'documentVersion/documentVersion',
+    'folder/folder',
     'header/header',
     'langSelector/langSelector',
     'loader/loader',
+    'project/project',
     'rootLayout/rootLayout',
+    'search/search',
     'uploads/uploads',
     'user/user',
     'viewer/viewer'

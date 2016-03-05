@@ -1,8 +1,8 @@
-define('uploads/uploads', [
+define('project/project', [
     'styler',
-    'text!uploads/uploads.css',
-    'text!uploads/uploads.html',
-    'text!uploads/uploads.txt.json'
+    'text!project/project.css',
+    'text!project/project.html',
+    'text!project/project.txt.json'
 ], function(
     styler,
     style,
@@ -14,7 +14,7 @@ define('uploads/uploads', [
 
     return function(ngModule){
         ngModule
-            .directive('mhUploads', function(){
+            .directive('mhProject', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

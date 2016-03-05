@@ -68,7 +68,6 @@ define('header/header', [
                         };
 
                         $scope.$on(EVENT.NAVIGATING, deactivateAnyActiveTabs);
-
                         function deactivateAnyActiveTabs(){
                             if($scope.viewerActive){
                                 $scope.viewerTabClick();
