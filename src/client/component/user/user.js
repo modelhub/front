@@ -19,7 +19,7 @@ define('user/user', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$rootScope', '$scope', '$window', 'api', 'event', 'i18n', function($rootScope, $scope, $window, api, event, i18n){
+                    controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', function($rootScope, $scope, $window, api, EVENT, i18n){
 
                         i18n($scope, txt);
 
