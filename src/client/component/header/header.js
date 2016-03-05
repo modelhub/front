@@ -66,6 +66,17 @@ define('header/header', [
                                 $rootScope.$broadcast(EVENT.HIDE_UPLOADS);
                             }
                         };
+
+                        $scope.$on(EVENT.NAVIGATING, deactivateAnyActiveTabs);
+
+                        function deactivateAnyActiveTabs(){
+                            if($scope.viewerActive){
+                                $scope.viewerTabClick();
+                            }
+                            if($scope.uploadsActive){
+                                $scope.uploadsTabClick();
+                            }
+                        }
                     }]
                 };
             });

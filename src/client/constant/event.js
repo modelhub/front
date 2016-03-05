@@ -12,7 +12,8 @@ define('constant/event', [
                 HIDE_UPLOADS: 'HIDE_UPLOADS',
                 FILE_UPLOAD_PROGRESS: 'FILE_UPLOAD_PROGRESS',
                 FILE_UPLOAD_SUCCESS: 'FILE_UPLOAD_SUCCESS',
-                FILE_UPLOAD_FAILURE: 'FILE_UPLOAD_FAILURE'
+                FILE_UPLOAD_FAILURE: 'FILE_UPLOAD_FAILURE',
+                NAVIGATING: 'NAVIGATING'
             });
     }
 });
