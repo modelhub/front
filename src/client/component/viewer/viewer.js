@@ -9,9 +9,6 @@ define('viewer/viewer', [
 ){
     styler(style);
 
-    var viewerIDSrc = 0,
-        INIT_TIMEOUT = 5000;
-
     return function(ngModule){
         ngModule
             .directive('mhViewer', function(){
