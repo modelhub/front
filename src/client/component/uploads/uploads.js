@@ -1,8 +1,8 @@
-define('user/user', [
+define('uploads/uploads', [
     'styler',
-    'text!user/user.css',
-    'text!user/user.html',
-    'text!user/user.txt.json'
+    'text!uploads/uploads.css',
+    'text!uploads/uploads.html',
+    'text!uploads/uploads.txt.json'
 ], function(
     styler,
     style,
@@ -14,7 +14,7 @@ define('user/user', [
 
     return function(ngModule){
         ngModule
-            .directive('mhUser', function(){
+            .directive('mhUploads', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

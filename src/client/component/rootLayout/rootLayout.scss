@@ -2,15 +2,15 @@
 
 mh-root-layout {
   mh-header{
-    @include fill($height: 50px);
+    @include fill($height: 51px);
   }
   > :not(mh-header){
-    @include fill($height: calc(100% - 50px));
+    @include fill($height: calc(100% - 51px));
   }
 
   mh-viewer, mh-uploads{
     position: absolute;
-    top: 50px;
+    top: 51px;
     left: 0;
     visibility: hidden;
     &.show {
@@ -23,4 +23,8 @@ html, body, mh-root-layout{
   @include default($display: block);
   @include fill();
   @include theme();
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

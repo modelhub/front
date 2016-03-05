@@ -1,41 +1,59 @@
 @import "../../global";
 
 mh-header {
-  background: $background1;
-  color: $color1;
-  font-size: 15px;
-  font-weight: bold;
-  min-height: 50px;
-  justify-content: space-between;
-  align-items: center;
-  .tabs {
-    height: 100%;
-    > * {
-      border-right: 1px solid $splitter1;
-      cursor: pointer;
-      justify-content: center;
-      width: 70px;
-      &:hover {
-        background: $background1Highlight;
+  .root {
+    background: $background1;
+    font-size: 15px;
+    font-weight: bold;
+    height: calc(100% - 1px);
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $splitter1;
+    .controls {
+      height: 100%;
+      .viewer, .uploads {
+        border-right: 1px solid $splitter1;
+        cursor: pointer;
+        justify-content: center;
+        width: 70px;
+        &:hover {
+          background: $background1Highlight;
+        }
+        &.active {
+          background: $background1Active;
+        }
+        > * {
+          user-select: none;
+          text-align: center;
+        }
       }
-      &.active {
-        background: $background1Active;
-      }
-      > * {
-        user-select: none;
-        text-align: center;
+      .global-search {
+        justify-content: center;
+        > input {
+          padding: 5px;
+          border: 1px solid $splitter1;
+          background: $background2;
+          color: $txtColor1;
+          text-align: center;
+          border-radius: 10px;
+          margin-left: 10px;
+          &:focus{
+            outline: none;
+            border-color: $background1Active;
+          }
+        }
       }
     }
-  }
-  .user-avatar {
-    @include fill(40px, 40px);
-    background: #fff;
-    border-radius: 2px;
-    margin-right: 5px;
-    img {
-      @include fill(34px, 34px);
-      margin: 3px 3px;
+    .user-avatar {
+      @include fill(40px, 40px);
+      background: #fff;
       border-radius: 2px;
+      margin-right: 5px;
+      img {
+        @include fill(34px, 34px);
+        margin: 3px 3px;
+        border-radius: 2px;
+      }
     }
   }
 }

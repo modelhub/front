@@ -16,21 +16,30 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$scope', '$window', 'EVENT', function($location, $scope, $window, EVENT) {
+                    controller: ['$location', '$scope', 'EVENT', 'nav', function($location, $scope, EVENT, nav) {
 
-                        var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'globalSearch'],
-                            pathSegments = $location.path().split('/'),
-                            base = pathSegments[1],
-                            baseArg = pathSegments[2];
+                        var onLocationChange = function() {
+                            //if the app is extended to have more routes of varying types then this should be deleted and ngRoute should be used instead, but for now, this is fine.
+                            var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search'],
+                                pathSegments = $location.path().split('/'),
+                                base = pathSegments[1],
+                                baseArg = pathSegments[2];
 
-                        if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
-                            $window.location.assign('#/user/me');
-                            base = 'user';
-                            baseArg = 'me';
-                        }
+                            if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
+                                nav.goToUser('me');
+                                base = 'user';
+                                baseArg = 'me';
+                            }
 
-                        $scope.base = base;
-                        $scope.baseArg = baseArg;
+                            if (base === 'search'){
+                                $scope.projectFilter = pathSegments[3];
+                            }
+                            $scope.base = base;
+                            $scope.baseArg = baseArg;
+                        };
+
+                        onLocationChange();
+                        $scope.$on('$locationChangeSuccess', onLocationChange);
 
                         $scope.showViewer = false;
                         $scope.showUploads = false;

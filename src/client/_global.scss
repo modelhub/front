@@ -4,10 +4,11 @@
 $background1: #333;
 $background1Highlight: #555;
 $background1Active: #59f;
+$background2: #444;
 $splitter1: #000;
-$color1: #fff;
-$txtColor: #808080;
+$txtColor1: #fff;
 $linkColor: #52A3DB;
+
 $fontFamily: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 /**
  * END CONSTANTS
@@ -31,7 +32,7 @@ $fontFamily: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   height: $height;
 }
 
-@mixin theme($color: $txtColor, $background: rgba(0,0,0,0), $fontFamily: $fontFamily, $fontSize: 14px, $fontWeight: normal){
+@mixin theme($color: $txtColor1, $background: $background2, $fontFamily: $fontFamily, $fontSize: 14px, $fontWeight: normal){
   color: $color;
   background: $background;
   font-family: $fontFamily;

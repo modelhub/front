@@ -11,6 +11,7 @@ define('header/header', [
 ){
     styler(style);
     txt = JSON.parse(txt);
+    var searchEl;
 
     return function(ngModule){
         ngModule
@@ -19,16 +20,27 @@ define('header/header', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', function($rootScope, $scope, $window, api, EVENT, i18n){
+                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'nav', function($element, $rootScope, $scope, api, EVENT, i18n, nav){
 
                         i18n($scope, txt);
+
+                        $scope.globalSearch = '';
+                        $element[0].getElementsByTagName('input')[0].addEventListener('keypress', function(e){
+                            if(e.keyCode == 13) { //enter
+                                var globalSearch = $scope.globalSearch.trim();
+                                if (globalSearch.length > 0) {
+                                    $scope.globalSearch = '';
+                                    nav.search(globalSearch);
+                                }
+                            }
+                        });
 
                         api.v1.user.getCurrent().then(function(user){
                             $scope.user = user;
                         });
 
                         $scope.avatarClick = function() {
-                            $window.location.assign('/#/user/me');
+                            nav.goToUser('me');
                         };
 
                         $scope.viewerActive = false;

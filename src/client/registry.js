@@ -6,26 +6,30 @@ define('registry', [
     'service/api',
     'service/i18n',
     'service/lmvLoader',
+    'service/nav',
     //components
     'header/header',
     'langSelector/langSelector',
     'loader/loader',
     'rootLayout/rootLayout',
+    'uploads/uploads',
     'user/user',
     'viewer/viewer'
 ], function(
     ng,
     //constants
-    event,
+    EVENT,
     //services
     api,
     i18n,
     lmvLoader,
+    nav,
     //components
     header,
     langSelector,
     loader,
     rootLayout,
+    uploads,
     user,
     viewer
 ){

@@ -1,4 +1,8 @@
 @import "../../global";
 
-mh-viewer-three-d {
+mh-viewer {
+  @include default();
+  .spinner {
+    display: none;
+  }
 }
