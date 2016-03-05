@@ -5,6 +5,7 @@ define('registry', [
     //services
     'service/api',
     'service/i18n',
+    'service/lmv',
     'service/lmvLoader',
     'service/nav',
     //components
@@ -22,6 +23,7 @@ define('registry', [
     //services
     api,
     i18n,
+    lmv,
     lmvLoader,
     nav,
     //components
