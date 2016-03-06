@@ -13,7 +13,8 @@ define('constant/event', [
                 FILE_UPLOAD_PROGRESS: 'FILE_UPLOAD_PROGRESS',
                 FILE_UPLOAD_SUCCESS: 'FILE_UPLOAD_SUCCESS',
                 FILE_UPLOAD_FAILURE: 'FILE_UPLOAD_FAILURE',
-                NAVIGATING: 'NAVIGATING'
+                NAVIGATING: 'NAVIGATING',
+                LANG_CHANGE: 'LANG_CHANGE'
             });
     }
 });

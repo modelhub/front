@@ -5,11 +5,11 @@ define('service/i18n', [
 ){
     return function(ngModule){
         ngModule
-            .service('i18n', ['$rootScope', function($rootScope){
+            .service('i18n', ['$rootScope', 'currentUser', 'EVENT', function($rootScope, currentUser, EVENT){
 
-                var lang_change_event = 'i18n_lang_change_event',
-                    last_lang,
-                    last_moment_locale,
+                var lastLang = currentUser().uiLanguage,
+                    lastMomentLocale = currentUser().locale,
+                    lastTimeFormat = currentUser().timeFormat,
                     service;
 
                 service = function(scope, i18nTxt){
@@ -24,9 +24,9 @@ define('service/i18n', [
                         scope.lang = scope.lang != i18nTxt.langs[idx]? i18nTxt.langs[idx]: scope.lang;
                     };
 
-                    langChangeHandler(null, last_lang);
+                    langChangeHandler(null, lastLang);
 
-                    scope.$on(lang_change_event, langChangeHandler);
+                    scope.$on(EVENT.LANG_CHANGE, langChangeHandler);
 
                     scope.txt = function(){
                         var strId = arguments[0];
@@ -40,6 +40,9 @@ define('service/i18n', [
 
                     scope.dt = function(date, format){
                         date = date.replace('T', ' ');
+                        if (!format) {
+                            format = lastTimeFormat;
+                        }
                         return moment(date).format(format);
                     };
 
@@ -47,23 +50,18 @@ define('service/i18n', [
 
                 service.setLang = function(lang){
 
-                    if(last_moment_locale != lang){
-                        last_moment_locale = moment.locale(lang);
+                    if(lastMomentLocale != lang){
+                        lastMomentLocale = moment.locale(lang);
                     }
 
                     if(typeof lang === 'string' && lang.length > 2){
                         lang = lang.substring(0, 2);
                     }
 
-                    last_lang = lang;
-                    $rootScope.$broadcast(lang_change_event, lang);
+                    lastLang = lang;
+                    $rootScope.$broadcast(EVENT.LANG_CHANGE, lang);
 
                 };
-
-                var prefLang = window.navigator.languages ? window.navigator.languages[0] : null;
-                prefLang = prefLang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
-
-                service.setLang(prefLang);
 
                 return service;
             }]);

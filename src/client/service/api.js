@@ -5,8 +5,8 @@ define('service/api', [
 ){
     return function(ngModule){
         ngModule
-            .service('api', ['$document', '$http', '$q', function($document, $http, $q){
-                var currentUserV1 = ng.copy(window.mhCurrentUser),
+            .service('api', ['$document', '$http', '$q', 'currentUser', function($document, $http, $q, currentUser){
+                var currentUserV1 = currentUser(),
                     userCacheV1 = {},
                     pendingUserIdToPromiseIdMapV1 = {},
                     pendingUserPromisesV1 = {},

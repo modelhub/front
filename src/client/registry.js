@@ -4,6 +4,7 @@ define('registry', [
     'constant/event',
     //services
     'service/api',
+    'service/currentUser',
     'service/i18n',
     'service/lmv',
     'service/lmvLoader',
@@ -27,6 +28,7 @@ define('registry', [
     EVENT,
     //services
     api,
+    currentUser,
     i18n,
     lmv,
     lmvLoader,
