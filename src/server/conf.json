@@ -25,7 +25,7 @@
   "session": {
     "name": "mh",
     "maxAge": 432000,
-    "keyPairs": ["6329064d6ad44386a4177f38659b0a9c", "622627ccd142406c8947b17c8ab6788e"],
+    "keyPairs": ["9fb28620b7988994f3e4752e37d9e99f08ac9e2c23e8daaf18f8bb7d5af98d1b", "22d4970ae55c4975180356741111e8f1c94fac4a09e5ceacee7b8a5049f4755f"],
     "maxRecentSheetCount": 25,
     "recentSheetAccessExpiration": "5m"
   },
@@ -36,6 +36,7 @@
     "publicDir": ["..", "client"],
     "certFile": [],
     "keyFile": [],
+    "csrfAuthKey": "b8c05f3a50ffb76b23e38cabd09a706faaff6b95b64043aff3222e7cf88cf832",
     "openIdProvider": "https://accounts.autodesk.com"
   }
 }

@@ -5,16 +5,17 @@ define('service/api', [
 ){
     return function(ngModule){
         ngModule
-            .service('api', ['$http', '$q', function($http, $q){
-                var currentUserV1,
+            .service('api', ['$document', '$http', '$q', function($document, $http, $q){
+                var currentUserV1 = ng.copy(window.mhCurrentUser),
                     userCacheV1 = {},
                     pendingUserIdToPromiseIdMapV1 = {},
                     pendingUserPromisesV1 = {},
                     promiseIdSrc = 0,
+                    csrfToken = $document[0].getElementById('mh-csrf-token').dataset.csrfToken,
                     newPromiseId = function(){return ''+promiseIdSrc++;},
                     doJsonReq = function(path, data){
                         return $q(function (resolve, reject) {
-                            $http.post(path, data)
+                            $http.post(path, data, {headers:{'Csrf-Token': csrfToken}})
                                 .then(function (resp) {
                                     resolve(resp.data);
                                 }, reject);
@@ -23,7 +24,10 @@ define('service/api', [
                     doFormReq = function(path, data){
                         return $q(function (resolve, reject) {
                             $http.post(path, data, {
-                                headers: {'Content-Type': undefined },
+                                headers: {
+                                    'Csrf-Token': csrfToken,
+                                    'Content-Type': undefined
+                                },
                                 transformRequest: angular.identity
                             }).then(function (resp) {
                                     resolve(resp.data);
@@ -44,7 +48,7 @@ define('service/api', [
                                             if (currentUserV1) {
                                                 resolve(ng.copy(currentUserV1));
                                             } else {
-                                                $http.post('/api/v1/user/getCurrent')
+                                                $http.post('/api/v1/user/getCurrent', null, {headers:{'Csrf-Token': csrfToken}})
                                                     .then(function (resp) {
                                                         currentUserV1 = ng.copy(resp.data);
                                                         userCacheV1[currentUserV1.id] = ng.copy(resp.data);
@@ -86,7 +90,7 @@ define('service/api', [
                                     if (unCachedAndNonePendingIds.length > 0) {
                                         var currentPromiseId = newPromiseId();
                                         pendingUserPromisesV1[currentPromiseId] = $q(function (resolve, reject) {
-                                            $http.post('/api/v1/user/get', {ids: unCachedAndNonePendingIds})
+                                            $http.post('/api/v1/user/get', {ids: unCachedAndNonePendingIds}, {headers:{'Csrf-Token': csrfToken}})
                                                 .then(function (resp) {
                                                     if (resp && resp.data && resp.data.length > 0) {
                                                         for (var i = 0, l = resp.data.length; i < l; i++) {
@@ -290,7 +294,7 @@ define('service/api', [
                         }
                     };
 
-                api.v1.user.getCurrent(); //just cache this value on page load, it will always be used.
+                userCacheV1[currentUserV1.id] = ng.copy(currentUserV1);
                 return api;
             }]);
     }
