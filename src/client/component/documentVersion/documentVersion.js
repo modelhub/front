@@ -18,7 +18,9 @@ define('documentVersion/documentVersion', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        documentVersionId: '@'
+                    },
                     controller: ['$scope', 'i18n', function($scope, i18n){
                         
                         i18n($scope, txt);

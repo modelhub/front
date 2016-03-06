@@ -18,7 +18,9 @@ define('project/project', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        projectId: '@'
+                    },
                     controller: ['$scope', 'i18n', function($scope, i18n){
 
                         i18n($scope, txt);

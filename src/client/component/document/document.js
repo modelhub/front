@@ -18,7 +18,9 @@ define('document/document', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        documentId: '@'
+                    },
                     controller: ['$scope', 'i18n', function($scope, i18n){
                         
                         i18n($scope, txt);

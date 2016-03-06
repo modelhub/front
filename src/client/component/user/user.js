@@ -18,7 +18,9 @@ define('user/user', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        userId: '@'
+                    },
                     controller: ['$scope', 'i18n', function($scope, i18n){
 
                         i18n($scope, txt);
