@@ -21,9 +21,21 @@ define('user/user', [
                     scope: {
                         userId: '@'
                     },
-                    controller: ['$scope', 'i18n', function($scope, i18n){
+                    controller: ['$scope', 'api', 'i18n', function($scope, api, i18n){
 
                         i18n($scope, txt);
+
+                        $scope.status = 'init';
+
+                        api.v1.user.get([$scope.userId]).then(function(users){
+                            if (users.length === 0) {
+                                $scope.status = 'noSuchUser';
+                            } else {
+                                $scope.user = users[0];
+                            }
+                        }, function(err){
+
+                        });
 
                     }]
                 };

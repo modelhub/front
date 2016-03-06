@@ -7,6 +7,7 @@ define('service/currentUser', [
         ngModule
             .service('currentUser', [function(){
                 var currentUser = ng.copy(window.mhCurrentUser);
+                delete window.mhCurrentUser;
                 return function(){
                     return ng.copy(currentUser);
                 };

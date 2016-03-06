@@ -20,9 +20,11 @@ define('header/header', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'nav', function($element, $rootScope, $scope, api, EVENT, i18n, nav){
+                    controller: ['$element', '$rootScope', '$scope', 'currentUser', 'EVENT', 'i18n', 'nav', function($element, $rootScope, $scope, currentUser, EVENT, i18n, nav){
 
                         i18n($scope, txt);
+
+                        $scope.user = currentUser();
 
                         $scope.globalSearch = '';
                         $element[0].getElementsByTagName('input')[0].addEventListener('keypress', function(e){
@@ -36,13 +38,9 @@ define('header/header', [
                             }
                         });
 
-                        api.v1.user.getCurrent().then(function(user){
-                            $scope.user = user;
-                        });
-
                         $scope.avatarClick = function() {
                             deactivateAnyActiveTabs();
-                            nav.goToUser('me');
+                            nav.goToUser($scope.user.id);
                         };
 
                         $scope.viewerActive = false;

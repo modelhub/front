@@ -16,27 +16,26 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$scope', 'EVENT', 'nav', function($location, $scope, EVENT, nav) {
+                    controller: ['$location', '$scope', 'currentUser', 'EVENT', 'nav', function($location, $scope, currentUser, EVENT, nav) {
 
-                        var onLocationChange = function() {
+                        var currentUserId = currentUser().id,
+                            onLocationChange = function() {
                             //if the app is extended to have more routes of varying types then this should be deleted and ngRoute should be used instead, but for now, this is fine.
-                            var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search'],
-                                pathSegments = $location.path().split('/'),
-                                base = pathSegments[1],
-                                baseArg = pathSegments[2];
+                                var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search'],
+                                    pathSegments = $location.path().split('/'),
+                                    base = pathSegments[1],
+                                    baseArg = pathSegments[2];
 
-                            if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
-                                nav.goToUser('me');
-                                base = 'user';
-                                baseArg = 'me';
-                            }
+                                if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
+                                    nav.goToUser(currentUserId);
+                                }
 
-                            if (base === 'search'){
-                                $scope.project = pathSegments[3];
-                            }
-                            $scope.base = base;
-                            $scope.baseArg = baseArg;
-                        };
+                                if (base === 'search'){
+                                    $scope.project = pathSegments[3];
+                                }
+                                $scope.base = base;
+                                $scope.baseArg = baseArg;
+                            };
 
                         onLocationChange();
                         $scope.$on('$locationChangeSuccess', onLocationChange);
