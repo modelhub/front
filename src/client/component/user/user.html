@@ -1,3 +1,21 @@
-<div>
-    <img ng-src="{{user.avatar}}"/>
+<div class="mh-def mh-fill init" ng-show="status === 'init'">
+    <mh-loader class="mh-def mh-fill bar-spinner"></mh-loader>
+</div>
+
+<div class="mh-def mh-fill ready" ng-show="status === 'ready'">
+    <div>
+        <img ng-src="{{user.avatar}}"/>
+    </div>
+</div>
+
+<div class="mh-def mh-fill init" ng-show="status === 'noSuchUser'">
+    <div class="error-message">
+        {{::txt('noSuchUser', userId)}}
+    </div>
+</div>
+
+<div class="mh-def mh-fill init" ng-show="status === 'error'">
+    <div class="error-message">
+        {{::txt('error', errorId)}}
+    </div>
 </div>

@@ -1,4 +1,11 @@
 {
-  "langs": ["en"]
+  "langs": ["en"],
 
+  "noSuchUser": {
+    "en": "No such user exists with id: {0}"
+  },
+
+  "error": {
+    "en": "Error loading user data, error id: {0}"
+  }
 }

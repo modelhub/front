@@ -1,14 +1,8 @@
 <div class="mh-def mh-row mh-fill root">
     <div class="mh-def mh-row controls">
-        <div class="mh-def viewer" ng-class="{active: viewerActive}" ng-click="viewerTabClick()">
-            <div class="mh-def">
-                {{::txt('viewer')}}
-            </div>
+        <div class="mh-def viewer" ng-class="{active: viewerActive}" ng-click="viewerTabClick()" title="{{::txt('viewer')}}">
         </div>
-        <div class="mh-def uploads" ng-class="{active: uploadsActive}" ng-click="uploadsTabClick()">
-            <div class="mh-def">
-                {{::txt('uploads')}}
-            </div>
+        <div class="mh-def uploads" ng-class="{active: uploadsActive}" ng-click="uploadsTabClick()" title="{{::txt('uploads')}}">
         </div>
         <div class="mh-def global-search">
             <input type="text" placeholder="{{::txt('globalSearch')}}" ng-model="globalSearch">

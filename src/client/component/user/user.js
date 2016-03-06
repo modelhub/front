@@ -31,10 +31,12 @@ define('user/user', [
                             if (users.length === 0) {
                                 $scope.status = 'noSuchUser';
                             } else {
+                                $scope.status = 'ready';
                                 $scope.user = users[0];
                             }
-                        }, function(err){
-
+                        }, function(errorId){
+                            $scope.status = 'error';
+                            $scope.errorId = errorId;
                         });
 
                     }]

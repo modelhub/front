@@ -18,7 +18,9 @@ define('service/api', [
                             $http.post(path, data, {headers:{'Csrf-Token': csrfToken}})
                                 .then(function (resp) {
                                     resolve(resp.data);
-                                }, reject);
+                                }, function(resp){
+                                    reject(resp.data);
+                                });
                         });
                     },
                     doFormReq = function(path, data){
@@ -31,7 +33,9 @@ define('service/api', [
                                 transformRequest: angular.identity
                             }).then(function (resp) {
                                     resolve(resp.data);
-                            }, reject);
+                            }, function(resp){
+                                reject(resp.data);
+                            });
                         });
                     },
                     api = {
@@ -55,7 +59,9 @@ define('service/api', [
                                                         delete pendingUserPromisesV1[promiseId];
                                                         delete pendingUserIdToPromiseIdMapV1[pendingCurrentUserKey];
                                                         resolve(ng.copy(resp.data));
-                                                    }, reject);
+                                                    }, function(resp){
+                                                        reject(resp.data);
+                                                    });
                                             }
                                         });
                                         pendingUserIdToPromiseIdMapV1[pendingCurrentUserKey] = promiseId;
@@ -100,7 +106,9 @@ define('service/api', [
                                                         }
                                                     }
                                                     resolve();
-                                                }, reject);
+                                                }, function(resp){
+                                                    reject(resp.data);
+                                                });
                                             });
                                         for (var i = 0, l = newPendingUsers.length; i < l; i++) {
                                             pendingUserIdToPromiseIdMapV1[newPendingUsers[i]] = currentPromiseId;

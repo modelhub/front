@@ -11,16 +11,24 @@ mh-header {
     border-bottom: 1px solid $splitter1;
     .controls {
       height: 100%;
+      .viewer {
+        background: url("/resource/image/eye-icon.png") no-repeat center;
+        background-size: 40px 40px;
+      }
+      .uploads {
+        background: url("/resource/image/upload-icon.png") no-repeat center;
+        background-size: 30px 30px;
+      }
       .viewer, .uploads {
         border-right: 1px solid $splitter1;
         cursor: pointer;
         justify-content: center;
-        width: 70px;
+        width: 50px;
         &:hover {
-          background: $background1Highlight;
+          background-color: $background1Highlight;
         }
         &.active {
-          background: $background1Active;
+          background-color: $background1Active;
         }
         > * {
           user-select: none;
