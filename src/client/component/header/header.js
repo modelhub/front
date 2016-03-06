@@ -30,6 +30,7 @@ define('header/header', [
                                 var globalSearch = $scope.globalSearch.trim();
                                 if (globalSearch.length > 0) {
                                     $scope.globalSearch = '';
+                                    deactivateAnyActiveTabs();
                                     nav.search(globalSearch);
                                 }
                             }
@@ -40,6 +41,7 @@ define('header/header', [
                         });
 
                         $scope.avatarClick = function() {
+                            deactivateAnyActiveTabs();
                             nav.goToUser('me');
                         };
 
@@ -67,7 +69,7 @@ define('header/header', [
                             }
                         };
 
-                        $scope.$on(EVENT.NAVIGATING, deactivateAnyActiveTabs);
+                        $scope.$on('$locationChangeStart', deactivateAnyActiveTabs);
                         function deactivateAnyActiveTabs(){
                             if($scope.viewerActive){
                                 $scope.viewerTabClick();
