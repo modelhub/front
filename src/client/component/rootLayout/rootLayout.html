@@ -1,9 +1,9 @@
 <mh-header class="mh-def mh-row" ng-cloak></mh-header>
-<mh-user class="mh-def" ng-if="base === 'user'" base-arg="{{baseArg}}" ng-cloak></mh-user>
-<mh-project class="mh-def" ng-if="base === 'project'" base-arg="{{baseArg}}" ng-cloak></mh-project>
-<mh-folder class="mh-def" ng-if="base === 'folder'" base-arg="{{baseArg}}" ng-cloak></mh-folder>
-<mh-document class="mh-def" ng-if="base === 'document'" base-arg="{{baseArg}}" ng-cloak></mh-document>
-<mh-document-version class="mh-def" ng-if="base === 'documentVersion'" base-arg="{{baseArg}}" ng-cloak></mh-document-version>
-<mh-search class="mh-def" ng-if="base === 'search'" base-arg="{{baseArg}}" project-filter="{{projectFilter}}" ng-cloak></mh-search>
+<mh-user class="mh-def" ng-if="base === 'user'" user-id="{{baseArg}}" ng-cloak></mh-user>
+<mh-project class="mh-def" ng-if="base === 'project'" project-id="{{baseArg}}" ng-cloak></mh-project>
+<mh-folder class="mh-def" ng-if="base === 'folder'" folder-id="{{baseArg}}" ng-cloak></mh-folder>
+<mh-document class="mh-def" ng-if="base === 'document'" document-id="{{baseArg}}" ng-cloak></mh-document>
+<mh-document-version class="mh-def" ng-if="base === 'documentVersion'" document-version-id="{{baseArg}}" ng-cloak></mh-document-version>
+<mh-search class="mh-def" ng-if="base === 'search'" search-term="{{baseArg}}" project-id="{{project}}" ng-cloak></mh-search>
 <mh-viewer ng-class="{show: showViewer}" ng-cloak></mh-viewer>
 <mh-uploads ng-class="{show: showUploads}" ng-cloak></mh-uploads>

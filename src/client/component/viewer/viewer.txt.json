@@ -1,0 +1,8 @@
+﻿{
+  "langs": ["en"],
+
+  "errorMessage": {
+    "en": "Error Initialising Viewer."
+  }
+
+}

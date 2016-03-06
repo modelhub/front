@@ -32,7 +32,7 @@ define('rootLayout/rootLayout', [
                             }
 
                             if (base === 'search'){
-                                $scope.projectFilter = pathSegments[3];
+                                $scope.project = pathSegments[3];
                             }
                             $scope.base = base;
                             $scope.baseArg = baseArg;

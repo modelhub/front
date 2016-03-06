@@ -2,7 +2,22 @@
 
 mh-viewer {
   @include default();
-  .spinner {
-    display: none;
+
+  .lmv-ready {
+    z-index: 1;
+    .lmv {
+      .spinner {
+        display: none;
+      }
+    }
+  }
+
+  .lmv-init, .lmv-error {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    .error-message {
+      margin: auto;
+    }
   }
 }
