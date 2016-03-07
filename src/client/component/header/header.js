@@ -67,7 +67,7 @@ define('header/header', [
                             }
                         };
 
-                        $scope.$on('$locationChangeStart', deactivateAnyActiveTabs);
+                        $scope.$on('$locationChangeSuccess', deactivateAnyActiveTabs);
                         function deactivateAnyActiveTabs(){
                             if($scope.viewerActive){
                                 $scope.viewerTabClick();
