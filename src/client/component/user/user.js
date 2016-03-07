@@ -25,20 +25,25 @@ define('user/user', [
 
                         i18n($scope, txt);
 
-                        $scope.status = 'init';
+                        function init() {
+                            $scope.status = 'init';
 
-                        api.v1.user.get([$scope.userId]).then(function(users){
-                            if (users.length === 0) {
-                                $scope.status = 'noSuchUser';
-                            } else {
-                                $scope.status = 'ready';
-                                $scope.user = users[0];
-                            }
-                        }, function(errorId){
-                            $scope.status = 'error';
-                            $scope.errorId = errorId;
+                            api.v1.user.get([$scope.userId]).then(function (users) {
+                                if (users.length === 0) {
+                                    $scope.status = 'noSuchUser';
+                                } else {
+                                    $scope.status = 'ready';
+                                    $scope.user = users[0];
+                                }
+                            }, function (errorId) {
+                                $scope.status = 'error';
+                                $scope.errorId = errorId;
+                            });
+                        }
+                        init();
+                        $scope.$watch('userId', function(){
+                            init();
                         });
-
                     }]
                 };
             });

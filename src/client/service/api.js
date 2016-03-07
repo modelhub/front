@@ -122,7 +122,7 @@ define('service/api', [
                                         }
                                         return results;
                                     }, function(err){
-                                        return err;
+                                        throw err;
                                     });
                                 },
 
