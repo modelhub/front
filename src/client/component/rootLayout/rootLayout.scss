@@ -1,21 +1,37 @@
 @import "../../global";
 
 mh-root-layout {
+  align-items: center;
   mh-header{
     @include fill($height: 51px);
   }
+
   > :not(mh-header){
     @include fill($height: calc(100% - 51px));
   }
 
+  .root {
+    justify-content: center;
+    .aligner {
+      max-width: $pageMaxWidth;
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+  }
+
   mh-viewer, mh-uploads{
     position: absolute;
-    top: 51px;
     left: 0;
     visibility: hidden;
     &.show {
       visibility: visible;
     }
+  }
+  mh-viewer{
+    top: 51px;
+  }
+  mh-uploads{
+    top: 0;
   }
 }
 

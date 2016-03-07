@@ -16,8 +16,9 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$scope', 'currentUser', 'EVENT', 'nav', function($location, $scope, currentUser, EVENT, nav) {
+                    controller: ['$location', '$scope', '$window', 'currentUser', 'EVENT', 'nav', function($location, $scope, $window, currentUser, EVENT, nav) {
 
+                        var reloadRootViewTimeout;
                         var currentUserId = currentUser().id,
                             onLocationChange = function() {
                             //if the app is extended to have more routes of varying types then this should be deleted and ngRoute should be used instead, but for now, this is fine.
@@ -33,8 +34,13 @@ define('rootLayout/rootLayout', [
                                 if (base === 'search'){
                                     $scope.project = pathSegments[3];
                                 }
-                                $scope.base = base;
-                                $scope.baseArg = baseArg;
+                                $window.clearTimeout(reloadRootViewTimeout);
+                                reloadRootViewTimeout = $window.setTimeout(function(){
+                                    $scope.base = base;
+                                    $scope.baseArg = baseArg;
+                                    $scope.$apply();
+                                }, 100);
+                                $scope.base = 'reloadRootView';
                             };
 
                         onLocationChange();

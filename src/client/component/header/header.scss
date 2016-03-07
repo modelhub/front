@@ -6,61 +6,69 @@ mh-header {
     font-size: 15px;
     font-weight: bold;
     height: calc(100% - 1px);
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid $splitter1;
-    .controls {
-      height: 100%;
-      .viewer {
-        background: url("/resource/image/eye-icon.png") no-repeat center;
-        background-size: 40px 40px;
-      }
-      .uploads {
-        background: url("/resource/image/upload-icon.png") no-repeat center;
-        background-size: 30px 30px;
-      }
-      .viewer, .uploads {
-        border-right: 1px solid $splitter1;
-        cursor: pointer;
-        justify-content: center;
-        width: 50px;
-        &:hover {
-          background-color: $background1Highlight;
+    .aligner {
+      margin-left: 5px;
+      margin-right: 5px;
+      justify-content: space-between;
+      align-items: center;
+      max-width: $pageMaxWidth;
+      .controls {
+        height: 100%;
+        .viewer {
+          background: url("/resource/image/eye-icon.png") no-repeat center;
+          background-size: 40px 40px;
         }
-        &.active {
-          background-color: $background1Active;
+        .uploads {
+          background: url("/resource/image/upload-icon.png") no-repeat center;
+          background-size: 30px 30px;
         }
-        > * {
-          user-select: none;
-          text-align: center;
+        .viewer{
+          border-left: 1px solid $splitter1;
         }
-      }
-      .global-search {
-        justify-content: center;
-        > input {
-          padding: 5px;
-          border: 1px solid $splitter1;
-          background: $background2;
-          color: $txtColor1;
-          text-align: center;
-          border-radius: 10px;
-          margin-left: 10px;
-          &:focus{
-            outline: none;
-            border-color: $background1Active;
+        .viewer, .uploads {
+          border-right: 1px solid $splitter1;
+          cursor: pointer;
+          justify-content: center;
+          width: 50px;
+          &:hover {
+            background-color: $background1Highlight;
+          }
+          &.active {
+            background-color: $background1Active;
+          }
+          > * {
+            user-select: none;
+            text-align: center;
+          }
+        }
+        .global-search {
+          justify-content: center;
+          > input {
+            padding: 5px;
+            border: 1px solid $splitter1;
+            background: $background2;
+            color: $txtColor1;
+            text-align: center;
+            border-radius: 10px;
+            margin-left: 10px;
+            &:focus {
+              outline: none;
+              border-color: $background1Active;
+            }
           }
         }
       }
-    }
-    .user-avatar {
-      @include fill(40px, 40px);
-      background: #fff;
-      border-radius: 2px;
-      margin-right: 5px;
-      img {
-        @include fill(34px, 34px);
-        margin: 3px 3px;
+      .user-avatar {
+        @include fill(40px, 40px);
+        background: #fff;
         border-radius: 2px;
+        img {
+          @include fill(34px, 34px);
+          margin: 3px 3px;
+          border-radius: 2px;
+        }
       }
     }
   }

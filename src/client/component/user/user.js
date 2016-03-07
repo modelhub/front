@@ -21,29 +21,31 @@ define('user/user', [
                     scope: {
                         userId: '@'
                     },
-                    controller: ['$scope', 'api', 'i18n', function($scope, api, i18n){
+                    controller: ['$scope', 'api', 'currentUser', 'i18n', function($scope, api, currentUser, i18n){
 
                         i18n($scope, txt);
 
-                        function init() {
-                            $scope.status = 'init';
+                        $scope.myId = currentUser().id;
 
-                            api.v1.user.get([$scope.userId]).then(function (users) {
-                                if (users.length === 0) {
-                                    $scope.status = 'noSuchUser';
-                                } else {
-                                    $scope.status = 'ready';
-                                    $scope.user = users[0];
-                                }
-                            }, function (errorId) {
-                                $scope.status = 'error';
-                                $scope.errorId = errorId;
-                            });
-                        }
-                        init();
-                        $scope.$watch('userId', function(){
-                            init();
+                        $scope.status = 'init';
+
+                        api.v1.user.get([$scope.userId]).then(function (users) {
+                            if (users.length === 0) {
+                                $scope.status = 'noSuchUser';
+                            } else {
+                                $scope.status = 'ready';
+                                $scope.user = users[0];
+                            }
+                        }, function (errorId) {
+                            $scope.status = 'error';
+                            $scope.errorId = errorId;
                         });
+
+                        api.v1.user.getDescription($scope.userId).then(function(description){
+                            $scope.user.description = description;
+                        },function(errorId){
+                            $scope.descriptionErrorId = errorId;
+                        })
                     }]
                 };
             });

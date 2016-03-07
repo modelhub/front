@@ -7,5 +7,25 @@
 
   "error": {
     "en": "Error loading user data, error id: {0}"
+  },
+
+  "descriptionErrorId": {
+    "en": "Error loading user description, error id: {0}"
+  },
+
+  "newProject": {
+    "en": "New Project"
+  },
+
+  "addToProject": {
+    "en": "Add to Project"
+  },
+
+  "deleteProject": {
+    "en": "Delete Project"
+  },
+
+  "removeFromProject": {
+    "en": "Remove from Project"
   }
 }
