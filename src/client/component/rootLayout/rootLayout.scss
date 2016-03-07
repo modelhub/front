@@ -10,15 +10,6 @@ mh-root-layout {
     @include fill($height: calc(100% - 51px));
   }
 
-  .root {
-    justify-content: center;
-    .aligner {
-      max-width: $pageMaxWidth;
-      margin-right: 5px;
-      margin-left: 5px;
-    }
-  }
-
   mh-viewer, mh-uploads{
     position: absolute;
     left: 0;
@@ -27,11 +18,8 @@ mh-root-layout {
       visibility: visible;
     }
   }
-  mh-viewer{
+  mh-viewer, mh-uploads{
     top: 51px;
-  }
-  mh-uploads{
-    top: 0;
   }
 }
 
