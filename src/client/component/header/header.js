@@ -32,32 +32,48 @@ define('header/header', [
                                 var globalSearch = $scope.globalSearch.trim();
                                 if (globalSearch.length > 0) {
                                     $scope.globalSearch = '';
-                                    deactivateViewer();
-                                    nav.goToSearch(globalSearch);
+                                    deactivateAnyActiveTabs();
+                                    nav.search(globalSearch);
                                 }
                             }
                         });
 
                         $scope.avatarClick = function() {
-                            deactivateViewer();
+                            deactivateAnyActiveTabs();
                             nav.goToUser($scope.user.id);
                         };
 
                         $scope.viewerActive = false;
+                        $scope.uploadsActive = false;
 
                         $scope.viewerTabClick = function(){
                             $scope.viewerActive = !$scope.viewerActive;
+                            $scope.uploadsActive = false;
+                            $rootScope.$broadcast(EVENT.HIDE_UPLOADS);
                             if($scope.viewerActive){
                                 $rootScope.$broadcast(EVENT.SHOW_VIEWER);
                             } else {
                                 $rootScope.$broadcast(EVENT.HIDE_VIEWER);
                             }
                         };
+                        $scope.uploadsTabClick = function(){
+                            $scope.uploadsActive = !$scope.uploadsActive;
+                            $scope.viewerActive = false;
+                            $rootScope.$broadcast(EVENT.HIDE_VIEWER);
+                            if($scope.uploadsActive){
+                                $rootScope.$broadcast(EVENT.SHOW_UPLOADS);
+                            } else {
+                                $rootScope.$broadcast(EVENT.HIDE_UPLOADS);
+                            }
+                        };
 
-                        $scope.$on('$locationChangeSuccess', deactivateViewer);
-                        function deactivateViewer(){
+                        $scope.$on('$locationChangeSuccess', deactivateAnyActiveTabs);
+                        function deactivateAnyActiveTabs(){
                             if($scope.viewerActive){
                                 $scope.viewerTabClick();
+                            }
+                            if($scope.uploadsActive){
+                                $scope.uploadsTabClick();
                             }
                         }
                     }]

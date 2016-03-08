@@ -3,13 +3,21 @@
 mh-header {
   > .root {
     background: $background1;
+    height: calc(100% - 1px);
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid $splitter1;
     .controls {
       height: 100%;
       .viewer {
         background: url("/resource/image/eye-icon.png") no-repeat center;
         background-size: 40px 40px;
+      }
+      .uploads {
+        background: url("/resource/image/upload-icon.png") no-repeat center;
+        background-size: 30px 30px;
+      }
+      .viewer, .uploads {
         border-right: 1px solid $splitter1;
         cursor: pointer;
         justify-content: center;

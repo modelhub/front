@@ -3,15 +3,20 @@ define('service/nav', [
 ){
     return function(ngModule){
         ngModule
-            .service('nav', ['$rootScope', '$window', function($rootScope, $window){
+            .service('nav', ['$rootScope', '$window', 'EVENT', function($rootScope, $window, EVENT){
                 function nav(base) {
-                    var path = '/#/'+base;
-                    for (var i = 1; i < arguments.length; i++){
-                        if (arguments[i] && arguments[i].length) {
-                            path += '/' + encodeURIComponent(arguments[i]);
+                    if(!arguments[1] || !arguments[1].length){
+                        throw "baseArg must be a none empty string";
+                    } else {
+                        var path = '/#/'+base;
+                        for (var i = 1; i < arguments.length; i++){
+                            if (arguments[i] && arguments[i].length) {
+                                path += '/' + encodeURIComponent(arguments[i]);
+                            }
                         }
+                        $rootScope.$broadcast(EVENT.NAVIGATING);
+                        $window.location.assign(path);
                     }
-                    $window.location.assign(path);
                 }
                 return {
                     goToUser: function(id){nav('user', id)},
@@ -19,8 +24,7 @@ define('service/nav', [
                     goToFolder: function(id){nav('folder', id)},
                     goToDocument: function(id){nav('document', id)},
                     goToDocumentVersion: function(id){nav('documentVersion', id)},
-                    goToSearch: function(search, project){nav('search', search, project)},
-                    goToUploads: function(){nav('uploads')}
+                    search: function(search, project){nav('search', search, project)}
                 };
             }]);
     };

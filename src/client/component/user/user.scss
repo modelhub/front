@@ -2,14 +2,20 @@
 
 mh-user {
 
-  > .ready {
-    > .user-profile {
+  .ready {
+    .side-menu{
+      max-width: 250px;
+      background: $background1;
+    }
+
+    .user-profile {
       padding: 10px;
       border-bottom: 1px solid $splitter1;
       width: 100%;
       .public {
         padding-top: 10px;
         padding-bottom: 10px;
+        width: $pageMaxWidth - 300px;
         .avatar {
           @include fill(186px, 186px);
           background: #fff;
