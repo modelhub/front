@@ -4,7 +4,7 @@
 $background1: #222;
 $background1Highlight: #555;
 $background1Active: #59f;
-$background2: #111;
+$background2: #333;
 $addColor: #77dd77;
 $addHoverColor: #99ff99;
 $removeColor: #ff5253;
@@ -23,7 +23,7 @@ $pageMaxWidth: 980px;
 /**
  * START MIXINS
  */
-@mixin default($position: relative, $display: flex, $flexDirection: column, $margin: 0, $border: 0, $padding: 0, $overflow: hidden){
+@mixin default($position: relative, $display: inline-flex, $flexDirection: column, $margin: 0, $border: 0, $padding: 0, $overflow: hidden){
   position: $position;
   display: $display;
   flex-direction: $flexDirection;

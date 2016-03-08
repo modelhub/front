@@ -2,75 +2,68 @@
 
 mh-user {
 
-  .ready {
-    .side-menu{
-      max-width: 250px;
-      background: $background1;
-    }
-
-    .user-profile {
-      padding: 10px;
-      border-bottom: 1px solid $splitter1;
-      width: 100%;
-      .public {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        width: $pageMaxWidth - 300px;
-        .avatar {
-          @include fill(186px, 186px);
-          background: #fff;
-          border-radius: 5px;
-          margin-right: 10px;
-          > img {
-            margin: auto;
-            border-radius: 5px;
-          }
-        }
-        .full-name {
-          font-weight: bold;
-          font-size: 32px;
-          margin-bottom: 10px;
-        }
-      }
-    }
-
-    .controls {
-      padding: 10px;
-      @include fill($height: 40px);
-      justify-content: flex-start;
-      align-items: center;
-      border-bottom: 1px solid $splitter1;
-      > * {
-        margin-right: 5px;
-        border: 1px solid $splitter1;
+  .user-profile {
+    padding: 10px;
+    border-bottom: 1px solid $splitter1;
+    width: 100%;
+    .public {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: $pageMaxWidth - 300px;
+      .avatar {
+        @include fill(186px, 186px);
+        background: #fff;
         border-radius: 5px;
-        @include fill($width: 30px, $height: 30px);
-        &:hover {
-          border: 1px solid $background1Highlight;
-        }
-        &:active {
-          border: 1px solid $background1Active;
+        margin-right: 10px;
+        > img {
+          margin: auto;
+          border-radius: 5px;
         }
       }
-      .add {
-        background: $addColor url("/resource/image/add-icon.png") no-repeat center;
-        background-size: 20px 20px;
-        &:hover {
-          background-color: $addHoverColor;
-        }
-        &:active {
-          background-color: $addColor;
-        }
+      .full-name{
+        font-weight: bold;
+        font-size: 32px;
+        margin-bottom: 10px;
       }
-      .remove {
-        background: $removeColor url("/resource/image/minus-icon.png") no-repeat center;
-        background-size: 20px 20px;
-        &:hover {
-          background-color: $removeHoverColor;
-        }
-        &:active {
-          background-color: $removeColor;
-        }
+    }
+  }
+
+  .controls{
+    padding: 10px;
+    @include fill($height: 40px);
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid $splitter1;
+    > * {
+      margin-right: 5px;
+      border: 1px solid $splitter1;
+      border-radius: 5px;
+      @include fill($width: 30px, $height: 30px);
+      &:hover{
+        border: 1px solid $background1Highlight;
+      }
+      &:active{
+        border: 1px solid $background1Active;
+      }
+    }
+    .add{
+      background: $addColor url("/resource/image/add-icon.png") no-repeat center;
+      background-size: 20px 20px;
+      &:hover{
+        background-color: $addHoverColor;
+      }
+      &:active{
+        background-color: $addColor;
+      }
+    }
+    .remove{
+      background: $removeColor url("/resource/image/minus-icon.png") no-repeat center;
+      background-size: 20px 20px;
+      &:hover{
+        background-color: $removeHoverColor;
+      }
+      &:active{
+        background-color: $removeColor;
       }
     }
   }

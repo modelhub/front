@@ -1,6 +1,7 @@
 @import "../../global";
 
 mh-root-layout {
+  align-items: center;
   mh-header{
     @include fill($height: 51px);
   }
