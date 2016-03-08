@@ -19,6 +19,7 @@ define('registry', [
     'project/project',
     'rootLayout/rootLayout',
     'search/search',
+    'sideMenu/sideMenu',
     'uploads/uploads',
     'user/user',
     'viewer/viewer'
@@ -34,10 +35,16 @@ define('registry', [
     lmvLoader,
     nav,
     //components
+    document,
+    documentVersion,
+    folder,
     header,
     langSelector,
     loader,
+    project,
     rootLayout,
+    search,
+    sideMenu,
     uploads,
     user,
     viewer

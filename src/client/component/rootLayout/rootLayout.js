@@ -22,12 +22,12 @@ define('rootLayout/rootLayout', [
                         var currentUserId = currentUser().id,
                             onLocationChange = function() {
                             //if the app is extended to have more routes of varying types then this should be deleted and ngRoute should be used instead, but for now, this is fine.
-                                var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search'],
+                                var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search', 'uploads'],
                                     pathSegments = $location.path().split('/'),
                                     base = pathSegments[1],
                                     baseArg = pathSegments[2];
 
-                                if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
+                                if (knownBaseRoutes.indexOf(base) === -1) {
                                     nav.goToUser(currentUserId);
                                 }
 

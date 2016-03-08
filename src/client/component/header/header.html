@@ -2,11 +2,12 @@
     <div class="mh-def mh-row controls">
         <div class="mh-def viewer" ng-class="{active: viewerActive}" ng-click="viewerTabClick()" title="{{::txt('viewer')}}">
         </div>
-        <div class="mh-def uploads" ng-class="{active: uploadsActive}" ng-click="uploadsTabClick()" title="{{::txt('uploads')}}">
-        </div>
         <div class="mh-def global-search">
             <input type="text" placeholder="{{::txt('globalSearch')}}" ng-model="globalSearch">
         </div>
+    </div>
+    <div class="title">
+        {{::txt('title')}}
     </div>
     <div class="mh-def user-avatar" ng-click="avatarClick()">
         <img class="mh-def" ng-src="{{user.avatar}}" ng-if="user" title="{{user.fullName}}"/>

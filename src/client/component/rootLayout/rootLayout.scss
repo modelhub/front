@@ -1,24 +1,41 @@
 @import "../../global";
 
 mh-root-layout {
-  mh-header{
-    @include fill($height: 51px);
+  > mh-header{
+    @include fill($height: 50px);
+    border-bottom: 1px solid $splitter1;
   }
 
   > :not(mh-header){
     @include fill($height: calc(100% - 51px));
   }
 
-  mh-viewer, mh-uploads{
+  > .body{
+    > mh-side-menu{
+      max-width: 250px;
+      border-right: 1px solid $splitter1;
+    }
+    > .main{
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex-grow: 1;
+      > .aligner{
+        margin: 0 auto;
+        width: $mainMaxWidth;
+        max-width: 100%;
+        min-height: 100%;
+      }
+    }
+  }
+
+  mh-viewer{
+    top: 51px;
     position: absolute;
     left: 0;
     visibility: hidden;
     &.show {
       visibility: visible;
     }
-  }
-  mh-viewer, mh-uploads{
-    top: 51px;
   }
 }
 

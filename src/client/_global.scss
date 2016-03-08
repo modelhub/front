@@ -1,10 +1,10 @@
 /**
  * START CONSTANTS
  */
-$background1: #222;
+$background1: #252525;
 $background1Highlight: #555;
 $background1Active: #59f;
-$background2: #111;
+$background2: #151515;
 $addColor: #77dd77;
 $addHoverColor: #99ff99;
 $removeColor: #ff5253;
@@ -15,7 +15,7 @@ $linkColor: #52A3DB;
 
 $fontFamily: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
-$pageMaxWidth: 980px;
+$mainMaxWidth: 980px;
 /**
  * END CONSTANTS
  */
@@ -23,12 +23,11 @@ $pageMaxWidth: 980px;
 /**
  * START MIXINS
  */
-@mixin default($position: relative, $display: flex, $flexDirection: column, $margin: 0, $border: 0, $padding: 0, $overflow: hidden){
+@mixin default($position: relative, $display: flex, $flexDirection: column, $margin: 0, $padding: 0, $overflow: hidden){
   position: $position;
   display: $display;
   flex-direction: $flexDirection;
   margin: $margin;
-  border: $border;
   padding: $padding;
   overflow: $overflow;
 }

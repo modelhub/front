@@ -1,10 +1,17 @@
 <mh-header class="mh-def mh-row" ng-cloak></mh-header>
-<mh-user class="mh-def" ng-if="base === 'user'" user-id="{{baseArg}}" ng-cloak></mh-user>
-<mh-project class="mh-def mh-fill" ng-if="base === 'project'" project-id="{{baseArg}}" ng-cloak></mh-project>
-<mh-folder class="mh-def mh-fill" ng-if="base === 'folder'" folder-id="{{baseArg}}" ng-cloak></mh-folder>
-<mh-document class="mh-def mh-fill" ng-if="base === 'document'" document-id="{{baseArg}}" ng-cloak></mh-document>
-<mh-document-version class="mh-def mh-fill" ng-if="base === 'documentVersion'" document-version-id="{{baseArg}}" ng-cloak></mh-document-version>
-<mh-search class="mh-def mh-fill" ng-if="base === 'search'" search-term="{{baseArg}}" project-id="{{project}}" ng-cloak></mh-search>
-<mh-loader class="mh-def mh-fill bar-spinner" ng-if="base === 'reloadRootView'"></mh-loader>
+<div class="mh-def mh-row body">
+    <mh-side-menu class="mh-def mh-fill"></mh-side-menu>
+    <div class="mh-def mh-fill main">
+        <div class="mh-fill aligner">
+            <mh-user class="mh-fill" ng-if="base === 'user'" user-id="{{baseArg}}" ng-cloak></mh-user>
+            <mh-project class="mh-fill" ng-if="base === 'project'" project-id="{{baseArg}}" ng-cloak></mh-project>
+            <mh-folder class="mh-fill" ng-if="base === 'folder'" folder-id="{{baseArg}}" ng-cloak></mh-folder>
+            <mh-document class="mh-fill" ng-if="base === 'document'" document-id="{{baseArg}}" ng-cloak></mh-document>
+            <mh-document-version class="mh-fill" ng-if="base === 'documentVersion'" document-version-id="{{baseArg}}" ng-cloak></mh-document-version>
+            <mh-search class="mh-fill" ng-if="base === 'search'" search-term="{{baseArg}}" project-id="{{project}}" ng-cloak></mh-search>
+            <mh-loader class="mh-def mh-fill bar-spinner" ng-if="base === 'reloadRootView'"></mh-loader>
+            <mh-uploads class="mh-fill" ng-if="base === 'uploads'" ng-cloak></mh-uploads>
+        </div>
+    </div>
+</div>
 <mh-viewer ng-class="{show: showViewer}" ng-cloak></mh-viewer>
-<mh-uploads class="mh-fill" ng-class="{show: showUploads}" ng-cloak></mh-uploads>
