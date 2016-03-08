@@ -37,13 +37,13 @@
     </div>
 </div>
 
-<div class="mh-def mh-fill init" ng-show="status === 'noSuchUser'">
+<div class="mh-def mh-fill error" ng-show="status === 'noSuchUser'">
     <div class="error-message">
         {{txt('noSuchUser', userId)}}
     </div>
 </div>
 
-<div class="mh-def mh-fill init" ng-show="status === 'error'">
+<div class="mh-def mh-fill error" ng-show="status === 'error'">
     <div class="error-message">
         {{txt('error', errorId)}}
     </div>
