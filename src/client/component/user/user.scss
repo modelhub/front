@@ -3,7 +3,6 @@
 mh-user {
 
   .user-profile {
-    padding: 10px;
     border-bottom: 1px solid $splitter1;
     width: 100%;
     .public {
@@ -29,7 +28,6 @@ mh-user {
   }
 
   .controls{
-    padding: 10px;
     @include fill($height: 40px);
     justify-content: flex-start;
     align-items: center;
