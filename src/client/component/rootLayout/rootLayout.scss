@@ -38,8 +38,4 @@ html, body, mh-root-layout{
   @include default($display: block);
   @include fill();
   @include theme();
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
