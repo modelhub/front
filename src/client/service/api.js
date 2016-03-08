@@ -11,7 +11,8 @@ define('service/api', [
                     pendingUserIdToPromiseIdMapV1 = {},
                     pendingUserPromisesV1 = {},
                     promiseIdSrc = 0,
-                    csrfToken = $document[0].getElementById('mh-csrf-token').dataset.csrfToken,
+                    csrfEl = $document[0].getElementById('mh-csrf-token'),
+                    csrfToken = csrfEl.dataset.csrfToken,
                     newPromiseId = function(){return ''+promiseIdSrc++;},
                     doJsonReq = function(path, data){
                         return $q(function (resolve, reject) {
@@ -302,6 +303,7 @@ define('service/api', [
                         }
                     };
 
+                csrfEl.parentNode.removeChild(csrfEl);
                 userCacheV1[currentUserV1.id] = ng.copy(currentUserV1);
                 return api;
             }]);
