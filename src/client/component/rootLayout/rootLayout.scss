@@ -23,10 +23,13 @@ mh-root-layout {
     }
   }
 
-  >mh-viewer{
+  >mh-viewer, >mh-loader{
     position: absolute;
     left: 0;
     top: 51px;
+  }
+
+  >mh-viewer{
     visibility: hidden;
     &.show {
       visibility: visible;
