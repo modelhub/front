@@ -47,7 +47,19 @@ define('user/user', [
                             $scope.user.description = description;
                         },function(errorId){
                             $scope.descriptionErrorId = errorId;
-                        })
+                        });
+
+                        api.v1.project.getInUserInviteContext($scope.userId, 'any', 0, 100, 'nameAsc').then(function(projects){
+                            $scope.invitedProjects = projects;
+                        }, function(errorId) {
+                            $scope.invitedProjectsErrorId = errorId;
+                        });
+
+                        api.v1.project.getInUserContext($scope.userId, 'any', 0, 100, 'nameAsc').then(function(projects){
+                            $scope.projects = projects;
+                        }, function(errorId) {
+                            $scope.projectsErrorId = errorId;
+                        });
                     }]
                 };
             });
