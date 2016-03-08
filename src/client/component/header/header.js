@@ -33,7 +33,7 @@ define('header/header', [
                                 if (globalSearch.length > 0) {
                                     $scope.globalSearch = '';
                                     deactivateAnyActiveTabs();
-                                    nav.search(globalSearch);
+                                    nav.goToSearch(globalSearch);
                                 }
                             }
                         });

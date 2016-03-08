@@ -34,10 +34,15 @@ define('registry', [
     lmvLoader,
     nav,
     //components
+    document,
+    documentVersion,
+    folder,
     header,
     langSelector,
     loader,
+    project,
     rootLayout,
+    search,
     uploads,
     user,
     viewer

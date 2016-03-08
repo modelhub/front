@@ -3,7 +3,7 @@ define('service/nav', [
 ){
     return function(ngModule){
         ngModule
-            .service('nav', ['$rootScope', '$window', 'EVENT', function($rootScope, $window, EVENT){
+            .service('nav', ['$rootScope', '$window', function($rootScope, $window){
                 function nav(base) {
                     if(!arguments[1] || !arguments[1].length){
                         throw "baseArg must be a none empty string";
@@ -14,7 +14,6 @@ define('service/nav', [
                                 path += '/' + encodeURIComponent(arguments[i]);
                             }
                         }
-                        $rootScope.$broadcast(EVENT.NAVIGATING);
                         $window.location.assign(path);
                     }
                 }
@@ -24,7 +23,7 @@ define('service/nav', [
                     goToFolder: function(id){nav('folder', id)},
                     goToDocument: function(id){nav('document', id)},
                     goToDocumentVersion: function(id){nav('documentVersion', id)},
-                    search: function(search, project){nav('search', search, project)}
+                    goToSearch: function(search, project){nav('search', search, project)}
                 };
             }]);
     };
