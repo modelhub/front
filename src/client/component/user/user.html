@@ -2,34 +2,38 @@
     <mh-loader class="mh-def mh-fill bar-spinner"></mh-loader>
 </div>
 
-<div class="mh-def mh-fill ready" ng-show="status === 'ready'">
+<div class="mh-def mh-row mh-fill ready" ng-show="status === 'ready'">
+    <div class="mh-def mh-fill side-menu">
 
-    <div class="mh-def mh-row user-profile">
-        <div class="mh-def mh-row public">
-            <div class="mh-def mh-row">
-                <div class="mh-def avatar">
-                    <img ng-src="{{user.avatar}}" title="{{user.fullName}}"/>
-                </div>
-                <div class="mh-def">
-                    <div class="mh-def full-name">
-                        <div>{{user.fullName}}</div>
+    </div>
+    <div class="mh-def main">
+        <div class="mh-def user-profile">
+            <div class="mh-def mh-row public">
+                <div class="mh-def mh-row">
+                    <div class="mh-def avatar">
+                        <img ng-src="{{user.avatar}}" title="{{user.fullName}}"/>
                     </div>
-                    <div class="mh-def description">
-                        <div ng-if="!user.descriptionErrorId">{{user.description}}</div>
-                        <div ng-if="user.descriptionErrorId">{{txt('descriptionError', user.descriptionErrorId)}}</div>
+                    <div class="mh-def">
+                        <div class="mh-def full-name">
+                            <div>{{user.fullName}}</div>
+                        </div>
+                        <div class="mh-def description">
+                            <div ng-if="!user.descriptionErrorId">{{user.description}}</div>
+                            <div ng-if="user.descriptionErrorId">{{txt('descriptionError', user.descriptionErrorId)}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="profile-controls" ng-if="myId === user.id">
+                <!--TODO add in myId account controls to update uiLang/locale/uiTheme/description-->
+            </div>
         </div>
-        <div class="profile-controls" ng-if="myId === user.id">
-            <!--TODO add in myId account controls to update uiLang/locale/uiTheme/description-->
-        </div>
-    </div>
 
-    <div class="mh-def mh-row controls">
-        <div class="add" ng-if="myId === user.id" ng-attr-title="{{myId === user.id && txt('newProject') || txt('addToProject')}}">
-        </div>
-        <div class="remove" ng-if="myId === user.id" ng-attr-title="{{myId === user.id && txt('deleteProject') || txt('removeFromProject')}}">
+        <div class="mh-def mh-row controls">
+            <div class="add" ng-if="myId === user.id" ng-attr-title="{{myId === user.id && txt('newProject') || txt('addToProject')}}">
+            </div>
+            <div class="remove" ng-if="myId === user.id" ng-attr-title="{{myId === user.id && txt('deleteProject') || txt('removeFromProject')}}">
+            </div>
         </div>
     </div>
 </div>
