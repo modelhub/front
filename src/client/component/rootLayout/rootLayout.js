@@ -19,16 +19,16 @@ define('rootLayout/rootLayout', [
                     controller: ['$location', '$scope', '$window', 'currentUser', 'EVENT', 'nav', function($location, $scope, $window, currentUser, EVENT, nav) {
 
                         var reloadRootViewTimeout;
-                        var currentUserId = currentUser().id,
+                        var myId = currentUser().id,
                             onLocationChange = function() {
                             //if the app is extended to have more routes of varying types then this should be deleted and ngRoute should be used instead, but for now, this is fine.
-                                var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search'],
+                                var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search', 'uploads'],
                                     pathSegments = $location.path().split('/'),
                                     base = pathSegments[1],
                                     baseArg = pathSegments[2];
 
-                                if (knownBaseRoutes.indexOf(base) === -1 || !baseArg || baseArg === "") {
-                                    nav.goToUser(currentUserId);
+                                if (knownBaseRoutes.indexOf(base) === -1 || ((!baseArg || baseArg === "") && base !== 'uploads')) {
+                                    nav.goToUser(myId);
                                 }
 
                                 if (base === 'search'){
@@ -47,7 +47,6 @@ define('rootLayout/rootLayout', [
                         $scope.$on('$locationChangeSuccess', onLocationChange);
 
                         $scope.showViewer = false;
-                        $scope.showUploads = false;
 
                         $scope.$on(EVENT.SHOW_VIEWER, function(){
                             $scope.showViewer = true;
@@ -55,14 +54,6 @@ define('rootLayout/rootLayout', [
 
                         $scope.$on(EVENT.HIDE_VIEWER, function(){
                             $scope.showViewer = false;
-                        });
-
-                        $scope.$on(EVENT.SHOW_UPLOADS, function(){
-                            $scope.showUploads = true;
-                        });
-
-                        $scope.$on(EVENT.HIDE_UPLOADS, function(){
-                            $scope.showUploads = false;
                         });
 
                     }]

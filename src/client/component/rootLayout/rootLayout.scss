@@ -2,39 +2,35 @@
 
 mh-root-layout {
   align-items: center;
-  mh-header{
-    @include fill($height: 51px);
+  >mh-header{
+    @include fill($height: 50px);
+    border-bottom: 1px solid $splitter1;
   }
 
   > :not(mh-header){
     @include fill($height: calc(100% - 51px));
   }
 
-  .root {
+  >.root {
     overflow-y: scroll;
     overflow-x: auto;
-    .aligner {
-      max-width: $pageMaxWidth + 10px;
+    >.aligner {
+      position: relative;
+      max-width: $pageMaxWidth;
       padding-left: 10px;
-      padding-right: 5px;
       min-height: 100%;
       margin: 0 auto;
     }
   }
 
-  mh-viewer, mh-uploads{
+  >mh-viewer{
     position: absolute;
     left: 0;
+    top: 51px;
     visibility: hidden;
     &.show {
       visibility: visible;
     }
-  }
-  mh-viewer{
-    top: 51px;
-  }
-  mh-uploads{
-    top: 0;
   }
 }
 

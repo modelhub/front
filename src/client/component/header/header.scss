@@ -9,8 +9,7 @@ mh-header {
     justify-content: center;
     border-bottom: 1px solid $splitter1;
     .aligner {
-      margin-left: 5px;
-      margin-right: 5px;
+      margin: 0 10px;
       justify-content: space-between;
       align-items: center;
       max-width: $pageMaxWidth;
