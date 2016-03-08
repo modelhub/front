@@ -8,6 +8,7 @@ define('registry', [
     'service/i18n',
     'service/lmv',
     'service/lmvLoader',
+    'service/logout',
     'service/nav',
     //components
     'document/document',
@@ -32,6 +33,7 @@ define('registry', [
     i18n,
     lmv,
     lmvLoader,
+    logout,
     nav,
     //components
     document,

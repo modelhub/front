@@ -21,13 +21,15 @@ define('user/user', [
                     scope: {
                         userId: '@'
                     },
-                    controller: ['$scope', 'api', 'currentUser', 'i18n', function($scope, api, currentUser, i18n){
+                    controller: ['$scope', 'api', 'currentUser', 'i18n', 'logout', function($scope, api, currentUser, i18n, logout){
 
                         i18n($scope, txt);
 
                         $scope.myId = currentUser().id;
 
                         $scope.status = 'init';
+
+                        $scope.logout = logout;
 
                         api.v1.user.get([$scope.userId]).then(function (users) {
                             if (users.length === 0) {

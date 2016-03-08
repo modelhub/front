@@ -33,8 +33,11 @@ mh-header {
           cursor: pointer;
           justify-content: center;
           width: 50px;
-          &:hover {
+          &:hover:not(.active) {
             background-color: $background1Highlight;
+          }
+          &:active:not(.active) {
+            background-color: $background1;
           }
         }
         .global-search {

@@ -4,20 +4,19 @@
 
 <div class="ready" ng-show="status === 'ready'">
 
-    <div class="mh-def mh-row user-profile">
+    <div class="mh-def user-profile">
         <div class="mh-def mh-row public">
-            <div class="mh-def mh-row">
-                <div class="mh-def avatar">
-                    <img ng-src="{{user.avatar}}" title="{{user.fullName}}"/>
+            <div class="mh-def avatar">
+                <img ng-src="{{user.avatar}}" title="{{user.fullName}}"/>
+            </div>
+            <div class="mh-def text">
+                <div class="mh-def mh-row full-name">
+                    <div class="mh-def">{{user.fullName}}</div>
+                    <div class="mh-def logout" ng-click="logout()" ng-show="myId === user.id">{{::txt('logout')}}</div>
                 </div>
-                <div class="mh-def">
-                    <div class="mh-def full-name">
-                        <div>{{user.fullName}}</div>
-                    </div>
-                    <div class="mh-def description">
-                        <div ng-if="!user.descriptionErrorId">{{user.description}}</div>
-                        <div ng-if="user.descriptionErrorId">{{txt('descriptionError', user.descriptionErrorId)}}</div>
-                    </div>
+                <div class="mh-def description">
+                    <div ng-if="!user.descriptionErrorId">{{user.description}}</div>
+                    <div ng-if="user.descriptionErrorId">{{txt('descriptionError', user.descriptionErrorId)}}</div>
                 </div>
             </div>
         </div>

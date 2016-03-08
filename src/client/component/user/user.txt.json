@@ -27,5 +27,9 @@
 
   "removeFromProject": {
     "en": "Remove from Project"
+  },
+
+  "logout": {
+    "en": "Logout"
   }
 }
