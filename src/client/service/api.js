@@ -134,14 +134,14 @@ define('service/api', [
 
                             project: {
 
-                                create: function (name, description, image) {
+                                create: function (name, description, fileName, image) {
                                     name = name || "";
                                     description = description || "";
                                     var data = new FormData();
                                     data.append('name', name);
                                     data.append('description', description);
                                     if(image) {
-                                        data.append('file', image);
+                                        data.append('file', image, fileName);
                                     }
                                     return doFormReq('/api/v1/project/create', data);
                                 },

@@ -17,6 +17,7 @@ mh-root-layout {
     >.aligner {
       position: relative;
       max-width: $pageMaxWidth;
+      min-width: $pageMaxWidth;
       padding-left: 10px;
       min-height: 100%;
       margin: 0 auto;

@@ -12,7 +12,7 @@
             <div class="mh-def text">
                 <div class="mh-def mh-row full-name">
                     <div class="mh-def">{{user.fullName}}</div>
-                    <div class="mh-def logout" ng-click="logout()" ng-show="myId === user.id">{{::txt('logout')}}</div>
+                    <div class="mh-def logout mh-primary-btn" ng-click="logout()" ng-show="myId === user.id">{{::txt('logout')}}</div>
                 </div>
                 <div class="mh-def description">
                     <div ng-if="!user.descriptionErrorId">{{user.description}}</div>
@@ -26,9 +26,35 @@
     </div>
 
     <div class="mh-def mh-row controls">
-        <div class="add" ng-if="myId === user.id" ng-attr-title="{{myId === user.id && txt('newProject') || txt('addToProject')}}">
+        <div class="mh-primary-btn" ng-if="myId === user.id" ng-click="newProjectClick()">
+            {{::txt('newProject')}}
         </div>
-        <div class="remove" ng-if="myId === user.id" ng-attr-title="{{myId === user.id && txt('deleteProject') || txt('removeFromProject')}}">
+
+    </div>
+
+    <div class="mh-def new-project-form" ng-show="showNewProjectForm">
+        <div class="mh-def mh-row form">
+            <div class="name">
+                {{::txt('name')}}:<input type="text" ng-model="newProjectName"/>
+            </div>
+            <div class="description">
+                {{::txt('description')}}:<input type="text" ng-model="newProjectDescription"/>
+            </div>
+            <div class="image">
+                {{::txt('image')}}:<input class="new-project-image-input" type="file" accept=".png,.jpg,.jpeg,.gif"/>
+            </div>
+            <img class="image-resizer"/>
+            <div class="mh-def mh-row">
+                <div class="create-btn mh-primary-btn" ng-if="myId === user.id" ng-click="createNewProjectClick()">
+                    {{::txt('create')}}
+                </div>
+                <div class="cancel-btn mh-secondary-btn" ng-click="cancelNewProjectClick()">
+                    {{::txt('cancel')}}
+                </div>
+            </div>
+        </div>
+        <div class="create-project-error" ng-show="createProjectErrorId">
+            {{txt('createProjectError', createProjectErrorId)}}
         </div>
     </div>
 
@@ -36,11 +62,13 @@
         <div class="heading">
 
         </div>
-        <div class="project" ng-repeat="project in invitedProjects">
 
+        <div class="project" ng-repeat="project in invitedProjects track by $index">
+            <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}"/>
         </div>
-        <div class="project" ng-repeat="project in projects">
 
+        <div class="project" ng-repeat="project in projects track by $index">
+            <img width="50" height="50" ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}"/>
         </div>
     </div>
 </div>

@@ -13,23 +13,35 @@
     "en": "Error loading user description, error id: {0}"
   },
 
+  "logout": {
+    "en": "Logout"
+  },
+
   "newProject": {
     "en": "New Project"
   },
 
-  "addToProject": {
-    "en": "Add to Project"
+  "name": {
+    "en": "Name"
   },
 
-  "deleteProject": {
-    "en": "Delete Project"
+  "description": {
+    "en": "Description"
   },
 
-  "removeFromProject": {
-    "en": "Remove from Project"
+  "image": {
+    "en": "Image"
   },
 
-  "logout": {
-    "en": "Logout"
+  "create": {
+    "en": "Create"
+  },
+
+  "cancel": {
+    "en": "Cancel"
+  },
+
+  "createProjectError": {
+    "en": "Error creating project: {0}"
   }
 }
