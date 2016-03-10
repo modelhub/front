@@ -76,24 +76,26 @@ define('user/user', [
                                                 max_size = 176,
                                                 width = image.width,
                                                 height = image.height,
-                                                clipX = 0
-                                                clipY = 0;
-                                            if (width < height) {
+                                                size = width,
+                                                srcDim = width,
+                                                srcX = 0,
+                                                srcY = 0;
+                                            if(width < height){
+                                                srcY = (height - width) / 2;
                                                 if (width > max_size) {
-                                                    height *= max_size / width;
-                                                    width = max_size;
+                                                    size = max_size;
                                                 }
-                                                clipX = 0;
-                                                clipY = ;
-                                            } else {
+                                            }else{
+                                                size = height;
+                                                srcDim = height;
+                                                srcX = (width - height) / 2;
                                                 if (height > max_size) {
-                                                    width *= max_size / height;
-                                                    height = max_size;
+                                                    size = max_size;
                                                 }
                                             }
-                                            canvas.width = width;
-                                            canvas.height = height;
-                                            canvas.getContext('2d').drawImage(image, ?, ?, max_size, max_size, 0, 0, max_size, max_size);
+                                            canvas.width = size;
+                                            canvas.height = size;
+                                            canvas.getContext('2d').drawImage(image, srcX, srcY, srcDim, srcDim, 0, 0, size, size);
                                             var dataUrl = canvas.toDataURL(file.type);
                                             var resizedImage = dataURLToBlob(dataUrl);
                                             _createProjectApiCall(file.name, resizedImage);
