@@ -59,16 +59,12 @@
     </div>
 
     <div class="projects">
-        <div class="heading">
-
-        </div>
-
-        <div class="project" ng-repeat="project in invitedProjects track by $index">
-            <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}"/>
-        </div>
-
-        <div class="project" ng-repeat="project in projects track by $index">
-            <img width="50" height="50" ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}"/>
+        <div class="mh-def mh-row project" ng-repeat="project in projects track by $index">
+            <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}" ng-if="::project.imageFileExtension !== ''"/>
+            <div class="empty-img" ng-if="::project.imageFileExtension === ''"></div>
+            <div class="name mh-ellip">{{::project.name}}</div>
+            <div class="description mh-ellip">{{::project.description}}</div>
+            <div class="role mh-ellip">{{::txt(project.role)}}</div>
         </div>
     </div>
 </div>

@@ -16,8 +16,13 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$scope', '$window', 'currentUser', 'EVENT', 'nav', function($location, $scope, $window, currentUser, EVENT, nav) {
-
+                    controller: ['$element', '$location', '$rootScope', '$scope', '$window', 'currentUser', 'EVENT', 'nav', function($element, $location, $rootScope, $scope, $window, currentUser, EVENT, nav) {
+                        var rootEl = $element[0].children[1];
+                        rootEl.addEventListener('scroll', function(){
+                            if (rootEl.scrollHeight - (rootEl.scrollTop + rootEl.clientHeight) < 10){
+                                $rootScope.$broadcast(EVENT.ROOT_SCROLL_BOTTOM);
+                            }
+                        });
                         var reloadRootViewTimeout;
                         var myId = currentUser().id,
                             onLocationChange = function() {

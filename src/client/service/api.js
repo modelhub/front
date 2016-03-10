@@ -187,6 +187,10 @@ define('service/api', [
                                     return doJsonReq('/api/v1/project/getMembershipInvites', {id: id, role: role, offset: offset, limit: limit, sortBy: sortBy});
                                 },
 
+                                getDescription: function (id) {
+                                    return doJsonReq('/api/v1/project/getDescription', {id: id});
+                                },
+
                                 get: function (ids) {
                                     return doJsonReq('/api/v1/project/get', {ids: ids});
                                 },

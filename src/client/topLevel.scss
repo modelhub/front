@@ -56,6 +56,12 @@
   }
 }
 
+.mh-ellip{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

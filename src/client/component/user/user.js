@@ -47,7 +47,7 @@ define('user/user', [
                     scope: {
                         userId: '@'
                     },
-                    controller: ['$document', '$element', '$scope', '$window', 'api', 'currentUser', 'i18n', 'logout', 'nav', function($document, $element, $scope, $window, api, currentUser, i18n, logout, nav){
+                    controller: ['$document', '$element', '$scope', '$window', 'api', 'currentUser', 'EVENT', 'i18n', 'logout', 'nav', function($document, $element, $scope, $window, api, currentUser, EVENT, i18n, logout, nav){
 
                         i18n($scope, txt);
 
@@ -145,17 +145,43 @@ define('user/user', [
                             $scope.descriptionErrorId = errorId;
                         });
 
-                        api.v1.project.getInUserInviteContext($scope.userId, 'any', 0, 100, 'nameAsc').then(function(result){
-                            $scope.invitedProjects = result.results;
-                        }, function(errorId) {
-                            $scope.invitedProjectsErrorId = errorId;
-                        });
+                        $scope.projects = [];
+                        var currentOffset = 0,
+                            currentTotalResults = 0,
+                            defaultBatchSize = 50,
+                            currentBatchSize = defaultBatchSize,
+                            currentApiFunc = api.v1.project.getInUserInviteContext,
+                            getNextProjectBatch = function(){
+                                if (currentApiFunc) {
+                                    currentApiFunc($scope.userId, 'any', currentOffset, currentBatchSize, 'nameAsc').then(function (result) {
+                                        currentTotalResults = result.totalResults;
+                                        $scope.projects.push.apply($scope.projects, result.results);
+                                        if (currentOffset + currentBatchSize >= currentTotalResults) {
+                                            currentBatchSize += currentOffset - currentTotalResults;
+                                            currentOffset = 0;
+                                            if (currentApiFunc === api.v1.project.getInUserInviteContext){
+                                                currentApiFunc = api.v1.project.getInUserContext;
+                                            } else {
+                                                currentApiFunc = null;
+                                            }
+                                            if (currentBatchSize > 0){
+                                                getNextProjectBatch()
+                                            } else {
+                                                currentOffset = currentBatchSize;
+                                                currentBatchSize = defaultBatchSize;
+                                            }
+                                        } else {
+                                            currentOffset += currentBatchSize;
+                                            currentBatchSize = defaultBatchSize;
+                                        }
+                                    }, function (errorId) {
+                                        $scope.invitedProjectsErrorId = errorId;
+                                    });
+                                }
+                            };
 
-                        api.v1.project.getInUserContext($scope.userId, 'any', 0, 100, 'nameAsc').then(function(result){
-                            $scope.projects = result.results;
-                        }, function(errorId) {
-                            $scope.projectsErrorId = errorId;
-                        });
+                        getNextProjectBatch();
+                        $scope.$on(EVENT.ROOT_SCROLL_BOTTOM, getNextProjectBatch);
                     }]
                 };
             });

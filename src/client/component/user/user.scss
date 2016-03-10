@@ -77,6 +77,14 @@ mh-user {
     }
   }
 
+  .project{
+    cursor: pointer;
+    img, .empty-img{
+      @include fill(50px, 50px);
+    }
+
+  }
+
   .error-message {
     padding: 10px;
     margin: auto;

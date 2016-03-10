@@ -43,5 +43,25 @@
 
   "createProjectError": {
     "en": "Error creating project: {0}"
+  },
+
+  "owner": {
+    "en": "Owner"
+  },
+
+  "admin": {
+    "en": "Admin"
+  },
+
+  "organiser": {
+    "en": "Organiser"
+  },
+
+  "contributor": {
+    "en": "Contributor"
+  },
+
+  "observer": {
+    "en": "Observer"
   }
 }
