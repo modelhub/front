@@ -12,11 +12,29 @@ require([
 
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/documents', {
-                template: '<mh-user-route class="mh-def" ng-cloak></mh-user-route>'
+            .when('/logout', {
+                template: '<mh-logout ng-cloak></mh-logout>'
+            })
+            .when('/settings', {
+                template: '<mh-settings ng-cloak></mh-settings>'
+            })
+            .when('/projects', {
+                template: '<mh-projects ng-cloak></mh-projects>'
+            })
+            .when('/invites', {
+                template: '<mh-invites ng-cloak></mh-invites>'
+            })
+            .when('/uploads', {
+                template: '<mh-uploads ng-cloak></mh-uploads>'
+            })
+            .when('/aggregation', {
+                template: ''
+            })
+            .when('/search/:search', {
+                template: '<mh-search ng-cloak></mh-search>'
             })
             .otherwise({
-                redirectTo: '/documents'
+                redirectTo: '/projects'
             });
     }]);
 

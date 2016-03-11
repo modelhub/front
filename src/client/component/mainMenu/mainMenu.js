@@ -19,11 +19,22 @@ define('mainMenu/mainMenu', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', 'logout', function($location, $rootScope, $route, $scope, currentUser, EVENT, i18n, logout){
+                    controller: ['$element', '$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', 'logout', function($element, $location, $rootScope, $route, $scope, currentUser, EVENT, i18n, logout){
 
                         i18n($scope, txt);
 
                         $scope.my = currentUser();
+
+                        $element[0].getElementsByTagName('input')[0].addEventListener('keypress', function(e){
+                            if(e.keyCode == 13) { //enter
+                                var search = $scope.search.trim();
+                                if (search.length > 0) {
+                                    $scope.search = '';
+                                    $location.path('/search/'+search);
+                                    $scope.$evalAsync();
+                                }
+                            }
+                        });
 
                         $scope.hideMainMenuBtnClick = function(){
                             $rootScope.$broadcast(EVENT.HIDE_MAIN_MENU);
@@ -54,7 +65,10 @@ define('mainMenu/mainMenu', [
                         };
 
                         $scope.$on('$locationChangeSuccess', function(){
-                            $scope.selected = $location.path().substring(1);
+                            $scope.selected = $location.path().split('/')[1];
+                            if ($scope.selected === 'logout') {
+                                logout();
+                            }
                         });
 
                         $scope.projectsBtnClick();

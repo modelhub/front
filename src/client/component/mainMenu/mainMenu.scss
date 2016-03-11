@@ -50,7 +50,7 @@ mh-main-menu {
 
     > .options {
       overflow: auto;
-      > .btn {
+      > * {
         @include fill($height: 32px);
         align-items: center;
         > * {
@@ -72,7 +72,7 @@ mh-main-menu {
           margin-right: 13px;
         }
         > .txt {
-          width: calc(100% - 51px);
+          width: calc(100% - 61px);
         }
 
         &.logout {
@@ -137,6 +137,22 @@ mh-main-menu {
           &.selected, &:hover {
             > .icon {
               background-image: url("/resource/image/multi-sheet-selected.png");
+            }
+          }
+        }
+
+        &.search{
+          input {
+            @include fill($width: calc(100% - 38px), $height: 20px);
+            margin-left: 13px;
+            outline: none;
+            text-align: center;
+            border: $border1;
+            border-radius: 10px;
+            background: $background2;
+            color: $color2;
+            &:focus{
+              border: 1px solid $highlight1;
             }
           }
         }

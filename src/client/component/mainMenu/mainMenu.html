@@ -36,5 +36,9 @@
             <div class="icon"></div>
             <div class="txt mh-ellip">{{::txt('aggregation')}}</div>
         </div>
+        <div class="mh-def mh-row btn search" ng-class="{selected: selected === 'search'}">
+            <div class="highlight"></div>
+            <input type="text" placeholder="{{txt('search')}}" ng-model="search">
+        </div>
     </div>
 </div>
