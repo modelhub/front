@@ -16,49 +16,30 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$location', '$rootScope', '$scope', '$window', 'currentUser', 'EVENT', 'nav', function($element, $location, $rootScope, $scope, $window, currentUser, EVENT, nav) {
-                        var rootEl = $element[0].children[1];
-                        rootEl.addEventListener('scroll', function(){
-                            if (rootEl.scrollHeight - (rootEl.scrollTop + rootEl.clientHeight) < 10){
-                                $rootScope.$broadcast(EVENT.ROOT_SCROLL_BOTTOM);
-                            }
-                        });
-                        var reloadRootViewTimeout;
-                        var myId = currentUser().id,
-                            onLocationChange = function() {
-                            //if the app is extended to have more routes of varying types then this should be deleted and ngRoute should be used instead, but for now, this is fine.
-                                var knownBaseRoutes = ['user', 'project', 'folder', 'document', 'documentVersion', 'search', 'uploads'],
-                                    pathSegments = $location.path().split('/'),
-                                    base = pathSegments[1],
-                                    baseArg = pathSegments[2];
+                    controller: ['$route', '$scope', 'EVENT', function($route, $scope, EVENT) {
 
-                                if (knownBaseRoutes.indexOf(base) === -1 || ((!baseArg || baseArg === "") && base !== 'uploads')) {
-                                    nav.goToUser(myId);
-                                }
+                        $scope.showMainMenu = false;
+                        $scope.showAggregationViewer = false;
 
-                                if (base === 'search'){
-                                    $scope.project = pathSegments[3];
-                                }
-                                $window.clearTimeout(reloadRootViewTimeout);
-                                reloadRootViewTimeout = $window.setTimeout(function(){
-                                    $scope.base = base;
-                                    $scope.baseArg = baseArg;
-                                    $scope.$apply();
-                                }, 100);
-                                $scope.base = 'reloadRootView';
-                            };
+                        $scope.showMainMenuBtnClick = function(){
+                            $route.updateParams({showMainMenu: 'true'});
+                        };
 
-                        onLocationChange();
-                        $scope.$on('$locationChangeSuccess', onLocationChange);
-
-                        $scope.showViewer = false;
-
-                        $scope.$on(EVENT.SHOW_VIEWER, function(){
-                            $scope.showViewer = true;
+                        $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
+                            $route.updateParams({showMainMenu: null});
                         });
 
-                        $scope.$on(EVENT.HIDE_VIEWER, function(){
-                            $scope.showViewer = false;
+                        $scope.$on(EVENT.SHOW_AGGREGATION_VIEWER, function(){
+                            $route.updateParams({showAggregationViewer: 'true'});
+                        });
+
+                        $scope.$on(EVENT.HIDE_AGGREGATION_VIEWER, function(){
+                            $route.updateParams({showAggregationViewer: null});
+                        });
+
+                        $scope.$on('$routeChangeSuccess', function(){
+                            $scope.showAggregationViewer = $route.current.params.showAggregationViewer === 'true';
+                            $scope.showMainMenu = $route.current.params.showMainMenu === 'true';
                         });
 
                     }]

@@ -1,11 +1,13 @@
-<div class="mh-def mh-fill lmv-ready">
-    <div class="mh-def mh-fill lmv"></div>
-</div>
-<div class="mh-def mh-fill mh-theme lmv-init" ng-if="state === 'init'">
-    <mh-loader class="mh-def mh-fill bar-spinner"></mh-loader>
-</div>
-<div class="mh-def mh-fill mh-theme lmv-error" ng-if="state === 'error'">
-    <div class="error-message">
-        {{::txt('errorMessage')}}
+<div class="mh-def mh-fill">
+    <div class="mh-def mh-fill lmv-ready">
+        <div class="mh-def mh-fill lmv"></div>
+    </div>
+    <div class="mh-def mh-fill mh-theme lmv-init" ng-if="state === 'init'">
+        <mh-loader class="mh-def mh-fill bar-spinner"></mh-loader>
+    </div>
+    <div class="mh-def mh-fill mh-theme lmv-error" ng-if="state === 'error'">
+        <div class="error-message">
+            {{::txt('errorMessage')}}
+        </div>
     </div>
 </div>

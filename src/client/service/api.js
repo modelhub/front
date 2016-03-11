@@ -5,18 +5,16 @@ define('service/api', [
 ){
     return function(ngModule){
         ngModule
-            .service('api', ['$document', '$http', '$q', 'currentUser', function($document, $http, $q, currentUser){
+            .service('api', ['$document', '$http', '$q', 'csrfToken', 'currentUser', function($document, $http, $q, csrfToken, currentUser){
                 var currentUserV1 = currentUser(),
                     userCacheV1 = {},
                     pendingUserIdToPromiseIdMapV1 = {},
                     pendingUserPromisesV1 = {},
                     promiseIdSrc = 0,
-                    csrfEl = $document[0].getElementById('mh-csrf-token'),
-                    csrfToken = csrfEl.dataset.csrfToken,
                     newPromiseId = function(){return ''+promiseIdSrc++;},
                     doJsonReq = function(path, data){
                         return $q(function (resolve, reject) {
-                            $http.post(path, data, {headers:{'Csrf-Token': csrfToken}})
+                            $http.post(path, data, {headers:{'Csrf-Token': csrfToken()}})
                                 .then(function (resp) {
                                     resolve(resp.data);
                                 }, function(resp){
@@ -28,7 +26,7 @@ define('service/api', [
                         return $q(function (resolve, reject) {
                             $http.post(path, data, {
                                 headers: {
-                                    'Csrf-Token': csrfToken,
+                                    'Csrf-Token': csrfToken(),
                                     'Content-Type': undefined
                                 },
                                 transformRequest: angular.identity
@@ -53,7 +51,7 @@ define('service/api', [
                                             if (currentUserV1) {
                                                 resolve(ng.copy(currentUserV1));
                                             } else {
-                                                $http.post('/api/v1/user/getCurrent', null, {headers:{'Csrf-Token': csrfToken}})
+                                                $http.post('/api/v1/user/getCurrent', null, {headers:{'Csrf-Token': csrfToken()}})
                                                     .then(function (resp) {
                                                         currentUserV1 = ng.copy(resp.data);
                                                         userCacheV1[currentUserV1.id] = ng.copy(resp.data);
@@ -72,10 +70,6 @@ define('service/api', [
 
                                 setProperty: function (property, value) {
                                     return doJsonReq('/api/v1/user/setProperty', {property: property, value: value});
-                                },
-
-                                getDescription: function (id) {
-                                    return doJsonReq('/api/v1/user/getDescription', {id: id});
                                 },
 
                                 get: function (ids) {
@@ -97,7 +91,7 @@ define('service/api', [
                                     if (unCachedAndNonePendingIds.length > 0) {
                                         var currentPromiseId = newPromiseId();
                                         pendingUserPromisesV1[currentPromiseId] = $q(function (resolve, reject) {
-                                            $http.post('/api/v1/user/get', {ids: unCachedAndNonePendingIds}, {headers:{'Csrf-Token': csrfToken}})
+                                            $http.post('/api/v1/user/get', {ids: unCachedAndNonePendingIds}, {headers:{'Csrf-Token': csrfToken()}})
                                                 .then(function (resp) {
                                                     if (resp && resp.data && resp.data.length > 0) {
                                                         for (var i = 0, l = resp.data.length; i < l; i++) {
@@ -134,12 +128,10 @@ define('service/api', [
 
                             project: {
 
-                                create: function (name, description, fileName, image) {
+                                create: function (name, fileName, image) {
                                     name = name || "";
-                                    description = description || "";
                                     var data = new FormData();
                                     data.append('name', name);
-                                    data.append('description', description);
                                     if(image) {
                                         data.append('file', image, fileName);
                                     }
@@ -148,10 +140,6 @@ define('service/api', [
 
                                 setName: function (id, name) {
                                     return doJsonReq('/api/v1/project/setName', {id: id, name: name});
-                                },
-
-                                setDescription: function (id, description) {
-                                    return doJsonReq('/api/v1/project/setDescription', {id: id, description: description});
                                 },
 
                                 setImage: function (id, image) {
@@ -185,10 +173,6 @@ define('service/api', [
 
                                 getMembershipInvites: function (id, role, offset, limit, sortBy) {
                                     return doJsonReq('/api/v1/project/getMembershipInvites', {id: id, role: role, offset: offset, limit: limit, sortBy: sortBy});
-                                },
-
-                                getDescription: function (id) {
-                                    return doJsonReq('/api/v1/project/getDescription', {id: id});
                                 },
 
                                 get: function (ids) {
@@ -307,7 +291,6 @@ define('service/api', [
                         }
                     };
 
-                csrfEl.parentNode.removeChild(csrfEl);
                 userCacheV1[currentUserV1.id] = ng.copy(currentUserV1);
                 return api;
             }]);

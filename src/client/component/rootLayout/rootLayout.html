@@ -1,14 +1,9 @@
-<mh-header class="mh-def mh-row" ng-cloak></mh-header>
-<div class="root">
-    <div class="aligner">
-        <mh-user class="mh-def mh-fill" ng-if="base === 'user'" user-id="{{baseArg}}" ng-cloak></mh-user>
-        <mh-project class="mh-def mh-fill" ng-if="base === 'project'" project-id="{{baseArg}}" ng-cloak></mh-project>
-        <mh-folder class="mh-def mh-fill" ng-if="base === 'folder'" folder-id="{{baseArg}}" ng-cloak></mh-folder>
-        <mh-document class="mh-def mh-fill" ng-if="base === 'document'" document-id="{{baseArg}}" ng-cloak></mh-document>
-        <mh-document-version class="mh-def mh-fill" ng-if="base === 'documentVersion'" document-version-id="{{baseArg}}" ng-cloak></mh-document-version>
-        <mh-search class="mh-def mh-fill" ng-if="base === 'search'" search-term="{{baseArg}}" project-id="{{project}}" ng-cloak></mh-search>
-        <mh-uploads class="mh-def mh-fill" ng-if="base === 'uploads'" ng-cloak></mh-uploads>
+<div class="mh-def mh-fill">
+    <div class="mh-def mh-row mh-fill">
+        <mh-main-menu class="mh-fill" ng-show="showMainMenu" ng-cloak></mh-main-menu>
+        <!--<ng-view ng-cloak></ng-view>-->
+        <div class="mh-def mh-fill" style="background: red;"></div>
     </div>
+    <div class="show-main-menu-btn mh-btn" ng-class="{show: !showMainMenu}" ng-click="showMainMenuBtnClick()"></div>
+    <mh-aggregation-viewer ng-class="{show: showAggregationViewer}" class ="mh-fill" ng-cloak></mh-aggregation-viewer>
 </div>
-<mh-viewer ng-class="{show: showViewer}" ng-cloak></mh-viewer>
-<mh-loader class="mh-fill bar-spinner" ng-if="base === 'reloadRootView'"></mh-loader>

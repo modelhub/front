@@ -1,0 +1,16 @@
+{
+  "langs": ["en"],
+
+  "viewer": {
+    "en": "Viewer"
+  },
+
+  "uploads": {
+    "en": "Uploads"
+  },
+
+  "globalSearch": {
+    "en": "Global Search"
+  }
+
+}

@@ -26,7 +26,7 @@ define('service/i18n', [
 
                     langChangeHandler(null, lastLang);
 
-                    scope.$on(EVENT.LANG_CHANGE, langChangeHandler);
+                    scope.$on(EVENT.LANGUAGE_CHANGE, langChangeHandler);
 
                     scope.txt = function(){
                         var strId = arguments[0];
@@ -59,7 +59,7 @@ define('service/i18n', [
                     }
 
                     lastLang = lang;
-                    $rootScope.$broadcast(EVENT.LANG_CHANGE, lang);
+                    $rootScope.$broadcast(EVENT.LANGUAGE_CHANGE, lang);
 
                 };
 

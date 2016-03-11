@@ -1,0 +1,46 @@
+@import "../../global";
+
+mh-main-menu {
+  background: $background1;
+
+  > div.root {
+    overflow: auto;
+    @include fill($width: calc(100% - 1px));
+    border-right: $border1;
+
+    * {
+      flex-shrink: 0;
+    }
+
+    > .section {
+      border-bottom: $border1;
+    }
+
+    > .header {
+      justify-content: space-between;
+
+      > * {
+        @include fill($width: 50px, $height: 50px);
+      }
+
+      > .hide-main-menu-btn {
+        background: $background1 url("/resource/image/menu-icon.png") no-repeat center;
+        &:hover {
+          background-color: $backgroundSelected;
+        }
+        &:active {
+          background-color: $background1;
+        }
+      }
+
+      > .avatar > img {
+        @include fill(50px, 50px);
+      }
+
+      > .btn {
+
+      }
+    }
+  }
+
+}

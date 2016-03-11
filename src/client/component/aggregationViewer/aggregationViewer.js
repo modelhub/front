@@ -1,8 +1,8 @@
-define('uploads/uploads', [
+define('aggregationViewer/aggregationViewer', [
     'styler',
-    'text!uploads/uploads.css',
-    'text!uploads/uploads.html',
-    'text!uploads/uploads.txt.json'
+    'text!aggregationViewer/aggregationViewer.css',
+    'text!aggregationViewer/aggregationViewer.html',
+    'text!aggregationViewer/aggregationViewer.txt.json'
 ], function(
     styler,
     style,
@@ -14,15 +14,12 @@ define('uploads/uploads', [
 
     return function(ngModule){
         ngModule
-            .directive('mhUploads', function(){
+            .directive('mhAggregationViewer', function(){
                 return {
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'i18n', function($scope, i18n){
-
-                        i18n($scope, txt);
-
+                    controller: [ function(){
                     }]
                 };
             });

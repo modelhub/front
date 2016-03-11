@@ -4,17 +4,16 @@ define('constant/event', [
     return function(ngModule){
         ngModule
             .constant('EVENT', {
-                LOAD_SHEET: 'LOAD_SHEET',
-                UNLOAD_SHEET: 'UNLOAD_SHEET',
-                SHOW_VIEWER: 'SHOW_VIEWER',
-                HIDE_VIEWER: 'HIDE_VIEWER',
-                SHOW_UPLOADS: 'SHOW_UPLOADS',
-                HIDE_UPLOADS: 'HIDE_UPLOADS',
+                SHOW_MAIN_MENU: 'SHOW_MAIN_MENU',
+                HIDE_MAIN_MENU: 'HIDE_MAIN_MENU',
+                SHOW_AGGREGATION_VIEWER: 'SHOW_AGGREGATION_VIEWER',
+                HIDE_AGGREGATION_VIEWER: 'HIDE_AGGREGATION_VIEWER',
+                LOAD_SHEET_INTO_AGGREGATION_VIEWER: 'LOAD_SHEET_INTO_AGGREGATION_VIEWER',
+                UNLOAD_SHEET_FROM_AGGREGATION_VIEWER: 'UNLOAD_SHEET_FROM_AGGREGATION_VIEWER',
                 FILE_UPLOAD_PROGRESS: 'FILE_UPLOAD_PROGRESS',
                 FILE_UPLOAD_SUCCESS: 'FILE_UPLOAD_SUCCESS',
                 FILE_UPLOAD_FAILURE: 'FILE_UPLOAD_FAILURE',
-                LANG_CHANGE: 'LANG_CHANGE',
-                ROOT_SCROLL_BOTTOM: 'ROOT_SCROLL_BOTTOM'
+                LANGUAGE_CHANGE: 'LANGUAGE_CHANGE'
             });
     }
 });

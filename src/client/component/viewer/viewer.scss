@@ -1,23 +1,23 @@
 @import "../../global";
 
 mh-viewer {
-  @include default();
-
-  .lmv-ready {
-    z-index: 1;
-    .lmv {
-      .spinner {
-        display: none;
+  >div {
+    .lmv-ready {
+      z-index: 1;
+      .lmv {
+        .spinner {
+          display: none;
+        }
       }
     }
-  }
 
-  .lmv-init, .lmv-error {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    .error-message {
-      margin: auto;
+    .lmv-init, .lmv-error {
+      z-index: 2;
+      position: absolute;
+      top: 0;
+      .error-message {
+        margin: auto;
+      }
     }
   }
 }

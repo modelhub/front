@@ -1,41 +1,51 @@
 @import "../../global";
 
 mh-root-layout {
-  align-items: center;
-  >mh-header{
-    @include fill($height: 50px);
-    border-bottom: 1px solid $splitter1;
-  }
 
-  > :not(mh-header){
-    @include fill($height: calc(100% - 51px));
-  }
+  > div {
+    background: $background2;
 
-  >.root {
-    overflow-y: scroll;
-    overflow-x: auto;
-    >.aligner {
-      position: relative;
-      max-width: $pageMaxWidth;
-      min-width: $pageMaxWidth;
-      padding-left: 10px;
-      min-height: 100%;
-      margin: 0 auto;
+    > * {
+      position: absolute;
+      top: 0;
+      left: 0;
     }
-  }
 
-  >mh-viewer, >mh-loader{
-    position: absolute;
-    left: 0;
-    top: 51px;
-  }
-
-  >mh-viewer{
-    visibility: hidden;
-    &.show {
-      visibility: visible;
+    > .show-main-menu-btn {
+      visibility: hidden;
+      background: $background1 url("/resource/image/menu-icon.png") no-repeat center;
+      @include fill($width: 50px, $height: 50px);
+      &.show{
+        visibility: visible;
+      }
+      &:hover{
+        background-color: $backgroundSelected;
+      }
+      &:active{
+        background-color: $background1;
+      }
     }
+
+    > mh-aggregation-viewer {
+      visibility: hidden;
+      &.show {
+        visibility: visible;
+      }
+    }
+
+    > div {
+      > mh-main-menu {
+        max-width: 250px;
+        flex-shrink: 0;
+      }
+      > :not(mh-main-menu) {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+    }
+
   }
+
 }
 
 html, body, mh-root-layout{

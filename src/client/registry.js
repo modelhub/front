@@ -4,24 +4,18 @@ define('registry', [
     'constant/event',
     //services
     'service/api',
+    'service/csrfToken',
     'service/currentUser',
     'service/i18n',
     'service/lmv',
     'service/lmvLoader',
     'service/logout',
-    'service/nav',
     //components
-    'document/document',
-    'documentVersion/documentVersion',
-    'folder/folder',
-    'header/header',
+    'aggregationViewer/aggregationViewer',
     'langSelector/langSelector',
     'loader/loader',
-    'project/project',
+    'mainMenu/mainMenu',
     'rootLayout/rootLayout',
-    'search/search',
-    'uploads/uploads',
-    'user/user',
     'viewer/viewer'
 ], function(
     ng,
@@ -29,24 +23,18 @@ define('registry', [
     EVENT,
     //services
     api,
+    csrfToken,
     currentUser,
     i18n,
     lmv,
     lmvLoader,
     logout,
-    nav,
     //components
-    document,
-    documentVersion,
-    folder,
-    header,
+    aggregationViewer,
     langSelector,
     loader,
-    project,
+    mainMenu,
     rootLayout,
-    search,
-    uploads,
-    user,
     viewer
 ){
     var registry = ng.module('mh.registry', []);

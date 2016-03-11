@@ -12,48 +12,12 @@
   flex-direction: row;
 }
 
-.mh-link{
-  color: $linkColor;
-  cursor: pointer;
-}
-
 .mh-theme{
   @include theme();
 }
 
 .mh-btn{
   cursor: pointer;
-  border: 1px solid $splitter1;
-  border-radius: 5px;
-  padding: 5px;
-  &:hover{
-    border: 1px solid $background1Highlight;
-  }
-  &:active{
-    border: 1px solid $background1Active;
-  }
-}
-
-.mh-primary-btn{
-  @extend .mh-btn;
-  background: $primaryBtn;
-  &:hover{
-    background-color: $primaryBtnHover;
-  }
-  &:active{
-    background-color: $primaryBtn;
-  }
-}
-
-.mh-secondary-btn{
-  @extend .mh-btn;
-  background: $secondaryBtn;
-  &:hover{
-    background-color: $secondaryBtnHover;
-  }
-  &:active{
-    background-color: $secondaryBtn;
-  }
 }
 
 .mh-ellip{
@@ -65,15 +29,20 @@
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
+  background: $scrollbarTrackColor;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: $background1;
+  background: $scrollbarThumbColor;
 }
 
 ::-webkit-scrollbar-corner{
-  background: $background2;
+  background: $scrollbarTrackColor;
+}
+
+::-webkit-scrollbar-track{
+  background: $scrollbarTrackColor;
 }
 
 
