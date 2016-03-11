@@ -1,16 +1,32 @@
 {
   "langs": ["en"],
 
-  "viewer": {
-    "en": "Viewer"
+  "logout": {
+    "en": "Logout"
+  },
+
+  "settings": {
+    "en": "Settings"
+  },
+
+  "projects": {
+    "en": "Projects"
+  },
+
+  "invites": {
+    "en": "Invites"
   },
 
   "uploads": {
     "en": "Uploads"
   },
 
-  "globalSearch": {
-    "en": "Global Search"
+  "aggregation": {
+    "en": "Aggregation"
+  },
+
+  "search": {
+    "en": "Search"
   }
 
 }

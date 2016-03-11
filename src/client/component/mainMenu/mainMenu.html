@@ -1,8 +1,40 @@
 <div class="mh-def root">
     <div class="mh-def mh-row header section">
-        <div class="hide-main-menu-btn mh-btn" ng-click="hideMainMenuBtnClick()"></div>
+        <div class="hide-main-menu-btn btn" ng-click="hideMainMenuBtnClick()"></div>
         <div class="avatar">
             <img ng-src="{{my.avatar}}" title="{{my.fullName}}"/>
+        </div>
+    </div>
+    <div class="mh-def mh-fill options">
+        <div class="mh-def mh-row btn logout" ng-class="{selected: selected === 'logout'}" ng-click="logoutBtnClick()">
+            <div class="highlight"></div>
+            <div class="icon"></div>
+            <div class="txt mh-ellip">{{::txt('logout')}}</div>
+        </div>
+        <div class="mh-def mh-row btn settings" ng-class="{selected: selected === 'settings'}" ng-click="settingsBtnClick()">
+            <div class="highlight"></div>
+            <div class="icon"></div>
+            <div class="txt mh-ellip">{{::txt('settings')}}</div>
+        </div>
+        <div class="mh-def mh-row btn projects" ng-class="{selected: selected === 'projects'}" ng-click="projectsBtnClick()">
+            <div class="highlight"></div>
+            <div class="icon"></div>
+            <div class="txt mh-ellip">{{::txt('projects')}}</div>
+        </div>
+        <div class="mh-def mh-row btn invites" ng-class="{selected: selected === 'invites'}" ng-click="invitesBtnClick()">
+            <div class="highlight"></div>
+            <div class="icon"></div>
+            <div class="txt mh-ellip">{{::txt('invites')}}</div>
+        </div>
+        <div class="mh-def mh-row btn uploads" ng-class="{selected: selected === 'uploads'}" ng-click="uploadsBtnClick()">
+            <div class="highlight"></div>
+            <div class="icon"></div>
+            <div class="txt mh-ellip">{{::txt('uploads')}}</div>
+        </div>
+        <div class="mh-def mh-row btn aggregation" ng-class="{selected: selected === 'aggregation'}" ng-click="aggregationBtnClick()">
+            <div class="highlight"></div>
+            <div class="icon"></div>
+            <div class="txt mh-ellip">{{::txt('aggregation')}}</div>
         </div>
     </div>
 </div>

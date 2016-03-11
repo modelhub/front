@@ -19,7 +19,7 @@ define('mainMenu/mainMenu', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$rootScope', '$scope', 'currentUser', 'EVENT', 'i18n', 'logout', function($rootScope, $scope, currentUser, EVENT, i18n, logout){
+                    controller: ['$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', 'logout', function($location, $rootScope, $route, $scope, currentUser, EVENT, i18n, logout){
 
                         i18n($scope, txt);
 
@@ -29,6 +29,35 @@ define('mainMenu/mainMenu', [
                             $rootScope.$broadcast(EVENT.HIDE_MAIN_MENU);
                         };
 
+                        $scope.logoutBtnClick = function(){
+                            $location.path('/logout');
+                        };
+
+                        $scope.settingsBtnClick = function(){
+                            $location.path('/settings');
+                        };
+
+                        $scope.projectsBtnClick = function(){
+                            $location.path('/projects');
+                        };
+
+                        $scope.invitesBtnClick = function(){
+                            $location.path('/invites');
+                        };
+
+                        $scope.uploadsBtnClick = function(){
+                            $location.path('/uploads');
+                        };
+
+                        $scope.aggregationBtnClick = function(){
+                            $location.path('/aggregation');
+                        };
+
+                        $scope.$on('$locationChangeSuccess', function(){
+                            $scope.selected = $location.path().substring(1);
+                        });
+
+                        $scope.projectsBtnClick();
                     }]
                 };
             });

@@ -4,7 +4,6 @@ mh-main-menu {
   background: $background1;
 
   > div.root {
-    overflow: auto;
     @include fill($width: calc(100% - 1px));
     border-right: $border1;
 
@@ -24,12 +23,12 @@ mh-main-menu {
       }
 
       > .hide-main-menu-btn {
-        background: $background1 url("/resource/image/menu-icon.png") no-repeat center;
+        background: $background1 url("/resource/image/menu.png") no-repeat center;
         &:hover {
-          background-color: $backgroundSelected;
+          background: $backgroundSelected url("/resource/image/menu-selected.png") no-repeat center;
         }
         &:active {
-          background-color: $background1;
+          background: $background1 url("/resource/image/menu.png") no-repeat center;
         }
       }
 
@@ -38,8 +37,110 @@ mh-main-menu {
       }
     }
 
-    > .btn {
-      
+    .btn {
+      cursor: pointer;
+      &.selected{
+        background: $backgroundSelected;
+        color: $colorSelected;
+      }
+      &:hover{
+        color: $colorSelected;
+      }
+    }
+
+    > .options {
+      overflow: auto;
+      > .btn {
+        @include fill($height: 32px);
+        align-items: center;
+        > * {
+          flex-shrink: 0;
+        }
+        > .highlight {
+          @include fill($width: 5px);
+        }
+        &.selected {
+          > .highlight {
+            background: $highlight1;
+          }
+        }
+        > .icon {
+          @include fill(20px, 20px);
+          background-repeat: no-repeat;
+          background-size: contain;
+          margin-left: 13px;
+          margin-right: 13px;
+        }
+        > .txt {
+          width: calc(100% - 51px);
+        }
+
+        &.logout {
+          > .icon {
+            background-image: url("/resource/image/logout.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/logout-selected.png");
+            }
+          }
+        }
+
+        &.settings {
+          > .icon {
+            background-image: url("/resource/image/settings.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/settings-selected.png");
+            }
+          }
+        }
+
+        &.projects {
+          > .icon {
+            background-image: url("/resource/image/project.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/project-selected.png");
+            }
+          }
+        }
+
+        &.invites {
+          > .icon {
+            background-image: url("/resource/image/invite.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/invite-selected.png");
+            }
+          }
+        }
+
+        &.uploads {
+          > .icon {
+            background-image: url("/resource/image/upload.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/upload-selected.png");
+            }
+          }
+        }
+
+        &.aggregation {
+          > .icon {
+            background-image: url("/resource/image/multi-sheet.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/multi-sheet-selected.png");
+            }
+          }
+        }
+      }
     }
   }
 

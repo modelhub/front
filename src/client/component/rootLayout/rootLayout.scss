@@ -13,16 +13,16 @@ mh-root-layout {
 
     > .show-main-menu-btn {
       visibility: hidden;
-      background: $background1 url("/resource/image/menu-icon.png") no-repeat center;
+      background: $background1 url("/resource/image/menu.png") no-repeat center;
       @include fill($width: 50px, $height: 50px);
       &.show{
         visibility: visible;
       }
       &:hover{
-        background-color: $backgroundSelected;
+        background: $backgroundSelected url("/resource/image/menu-selected.png") no-repeat center;
       }
       &:active{
-        background-color: $background1;
+        background: $background1 url("/resource/image/menu.png") no-repeat center;
       }
     }
 
@@ -35,7 +35,7 @@ mh-root-layout {
 
     > div {
       > mh-main-menu {
-        max-width: 250px;
+        max-width: 200px;
         flex-shrink: 0;
       }
       > :not(mh-main-menu) {

@@ -16,30 +16,21 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$route', '$scope', 'EVENT', function($route, $scope, EVENT) {
+                    controller: ['$location', '$scope', 'EVENT', function($location, $scope, EVENT) {
 
                         $scope.showMainMenu = false;
                         $scope.showAggregationViewer = false;
 
                         $scope.showMainMenuBtnClick = function(){
-                            $route.updateParams({showMainMenu: 'true'});
+                            $scope.showMainMenu = true;
                         };
 
                         $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
-                            $route.updateParams({showMainMenu: null});
+                            $scope.showMainMenu = false;
                         });
 
-                        $scope.$on(EVENT.SHOW_AGGREGATION_VIEWER, function(){
-                            $route.updateParams({showAggregationViewer: 'true'});
-                        });
-
-                        $scope.$on(EVENT.HIDE_AGGREGATION_VIEWER, function(){
-                            $route.updateParams({showAggregationViewer: null});
-                        });
-
-                        $scope.$on('$routeChangeSuccess', function(){
-                            $scope.showAggregationViewer = $route.current.params.showAggregationViewer === 'true';
-                            $scope.showMainMenu = $route.current.params.showMainMenu === 'true';
+                        $scope.$on('$locationChangeSuccess', function(){
+                            $scope.showAggregationViewer = $location.path().substring(1) === 'aggregation';
                         });
 
                     }]
