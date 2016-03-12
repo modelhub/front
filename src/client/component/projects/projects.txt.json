@@ -1,8 +1,8 @@
 ﻿{
   "langs": ["en"],
 
-  "msg": {
-    "en": "PROJECTS"
+  "projects": {
+    "en": "Projects"
   }
 
 }

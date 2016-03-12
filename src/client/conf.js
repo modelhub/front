@@ -3,7 +3,8 @@ require.config({
     paths: {
         'ng': '../lib/angular/angular',
         'ngRoute': '../lib/angular-route/angular-route',
-        'moment': '../lib/moment/min/moment-with-locales',
+        'moment': '../lib/moment/moment',
+        'momentLocale': '../lib/moment/locale',
         'text': '../lib/requirejs-text/text',
         'registry': '../registry',
         'service': '../service',

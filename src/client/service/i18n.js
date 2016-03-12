@@ -1,5 +1,6 @@
 define('service/i18n', [
-    'moment'
+    'moment',
+    'momentLocale/de'
 ], function(
     moment
 ){
@@ -7,10 +8,12 @@ define('service/i18n', [
         ngModule
             .service('i18n', ['$rootScope', 'currentUser', 'EVENT', function($rootScope, currentUser, EVENT){
 
-                var lastLang = currentUser().uiLanguage,
-                    lastMomentLocale = currentUser().locale,
-                    lastTimeFormat = currentUser().timeFormat,
+                var lang = currentUser().uiLanguage,
+                    shortLang = lang.substring(0, 2),
+                    timeFormat = currentUser().timeFormat,
                     service;
+
+                moment.locale(lang);
 
                 service = function(scope, i18nTxt){
 
@@ -18,19 +21,9 @@ define('service/i18n', [
                         i18nTxt = JSON.parse(i18nTxt);
                     }
 
-                    var langChangeHandler = function(event, lang){
-                        var idx = i18nTxt.langs.indexOf(lang);
-                        idx = idx === -1? 0: idx;
-                        scope.lang = scope.lang != i18nTxt.langs[idx]? i18nTxt.langs[idx]: scope.lang;
-                    };
-
-                    langChangeHandler(null, lastLang);
-
-                    scope.$on(EVENT.LANGUAGE_CHANGE, langChangeHandler);
-
                     scope.txt = function(){
                         var strId = arguments[0];
-                        var txt = i18nTxt[strId][scope.lang];
+                        var txt = i18nTxt[strId][shortLang];
                         var argsLen = arguments.length;
                         for(var i = 1; i < argsLen; i++){
                             txt = txt.replace('{'+(i-1)+'}', arguments[i]);
@@ -41,25 +34,10 @@ define('service/i18n', [
                     scope.dt = function(date, format){
                         date = date.replace('T', ' ');
                         if (!format) {
-                            format = lastTimeFormat;
+                            format = timeFormat;
                         }
                         return moment(date).format(format);
                     };
-
-                };
-
-                service.setLang = function(lang){
-
-                    if(lastMomentLocale != lang){
-                        lastMomentLocale = moment.locale(lang);
-                    }
-
-                    if(typeof lang === 'string' && lang.length > 2){
-                        lang = lang.substring(0, 2);
-                    }
-
-                    lastLang = lang;
-                    $rootScope.$broadcast(EVENT.LANGUAGE_CHANGE, lang);
 
                 };
 
