@@ -69,8 +69,6 @@ define('mainMenu/mainMenu', [
                                 logout();
                             }
                         });
-
-                        $scope.projectsBtnClick();
                     }]
                 };
             });

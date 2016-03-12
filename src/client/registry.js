@@ -12,11 +12,16 @@ define('registry', [
     'service/logout',
     //components
     'aggregationViewer/aggregationViewer',
+    'invites/invites',
     'langSelector/langSelector',
     'loader/loader',
     'logout/logout',
     'mainMenu/mainMenu',
+    'projects/projects',
     'rootLayout/rootLayout',
+    'search/search',
+    'settings/settings',
+    'uploads/uploads',
     'viewer/viewer'
 ], function(
     ng,
@@ -32,11 +37,16 @@ define('registry', [
     logoutService,
     //components
     aggregationViewer,
+    invites,
     langSelector,
     loader,
     logout,
     mainMenu,
+    projects,
     rootLayout,
+    search,
+    settings,
+    uploads,
     viewer
 ){
     var registry = ng.module('mh.registry', []);
