@@ -30,7 +30,7 @@ require([
             .when('/aggregation', {
                 template: ''
             })
-            .when('/search/:search', {
+            .when('/search/:project/:search', {
                 template: '<mh-search ng-cloak></mh-search>'
             })
             .otherwise({

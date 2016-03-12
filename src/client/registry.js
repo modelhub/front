@@ -14,6 +14,7 @@ define('registry', [
     'aggregationViewer/aggregationViewer',
     'langSelector/langSelector',
     'loader/loader',
+    'logout/logout',
     'mainMenu/mainMenu',
     'rootLayout/rootLayout',
     'viewer/viewer'
@@ -28,11 +29,12 @@ define('registry', [
     i18n,
     lmv,
     lmvLoader,
-    logout,
+    logoutService,
     //components
     aggregationViewer,
     langSelector,
     loader,
+    logout,
     mainMenu,
     rootLayout,
     viewer

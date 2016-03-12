@@ -25,17 +25,6 @@ define('mainMenu/mainMenu', [
 
                         $scope.my = currentUser();
 
-                        $element[0].getElementsByTagName('input')[0].addEventListener('keypress', function(e){
-                            if(e.keyCode == 13) { //enter
-                                var search = $scope.search.trim();
-                                if (search.length > 0) {
-                                    $scope.search = '';
-                                    $location.path('/search/'+search);
-                                    $scope.$evalAsync();
-                                }
-                            }
-                        });
-
                         $scope.hideMainMenuBtnClick = function(){
                             $rootScope.$broadcast(EVENT.HIDE_MAIN_MENU);
                         };
@@ -59,6 +48,16 @@ define('mainMenu/mainMenu', [
                         $scope.uploadsBtnClick = function(){
                             $location.path('/uploads');
                         };
+
+                        $element[0].getElementsByTagName('input')[0].addEventListener('keypress', function(e){
+                            if(e.keyCode == 13) { //enter
+                                $scope.search = $scope.search.trim();
+                                if ($scope.search.length > 0) {
+                                    $location.path('/search/global/'+$scope.search);
+                                    $scope.$evalAsync();
+                                }
+                            }
+                        });
 
                         $scope.aggregationBtnClick = function(){
                             $location.path('/aggregation');

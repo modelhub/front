@@ -18,7 +18,7 @@ define('rootLayout/rootLayout', [
                     scope: {},
                     controller: ['$location', '$scope', 'EVENT', function($location, $scope, EVENT) {
 
-                        $scope.showMainMenu = false;
+                        $scope.showMainMenu = true;
                         $scope.showAggregationViewer = false;
 
                         $scope.showMainMenuBtnClick = function(){

@@ -1,9 +1,8 @@
 <div class="mh-def mh-fill">
     <div class="mh-def mh-row mh-fill">
         <mh-main-menu class="mh-fill" ng-show="showMainMenu" ng-cloak></mh-main-menu>
-        <!--<ng-view ng-cloak></ng-view>-->
         <div class="mh-def mh-fill">
-            <div class="mh-def mh-fill"></div>
+            <ng-view ng-cloak></ng-view>
             <mh-aggregation-viewer ng-class="{show: showAggregationViewer}" class ="mh-fill" ng-cloak></mh-aggregation-viewer>
         </div>
     </div>
