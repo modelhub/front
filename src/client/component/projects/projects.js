@@ -19,8 +19,33 @@ define('projects/projects', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'i18n', function($scope, i18n){
+                    controller: ['$element', '$scope', 'api', 'i18n', function($element, $scope, api, i18n){
                         i18n($scope, txt);
+
+                        var fileEl = $element[0].getElementsByClassName('new-project-thumbnail-input')[0];
+                        $scope.projects = true;
+                        $scope.projectsLoadingError = '';
+
+                        $scope.newProjectBtnClick = function(){
+                            $scope.newProjectName = '';
+                            if ($scope.selectedControl === 'newProject') {
+                                $scope.selectedControl = '';
+                            } else {
+                                $scope.selectedControl = 'newProject';
+                            }
+                        };
+
+                        $scope.createNewProjectBtnClick = function(){
+
+                        };
+
+                        $scope.newProjectThumbnailBtnClick = function(){
+                            fileEl.click();
+                        };
+
+                        $scope.newProjectThumbnailFileChange = function(){
+                            alert('OY!');
+                        };
                     }]
                 };
             });

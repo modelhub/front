@@ -3,6 +3,26 @@
 
   "projects": {
     "en": "Projects"
+  },
+
+  "loadingError": {
+    "en": "An error occured: {0}"
+  },
+
+  "newProject": {
+    "en": "New Project"
+  },
+
+  "projectName": {
+    "en": "Project Name"
+  },
+
+  "create": {
+    "en": "Create"
+  },
+
+  "cancel": {
+    "en": "Cancel"
   }
 
 }

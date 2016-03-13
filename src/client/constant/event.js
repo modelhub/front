@@ -4,6 +4,7 @@ define('constant/event', [
     return function(ngModule){
         ngModule
             .constant('EVENT', {
+                SHOW_MAIN_MENU: 'SHOW_MAIN_MENU',
                 HIDE_MAIN_MENU: 'HIDE_MAIN_MENU',
                 LOAD_SHEET_INTO_AGGREGATION_VIEWER: 'LOAD_SHEET_INTO_AGGREGATION_VIEWER',
                 UNLOAD_SHEET_FROM_AGGREGATION_VIEWER: 'UNLOAD_SHEET_FROM_AGGREGATION_VIEWER',

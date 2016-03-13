@@ -39,6 +39,9 @@ define('service/lmv', [
                                         loadSheet: function(id, manifestPath) {
                                             viewer.load('/api/v1/sheet/getItem/' + id + manifestPath);
                                         },
+                                        resize: function(){
+                                            viewer.resize();
+                                        },
                                         unloadSheet: function(id){
                                             //TODO
                                         }

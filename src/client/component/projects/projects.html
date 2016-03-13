@@ -1,7 +1,34 @@
 <div class="mh-def mh-fill root">
     <div class="mh-def content">
-        <div class="header">
-            {{txt('projects')}}
+        <div class="mh-def mh-row header">
+            <div class="icon"></div>
+            <div class="title">{{::txt('projects')}}</div>
+            <div class="mh-def mh-row controls" ng-show="projects && !projectsLoadingError">
+                <div class="mh-def control" ng-class="{selected: selectedControl === 'newProject'}" ng-click="newProjectBtnClick()">
+                    <div class="name">{{::txt('newProject')}}</div>
+                    <div class="highlight"></div>
+                </div>
+            </div>
+        </div>
+        <mh-loader class="mh-def bar-spinner" ng-show="!projects && !projectsLoadingError"></mh-loader>
+        <div class="mh-def projects-loading-error" ng-show="projectsLoadingError">
+            <div>{{txt('loadingError', projectsLoadingError)}}</div>
+        </div>
+        <div class="mh-def mh-row projects" ng-show="projects && !projectsLoadingError">
+            <div class="mh-def new-project-form" ng-class="{show: selectedControl === 'newProject'}">
+                <div class="thumbnail" ng-click="newProjectThumbnailBtnClick()">
+
+                </div>
+                <input class="new-project-thumbnail-input" type="file" accept=".png,.jpeg,.jpg,.gif" onchange="angular.element(this).scope().newProjectThumbnailFileChange()"/>
+                <input type="text" placeholder="{{::txt('projectName')}}" ng-model="newProjectName"/>
+                <div class="mh-def btns">
+                    <div class="create" ng-click="createNewProjectBtnClick()">{{::txt('create')}}</div>
+                    <div class="cancel" ng-click="newProjectBtnClick()">{{::txt('cancel')}}</div>
+                </div>
+            </div>
+            <div class="mh-def project" ng-repeat="project in projects track by $index">
+
+            </div>
         </div>
     </div>
 </div>

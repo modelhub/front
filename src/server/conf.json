@@ -19,7 +19,7 @@
   "coreApi": {
     "statusCheckTimeout": "5s",
     "ossBucketPrefix": "modelhub_01",
-    "ossBucketPolicy": "transient"
+    "ossBucketPolicy": "temporary"
   },
 
   "session": {

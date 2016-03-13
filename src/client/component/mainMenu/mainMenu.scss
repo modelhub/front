@@ -130,17 +130,6 @@ mh-main-menu {
           }
         }
 
-        &.aggregation {
-          > .icon {
-            background-image: url("/resource/image/multi-sheet.png");
-          }
-          &.selected, &:hover {
-            > .icon {
-              background-image: url("/resource/image/multi-sheet-selected.png");
-            }
-          }
-        }
-
         &.search{
           input {
             @include fill($width: calc(100% - 38px), $height: 20px);
@@ -153,6 +142,17 @@ mh-main-menu {
             color: $color2;
             &:focus{
               border: 1px solid $highlight1;
+            }
+          }
+        }
+
+        &.aggregation {
+          > .icon {
+            background-image: url("/resource/image/multi-sheet.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/multi-sheet-selected.png");
             }
           }
         }

@@ -16,13 +16,14 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$scope', 'EVENT', function($location, $scope, EVENT) {
+                    controller: ['$location', '$rootScope', '$scope', 'EVENT', function($location, $rootScope, $scope, EVENT) {
 
                         $scope.showMainMenu = true;
                         $scope.showAggregationViewer = false;
 
                         $scope.showMainMenuBtnClick = function(){
                             $scope.showMainMenu = true;
+                            $rootScope.$broadcast(EVENT.SHOW_MAIN_MENU);
                         };
 
                         $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
