@@ -33,6 +33,9 @@ require([
             .when('/search/:project/:search', {
                 template: '<mh-search ng-cloak></mh-search>'
             })
+            .when('/folder/:project', {
+                template: '<mh-folder ng-cloak></mh-folder>'
+            })
             .otherwise({
                 redirectTo: '/projects'
             });

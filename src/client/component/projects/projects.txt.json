@@ -23,6 +23,22 @@
 
   "cancel": {
     "en": "Cancel"
+  },
+
+  "owner": {
+    "en": "Owner"
+  },
+
+  "admin": {
+    "en": "Admin"
+  },
+
+  "organiser": {
+    "en": "Organiser"
+  },
+
+  "contributor": {
+    "en": "Cancel"
   }
 
 }

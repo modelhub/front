@@ -18,13 +18,12 @@ define('langSelector/langSelector', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'i18n', function($scope, i18n){
+                    controller: ['$scope', 'api', function($scope, api){
                         $scope.langs = JSON.parse(langs);
                         $scope.change = function(){
-                            if($scope.selected && $scope.selected.code)
-                                i18n.setLang($scope.selected.code);
-                            else
-                                i18n.setLang(null);
+                            if($scope.selected && $scope.selected.code){
+
+                            }
                         };
                     }]
                 };

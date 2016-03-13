@@ -17,7 +17,7 @@
         <div class="mh-def mh-row projects" ng-show="projects && !projectsLoadingError">
             <div class="mh-def new-project-form" ng-class="{show: selectedControl === 'newProject'}">
                 <div class="thumbnail" ng-click="newProjectThumbnailBtnClick()">
-
+                    <img class="new-project-thumbnail-preview"/>
                 </div>
                 <input class="new-project-thumbnail-input" type="file" accept=".png,.jpeg,.jpg,.gif" onchange="angular.element(this).scope().newProjectThumbnailFileChange()"/>
                 <input type="text" placeholder="{{::txt('projectName')}}" ng-model="newProjectName"/>
@@ -26,8 +26,15 @@
                     <div class="cancel" ng-click="newProjectBtnClick()">{{::txt('cancel')}}</div>
                 </div>
             </div>
-            <div class="mh-def project" ng-repeat="project in projects track by $index">
-
+            <div class="mh-def project" ng-repeat="project in projects track by $index" ng-click="projectClick(project.id)">
+                <div class="thumbnail">
+                    <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}" ng-show="::project.imageFileExtension"/>
+                </div>
+                <div class="mh-def info">
+                    <div class="name">{{::project.name}}</div>
+                    <div class="created" >{{::dt(project.created, 'L')}}</div>
+                    <div class="role">{{::txt(project.role)}}</div>
+                </div>
             </div>
         </div>
     </div>

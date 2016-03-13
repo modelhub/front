@@ -19,12 +19,14 @@ define('projects/projects', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$scope', 'api', 'i18n', function($element, $scope, api, i18n){
+                    controller: ['$element', '$location', '$scope', '$window', 'api', 'currentUser', 'i18n', 'thumbnail', function($element, $location, $scope, $window, api, currentUser, i18n, thumbnail){
                         i18n($scope, txt);
 
+                        var scrollEl = $element[0].getElementsByClassName('root')[0];
                         var fileEl = $element[0].getElementsByClassName('new-project-thumbnail-input')[0];
-                        $scope.projects = true;
-                        $scope.projectsLoadingError = '';
+                        var imgEl = $element[0].getElementsByClassName('new-project-thumbnail-preview')[0];
+
+                        $scope.my = currentUser();
 
                         $scope.newProjectBtnClick = function(){
                             $scope.newProjectName = '';
@@ -35,16 +37,68 @@ define('projects/projects', [
                             }
                         };
 
-                        $scope.createNewProjectBtnClick = function(){
-
-                        };
-
                         $scope.newProjectThumbnailBtnClick = function(){
                             fileEl.click();
                         };
 
+                        var processingThumbnail = false,
+                            resizedImage = null,
+                            resizedImageName = null;
                         $scope.newProjectThumbnailFileChange = function(){
-                            alert('OY!');
+                            if (!processingThumbnail) {
+                                processingThumbnail = true;
+                                thumbnail(fileEl.files[0], 196).then(function (data) {
+                                    resizedImage = data.blob;
+                                    resizedImageName = data.name;
+                                    imgEl.src = data.image.src;
+                                    processingThumbnail = false;
+                                }, function (error) {
+                                    processingThumbnail = false;
+                                });
+                            }
+                        };
+
+                        var sendingCreateApiRequest = false;
+                        $scope.createNewProjectBtnClick = function(){
+                            if(!processingThumbnail && !sendingCreateApiRequest){
+                                sendingCreateApiRequest = true;
+                                api.v1.project.create($scope.newProjectName, resizedImageName, resizedImage).then(function(project){
+                                    sendingCreateApiRequest = false;
+                                    $scope.selectedControl = '';
+                                    $location.path('/folder/'+project.id);
+                                }, function(errorId){
+                                    //TODO
+                                    sendingCreateApiRequest = false;
+                                });
+                            }
+                        };
+
+                        var loadNextProjectBatch,
+                            offset = 0,
+                            limit = 20,
+                            totalResults = null;
+                        loadNextProjectBatch = function(){
+                            if(!$scope.projects || totalResults === null || offset < totalResults) {
+                                api.v1.project.getInUserContext($scope.my.id, 'any', offset, limit).then(function (result) {
+                                    totalResults = result.totalResults;
+                                    if (!$scope.projects){
+                                        $scope.projects = result.results;
+                                    } else {
+                                        $scope.projects.push.apply($scope.projects, result.results);
+                                    }
+                                    offset = $scope.projects.length;
+                                    if (offset < totalResults && scrollEl.scrollHeight > scrollEl.clientHeight) {
+                                        loadNextProjectBatch();
+                                    }
+                                }, function (errorId) {
+                                    $scope.projectsLoadingError = errorId;
+                                });
+                            }
+                        };
+                        loadNextProjectBatch();
+
+                        $scope.projectClick = function(projectId){
+                            $location.path('/folder/'+projectId);
                         };
                     }]
                 };

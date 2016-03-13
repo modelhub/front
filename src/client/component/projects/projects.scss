@@ -70,17 +70,23 @@ mh-projects {
           @include fill($width: 196px, $height: 285px);
           background: $background1;
           margin: 8px;
+          > .thumbnail{
+            @include fill($width: 196px, $height: 196px);
+            border-bottom: $border1;
+            background: url("/resource/image/img.png") center no-repeat;
+            img{
+              @include fill($width: 196px, $height: 196px);
+            }
+          }
         }
-        > .new-project-form{
+        > .new-project-form {
+          align-items: center;
           display: none;
           &.show{
             display: flex;
           }
-          align-items: center;
           > .thumbnail{
             cursor: pointer;
-            @include fill($width: 196px, $height: 196px);
-            background: url("/resource/image/img.png") center no-repeat;
             border-bottom: $border1;
             &:hover{
               background: url("/resource/image/img-selected.png") center no-repeat;
@@ -126,12 +132,16 @@ mh-projects {
               background: $background2;
               &:hover{
                 background: $background1;
+                border: $border1;
               }
               &:active{
                 background: $background2;
               }
             }
           }
+        }
+        > .project{
+          cursor: pointer;
         }
       }
     }

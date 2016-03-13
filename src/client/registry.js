@@ -10,6 +10,7 @@ define('registry', [
     'service/lmv',
     'service/lmvLoader',
     'service/logout',
+    'service/thumbnail',
     //components
     'aggregationViewer/aggregationViewer',
     'invites/invites',
@@ -35,6 +36,7 @@ define('registry', [
     lmv,
     lmvLoader,
     logoutService,
+    thumbnail,
     //components
     aggregationViewer,
     invites,
