@@ -29,6 +29,8 @@ define('projects/projects', [
                         $scope.my = currentUser();
 
                         $scope.newProjectBtnClick = function(){
+                            fileEl.value = '';
+                            imgEl.src = '';
                             $scope.newProjectName = '';
                             if ($scope.selectedControl === 'newProject') {
                                 $scope.selectedControl = '';
@@ -50,7 +52,11 @@ define('projects/projects', [
                                 thumbnail(fileEl.files[0], 196).then(function (data) {
                                     resizedImage = data.blob;
                                     resizedImageName = data.name;
-                                    imgEl.src = data.image.src;
+                                    if(data.image) {
+                                        imgEl.src = data.image.src;
+                                    } else {
+                                        imgEl.src = '';
+                                    }
                                     processingThumbnail = false;
                                 }, function (error) {
                                     processingThumbnail = false;
@@ -77,8 +83,10 @@ define('projects/projects', [
                             offset = 0,
                             limit = 20,
                             totalResults = null;
+                        $scope.loadingProjects = true;
                         loadNextProjectBatch = function(){
                             if(!$scope.projects || totalResults === null || offset < totalResults) {
+                                $scope.loadingProjects = true;
                                 api.v1.project.getInUserContext($scope.my.id, 'any', offset, limit).then(function (result) {
                                     totalResults = result.totalResults;
                                     if (!$scope.projects){
@@ -90,8 +98,10 @@ define('projects/projects', [
                                     if (offset < totalResults && scrollEl.scrollHeight > scrollEl.clientHeight) {
                                         loadNextProjectBatch();
                                     }
+                                    $scope.loadingProjects = false;
                                 }, function (errorId) {
                                     $scope.projectsLoadingError = errorId;
+                                    $scope.loadingProjects = false;
                                 });
                             }
                         };

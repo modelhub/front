@@ -10,7 +10,6 @@
                 </div>
             </div>
         </div>
-        <mh-loader class="mh-def bar-spinner" ng-show="!projects && !projectsLoadingError"></mh-loader>
         <div class="mh-def projects-loading-error" ng-show="projectsLoadingError">
             <div>{{txt('loadingError', projectsLoadingError)}}</div>
         </div>
@@ -37,5 +36,6 @@
                 </div>
             </div>
         </div>
+        <mh-loader class="mh-def bar-spinner" ng-show="loadingProjects"></mh-loader>
     </div>
 </div>
