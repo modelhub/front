@@ -18,7 +18,9 @@ define('folder/folder', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        folderId: '@'
+                    },
                     controller: ['$element', '$location', '$scope', '$window', 'api', 'currentUser', 'i18n', 'thumbnail', function($element, $location, $scope, $window, api, currentUser, i18n, thumbnail){
                         i18n($scope, txt);
 

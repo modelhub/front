@@ -17,7 +17,7 @@ define('folderRoute/folderRoute', [
                     template: tpl,
                     scope: {},
                     controller: ['$route', '$scope', function($route, $scope){
-
+                        $scope.folderId = $route.current.params.folderId;
                     }]
                 };
             });
