@@ -25,7 +25,7 @@
                     <div class="cancel" ng-click="newProjectBtnClick()">{{::txt('cancel')}}</div>
                 </div>
             </div>
-            <div class="mh-def project" ng-repeat="project in projects track by $index" ng-click="projectClick(project.id)">
+            <div class="mh-def project" ng-repeat="project in projects track by $index" ng-click="projectClick(project)">
                 <div class="thumbnail">
                     <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}" ng-show="::project.imageFileExtension"/>
                 </div>

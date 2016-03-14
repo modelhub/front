@@ -107,8 +107,8 @@ define('projects/projects', [
                         };
                         loadNextProjectBatch();
 
-                        $scope.projectClick = function(projectId){
-                            $location.path('/folder/'+projectId);
+                        $scope.projectClick = function(project){
+                            $location.path('/folder/'+project.id);
                         };
                     }]
                 };
