@@ -5,6 +5,7 @@ mh-projects {
     flex-shrink: 0;
   }
   > div.root {
+    @include IEScrollbars();
     justify-content: flex-start;
     align-items: center;
     overflow: auto;

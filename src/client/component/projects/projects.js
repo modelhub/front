@@ -81,7 +81,7 @@ define('projects/projects', [
 
                         var loadNextProjectBatch,
                             offset = 0,
-                            limit = 2,
+                            limit = 20,
                             totalResults = null;
                         $scope.loadingProjects = true;
                         loadNextProjectBatch = function(){
