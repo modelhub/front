@@ -13,6 +13,7 @@ define('registry', [
     'service/thumbnail',
     //components
     'aggregationViewer/aggregationViewer',
+    'breadcrumbs/breadcrumbs',
     'folder/folder',
     'folderRoute/folderRoute',
     'invites/invites',
@@ -41,6 +42,7 @@ define('registry', [
     thumbnail,
     //components
     aggregationViewer,
+    breadcrumbs,
     folder,
     folderRoute,
     invites,
