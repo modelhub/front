@@ -1,8 +1,8 @@
-define('projects/projects', [
+define('folder/folder', [
     'styler',
-    'text!projects/projects.css',
-    'text!projects/projects.html',
-    'text!projects/projects.txt.json'
+    'text!folder/folder.css',
+    'text!folder/folder.html',
+    'text!folder/folder.txt.json'
 ], function(
     styler,
     style,
@@ -14,7 +14,7 @@ define('projects/projects', [
 
     return function(ngModule){
         ngModule
-            .directive('mhProjects', function(){
+            .directive('mhFolder', function(){
                 return {
                     restrict: 'E',
                     template: tpl,

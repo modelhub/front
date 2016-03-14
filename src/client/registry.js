@@ -13,6 +13,8 @@ define('registry', [
     'service/thumbnail',
     //components
     'aggregationViewer/aggregationViewer',
+    'folder/folder',
+    'folderRoute/folderRoute',
     'invites/invites',
     'langSelector/langSelector',
     'loader/loader',
@@ -39,6 +41,8 @@ define('registry', [
     thumbnail,
     //components
     aggregationViewer,
+    folder,
+    folderRoute,
     invites,
     langSelector,
     loader,

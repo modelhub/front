@@ -21,29 +21,10 @@
 }
 
 .mh-ellip{
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  @include ellipsis();
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-  background: $scrollbarTrackColor;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: $scrollbarThumbColor;
-}
-
-::-webkit-scrollbar-corner{
-  background: $scrollbarTrackColor;
-}
-
-::-webkit-scrollbar-track{
-  background: $scrollbarTrackColor;
-}
+@include scrollbars();
 
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

@@ -99,11 +99,11 @@ mh-main-menu {
 
         &.projects {
           > .icon {
-            background-image: url("/resource/image/project.png");
+            background-image: url("/resource/image/folder.png");
           }
           &.selected, &:hover {
             > .icon {
-              background-image: url("/resource/image/project-selected.png");
+              background-image: url("/resource/image/folder-selected.png");
             }
           }
         }

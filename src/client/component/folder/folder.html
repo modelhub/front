@@ -2,8 +2,7 @@
     <div class="mh-def content">
         <div class="mh-def mh-row header">
             <div class="icon"></div>
-            <div class="title">{{::txt('projects')}}</div>
-            <div class="mh-def mh-row controls" ng-show="projects && !projectsLoadingError">
+            <div class="mh-def mh-row breadcrumbs" ng-show="projects && !projectsLoadingError">
                 <div class="mh-def control" ng-class="{selected: selectedControl === 'newProject'}" ng-click="newProjectBtnClick()">
                     <div class="name">{{::txt('newProject')}}</div>
                     <div class="highlight"></div>

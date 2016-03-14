@@ -50,6 +50,35 @@ $border1: 1px solid $background2;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+@mixin scrollbars(){
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: $scrollbarTrackColor;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: $scrollbarThumbColor;
+  }
+
+  ::-webkit-scrollbar-corner{
+    background: $scrollbarTrackColor;
+  }
+
+  ::-webkit-scrollbar-track{
+    background: $scrollbarTrackColor;
+  }
+
+  scrollbar-arrow-color: $scrollbarThumbColor;
+  scrollbar-track-color: $scrollbarTrackColor;
+  scrollbar-face-color: $scrollbarThumbColor;
+  scrollbar-highlight-color: $scrollbarTrackColor;
+  scrollbar-3dlight-color: $scrollbarTrackColor;
+  scrollbar-shadow-color: $scrollbarTrackColor;
+  scrollbar-darkshadow-color: $scrollbarTrackColor;
+}
 /**
  * END MIXINS
  */
