@@ -30,20 +30,40 @@ define('service/thumbnail', [
 
                 return function(file, max_size){
                     return $q(function(resolve, reject) {
-                        if (file && file.type.match(/image.*/)) {
-                            var reader = new $window.FileReader();
-                            reader.onerror = function(error){
-                                reject(error);
-                            };
-                            reader.onload = function (readerEvent) {
-                                var image = new $window.Image();
-                                image.onerror = function(error){
-                                    reject(error);
+                        if (file && file.type.match(/(image.*|video.*)/)) {
+                            var target, getTargetWidth, getTargetHeight, addOnLoadHandler;
+                            if(file.type.match(/image.*/)) {
+                                target = new $window.Image();
+                                getTargetWidth = function () {
+                                    return target.width;
                                 };
-                                image.onload = function () {
+                                getTargetHeight = function () {
+                                    return target.width;
+                                };
+                                addOnLoadHandler = function (fn) {
+                                    target.addEventListener('load', fn);
+                                };
+                            } else {
+                                target = $document[0].createElement('video');
+                                getTargetWidth = function () {
+                                    return target.videoWidth;
+                                };
+                                getTargetHeight = function () {
+                                    return target.videoHeight;
+                                };
+                                addOnLoadHandler = function (fn) {
+                                    target.addEventListener('loadeddata', fn);
+                                };
+                            }
+                            var reader = new $window.FileReader();
+                            reader.addEventListener('error', function(error) {
+                                reject(error);
+                            });
+                            reader.addEventListener('load', function (readerEvent) {
+                                addOnLoadHandler(function () {
                                     var canvas = $document[0].createElement('canvas'),
-                                        width = image.width,
-                                        height = image.height,
+                                        width = getTargetWidth(),
+                                        height = getTargetHeight(),
                                         size = width,
                                         srcDim = width,
                                         srcX = 0,
@@ -63,14 +83,17 @@ define('service/thumbnail', [
                                     }
                                     canvas.width = size;
                                     canvas.height = size;
-                                    canvas.getContext('2d').drawImage(image, srcX, srcY, srcDim, srcDim, 0, 0, size, size);
+                                    canvas.getContext('2d').drawImage(target, srcX, srcY, srcDim, srcDim, 0, 0, size, size);
                                     var dataUrl = canvas.toDataURL(file.type);
                                     var resizedImage = new $window.Image();
                                     resizedImage.src = dataUrl;
                                     resolve({image: resizedImage, blob: dataURLToBlob(dataUrl), name: file.name});
-                                };
-                                image.src = readerEvent.target.result;
-                            };
+                                });
+                                target.addEventListener('error', function (error) {
+                                    reject(error);
+                                });
+                                target.src = readerEvent.target.result;
+                            });
                             reader.readAsDataURL(file);
                         } else {
                             resolve({image: null, blob: null, name: null});

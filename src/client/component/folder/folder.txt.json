@@ -1,20 +1,24 @@
 ﻿{
   "langs": ["en"],
 
-  "projects": {
-    "en": "Projects"
-  },
-
   "loadingError": {
     "en": "An error occured: {0}"
   },
 
-  "newProject": {
-    "en": "New Project"
+  "newFolder": {
+    "en": "New Folder"
   },
 
-  "projectName": {
-    "en": "Project Name"
+  "newFile": {
+    "en": "New File"
+  },
+
+  "folderName": {
+    "en": "Folder Name"
+  },
+
+  "fileName": {
+    "en": "File Name"
   },
 
   "create": {
@@ -22,22 +26,6 @@
   },
 
   "cancel": {
-    "en": "Cancel"
-  },
-
-  "owner": {
-    "en": "Owner"
-  },
-
-  "admin": {
-    "en": "Admin"
-  },
-
-  "organiser": {
-    "en": "Organiser"
-  },
-
-  "contributor": {
     "en": "Cancel"
   }
 

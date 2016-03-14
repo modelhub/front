@@ -25,86 +25,89 @@ define('folder/folder', [
                         i18n($scope, txt);
 
                         var scrollEl = $element[0].getElementsByClassName('root')[0];
-                        var fileEl = $element[0].getElementsByClassName('new-project-thumbnail-input')[0];
-                        var imgEl = $element[0].getElementsByClassName('new-project-thumbnail-preview')[0];
+                        var fileEl = $element[0].getElementsByClassName('new-file-input')[0];
 
                         $scope.my = currentUser();
 
-                        $scope.newProjectBtnClick = function(){
-                            fileEl.value = '';
-                            imgEl.src = '';
-                            $scope.newProjectName = '';
-                            if ($scope.selectedControl === 'newProject') {
+                        $scope.newFolderBtnClick = function(){
+                            $scope.newFolderName = '';
+                            if ($scope.selectedControl === 'newFolder') {
                                 $scope.selectedControl = '';
                             } else {
-                                $scope.selectedControl = 'newProject';
+                                $scope.selectedControl = 'newFolder';
                             }
                         };
 
-                        $scope.newProjectThumbnailBtnClick = function(){
+                        $scope.newFileBtnClick = function(){
+                            fileEl.value = '';
+                            $scope.newFileName = '';
+                            if ($scope.selectedControl === 'newFile') {
+                                $scope.selectedControl = '';
+                            } else {
+                                $scope.selectedControl = 'newFile';
+                            }
+                        };
+
+                        $scope.newFileInputBtnClick = function(){
                             fileEl.click();
                         };
 
-                        var processingThumbnail = false,
-                            resizedImage = null,
-                            resizedImageName = null;
-                        $scope.newProjectThumbnailFileChange = function(){
-                            if (!processingThumbnail) {
-                                processingThumbnail = true;
-                                thumbnail(fileEl.files[0], 196).then(function (data) {
-                                    resizedImage = data.blob;
-                                    resizedImageName = data.name;
-                                    if(data.image) {
-                                        imgEl.src = data.image.src;
-                                    } else {
-                                        imgEl.src = '';
-                                    }
-                                    processingThumbnail = false;
-                                }, function (error) {
-                                    processingThumbnail = false;
-                                });
-                            }
-                        };
-
-                        var sendingCreateApiRequest = false;
-                        $scope.createNewProjectBtnClick = function(){
-                            if(!processingThumbnail && !sendingCreateApiRequest){
-                                sendingCreateApiRequest = true;
-                                api.v1.project.create($scope.newProjectName, resizedImageName, resizedImage).then(function(project){
-                                    sendingCreateApiRequest = false;
+                        var sendingCreateFolderApiRequest = false;
+                        $scope.createNewFolderBtnClick = function(){
+                            if(!sendingCreateFolderApiRequest){
+                                sendingCreateFolderApiRequest = true;
+                                api.v1.treeNode.createFolder($scope.folderId, $scope.newFolderName).then(function(folder){
+                                    sendingCreateFolderApiRequest = false;
                                     $scope.selectedControl = '';
-                                    $location.path('/folder/'+project.id);
+                                    $location.path('/folder/'+folder.id);
                                 }, function(errorId){
                                     //TODO
-                                    sendingCreateApiRequest = false;
+                                    sendingCreateFolderApiRequest = false;
                                 });
                             }
                         };
 
-                        var loadNextProjectBatch,
+                        var sendingCreateFileApiRequest = false;
+                        $scope.createNewFileBtnClick = function(){
+                            if(!sendingCreateFileApiRequest && fileEl.files[0]){
+                                sendingCreateFileApiRequest = true;
+                                api.v1.treeNode.createDocument($scope.folderId, $scope.newFileName, '', fileEl.files[0]).then(function(folder){
+                                    sendingCreateFileApiRequest = false;
+                                    $scope.selectedControl = '';
+                                }, function(errorId){
+                                    //TODO
+                                    sendingCreateFileApiRequest = false;
+                                });
+                            }
+                        };
+
+                        var loadNextTreeNodeBatch,
+                            filter = 'folder',
                             offset = 0,
-                            limit = 2,
+                            limit = 20,
                             totalResults = null;
-                        $scope.loadingProjects = true;
-                        loadNextProjectBatch = function(){
-                            if(!$scope.projects || totalResults === null || offset < totalResults) {
-                                $scope.loadingProjects = true;
-                                api.v1.project.getInUserContext($scope.my.id, 'any', offset, limit).then(function (result) {
+                        $scope.loadingChildren = true;
+                        loadNextTreeNodeBatch = function(){
+                            if(filter) {
+                                $scope.loadingChildren = true;
+                                api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit).then(function (result) {
                                     totalResults = result.totalResults;
-                                    if (!$scope.projects){
-                                        $scope.projects = result.results;
+                                    if (!$scope.children){
+                                        $scope.children = result.results;
                                     } else {
-                                        $scope.projects.push.apply($scope.projects, result.results);
+                                        $scope.children.push.apply($scope.children, result.results);
                                     }
-                                    offset = $scope.projects.length;
+                                    offset = $scope.children.length;
                                     if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight) {
-                                        loadNextProjectBatch();
+                                        loadNextTreeNodeBatch();
+                                    } else if (filter === 'folder' ){
+                                        filter = 'document';
                                     } else {
-                                        $scope.loadingProjects = false;
+                                        $scope.loadingChildren = false;
                                     }
                                 }, function (errorId) {
-                                    $scope.projectsLoadingError = errorId;
-                                    $scope.loadingProjects = false;
+                                    $scope.childrenLoadingError = errorId;
+                                    $scope.loadingChildren = false;
                                 });
                             }
                         };
@@ -113,15 +116,15 @@ define('folder/folder', [
                         scrollEl.addEventListener('scroll', function(){
                             if (lastScrollTop < scrollEl.scrollTop && scrollEl.scrollHeight - (scrollEl.scrollTop + scrollEl.clientHeight) < 10){
                                 lastScrollTop = scrollEl.scrollTop;
-                                loadNextProjectBatch();
+                                loadNextTreeNodeBatch();
                             }
                         });
 
-                        $scope.projectClick = function(project){
-                            $location.path('/folder/'+project.id);
+                        $scope.childClick = function(child){
+                            $location.path('/'+child.nodeType+'/'+child.id);
                         };
 
-                        loadNextProjectBatch();
+                        loadNextTreeNodeBatch();
                     }]
                 };
             });

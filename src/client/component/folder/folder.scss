@@ -27,12 +27,13 @@ mh-folder {
           background: url("/resource/image/folder-selected.png") center no-repeat;
           background-size: 30px 30px;
         }
-        > .breadcrumbs{
+        > .controls{
           > .control {
             cursor: pointer;
             font-size: 14px;
             font-weight: 400;
             color: $color1;
+            margin-right: 16px;
             > .name {
               margin-bottom: 5px;
             }
@@ -53,13 +54,13 @@ mh-folder {
       > mh-loader{
         flex-grow: 1;
       }
-      > .projects-loading-error{
+      > .children-loading-error{
         flex-grow: 1;
         > div{
           margin: auto;
         }
       }
-      > .projects{
+      > .children{
         margin: 8px;
         flex-wrap: wrap;
         > * {
@@ -69,24 +70,21 @@ mh-folder {
           > .thumbnail{
             @include fill($width: 196px, $height: 196px);
             border-bottom: $border1;
-            background: url("/resource/image/img.png") center no-repeat;
+            background: url("/resource/image/folder.png") center no-repeat;
+            background-size: 60px 60px;
             img{
               @include fill($width: 196px, $height: 196px);
             }
           }
         }
-        > .new-project-form {
+        > .new-folder-form, > .new-file-form {
           align-items: center;
           display: none;
           &.show{
             display: flex;
           }
           > .thumbnail{
-            cursor: pointer;
             border-bottom: $border1;
-            &:hover{
-              background: url("/resource/image/img-selected.png") center no-repeat;
-            }
           }
           > input[type="file"] {
             display: none;
@@ -133,6 +131,17 @@ mh-folder {
               &:active{
                 background: $background2;
               }
+            }
+          }
+        }
+        > .new-file-form{
+          > .thumbnail{
+            cursor: pointer;
+            background: url("/resource/image/upload.png") center no-repeat;
+            background-size: 60px 60px;
+            &:hover{
+              background: url("/resource/image/upload-selected.png") center no-repeat;
+              background-size: 60px 60px;
             }
           }
         }

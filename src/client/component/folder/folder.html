@@ -1,32 +1,43 @@
 <div class="mh-def mh-fill root">
     <div class="mh-def content">
-        {{folderId}}
-        <!--
         <div class="mh-def mh-row header">
             <div class="icon"></div>
-            <div class="mh-def mh-row breadcrumbs" ng-show="projects && !projectsLoadingError">
-                <div class="mh-def control" ng-class="{selected: selectedControl === 'newProject'}" ng-click="newProjectBtnClick()">
-                    <div class="name">{{::txt('newProject')}}</div>
+            <div class="mh-def mh-row controls" ng-show="children && !childrenLoadingError">
+                <div class="mh-def control" ng-class="{selected: selectedControl === 'newFolder'}" ng-click="newFolderBtnClick()">
+                    <div class="name">{{::txt('newFolder')}}</div>
+                    <div class="highlight"></div>
+                </div>
+                <div class="mh-def control" ng-class="{selected: selectedControl === 'newFile'}" ng-click="newFileBtnClick()">
+                    <div class="name">{{::txt('newFile')}}</div>
                     <div class="highlight"></div>
                 </div>
             </div>
         </div>
-        <div class="mh-def projects-loading-error" ng-show="projectsLoadingError">
-            <div>{{txt('loadingError', projectsLoadingError)}}</div>
+        <div class="mh-def breadcrumbs">
+            <mh-breadcrumbs entity-type="folder" entity-id="{{folderId}}" ng-cloak></mh-breadcrumbs>
         </div>
-        <div class="mh-def mh-row projects" ng-show="projects && !projectsLoadingError">
-            <div class="mh-def new-project-form" ng-class="{show: selectedControl === 'newProject'}">
-                <div class="thumbnail" ng-click="newProjectThumbnailBtnClick()">
-                    <img class="new-project-thumbnail-preview"/>
-                </div>
-                <input class="new-project-thumbnail-input" type="file" accept=".png,.jpeg,.jpg,.gif" onchange="angular.element(this).scope().newProjectThumbnailFileChange()"/>
-                <input type="text" placeholder="{{::txt('projectName')}}" ng-model="newProjectName"/>
+        <div class="mh-def children-loading-error" ng-show="childrenLoadingError">
+            <div>{{txt('loadingError', childrenLoadingError)}}</div>
+        </div>
+        <div class="mh-def mh-row children" ng-show="children && !childrenLoadingError">
+            <div class="mh-def new-folder-form" ng-class="{show: selectedControl === 'newFolder'}">
+                <div class="thumbnail"></div>
+                <input type="text" placeholder="{{::txt('folderName')}}" ng-model="newFolderName"/>
                 <div class="mh-def btns">
-                    <div class="create" ng-click="createNewProjectBtnClick()">{{::txt('create')}}</div>
-                    <div class="cancel" ng-click="newProjectBtnClick()">{{::txt('cancel')}}</div>
+                    <div class="create" ng-click="createNewFolderBtnClick()">{{::txt('create')}}</div>
+                    <div class="cancel" ng-click="newFolderBtnClick()">{{::txt('cancel')}}</div>
                 </div>
             </div>
-            <div class="mh-def project" ng-repeat="project in projects track by $index" ng-click="projectClick(project)">
+            <div class="mh-def new-file-form" ng-class="{show: selectedControl === 'newFile'}">
+                <div class="thumbnail" ng-click="newFileInputBtnClick()"></div>
+                <input type="file" class="new-file-input"/>
+                <input type="text" placeholder="{{::txt('fileName')}}" ng-model="newFileName"/>
+                <div class="mh-def btns">
+                    <div class="create" ng-click="createNewFileBtnClick()">{{::txt('create')}}</div>
+                    <div class="cancel" ng-click="newFileBtnClick()">{{::txt('cancel')}}</div>
+                </div>
+            </div>
+            <div class="mh-def project" ng-repeat="child in children track by $index" ng-click="childClick(child)">
                 <div class="thumbnail">
                     <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}" ng-show="::project.imageFileExtension"/>
                 </div>
@@ -37,7 +48,6 @@
                 </div>
             </div>
         </div>
-        <mh-loader class="mh-def bar-spinner" ng-show="loadingProjects"></mh-loader>
-        -->
+        <mh-loader class="mh-def bar-spinner" ng-show="loadingChildren"></mh-loader>
     </div>
 </div>
