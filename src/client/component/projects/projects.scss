@@ -142,6 +142,15 @@ mh-projects {
         }
         > .project{
           cursor: pointer;
+          > .info{
+            > * {
+              margin-left: 8px;
+              margin-top: 8px;
+            }
+            > .name {
+              color: $color2;
+            }
+          }
         }
       }
     }
