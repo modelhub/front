@@ -19,7 +19,7 @@ define('mainMenu/mainMenu', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', 'logout', function($element, $location, $rootScope, $route, $scope, currentUser, EVENT, i18n, logout){
+                    controller: ['$element', '$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $route, $scope, currentUser, EVENT, i18n){
 
                         i18n($scope, txt);
 
@@ -65,9 +65,6 @@ define('mainMenu/mainMenu', [
 
                         $scope.$on('$locationChangeSuccess', function(){
                             $scope.selected = $location.path().split('/')[1];
-                            if ($scope.selected === 'logout') {
-                                logout();
-                            }
                         });
                     }]
                 };

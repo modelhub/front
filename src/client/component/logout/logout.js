@@ -19,8 +19,9 @@ define('logout/logout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'i18n', function($scope, i18n){
+                    controller: ['$scope', 'i18n', 'logout', function($scope, i18n, logout){
                         i18n($scope, txt);
+                        logout();
                     }]
                 };
             });
