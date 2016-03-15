@@ -49,7 +49,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             resizedImageName = null;
                         $scope.newFileInputChange = function(){
                             if (!processingThumbnail) {
-                                if (fileEl.files.length === 1) {
+                                if (fileEl.files.length === 1 || ($scope.newType === 'project' && fileEl.files.length > 1)) {
                                     $scope.multiFiles = false;
                                     processingThumbnail = true;
                                     thumbnail(fileEl.files[0], 196).then(function (data) {

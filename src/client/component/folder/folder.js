@@ -21,86 +21,42 @@ define('folder/folder', [
                     scope: {
                         folderId: '@'
                     },
-                    controller: ['$element', '$location', '$scope', '$window', 'api', 'currentUser', 'i18n', 'thumbnail', function($element, $location, $scope, $window, api, currentUser, i18n, thumbnail){
+                    controller: ['$element', '$location', '$rootScope', '$scope', '$window', 'api', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $scope, $window, api, currentUser, EVENT, i18n){
                         i18n($scope, txt);
 
                         var scrollEl = $element[0].getElementsByClassName('root')[0];
-                        var fileEl = $element[0].getElementsByClassName('new-file-input')[0];
 
                         $scope.my = currentUser();
 
                         $scope.newFolderBtnClick = function(){
-                            $scope.newFolderName = '';
+                            $scope.newType = 'folder';
                             if ($scope.selectedControl === 'newFolder') {
+                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
+                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
                                 $scope.selectedControl = 'newFolder';
                             }
                         };
 
-                        $scope.newFileBtnClick = function(){
-                            fileEl.value = '';
-                            $scope.newFileName = '';
-                            if ($scope.selectedControl === 'newFile') {
+                        $scope.newDocumentBtnClick = function(){
+                            $scope.newType = 'document';
+                            if ($scope.selectedControl === 'newDocument') {
+                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
-                                $scope.selectedControl = 'newFile';
+                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
+                                $scope.selectedControl = 'newDocument';
                             }
                         };
 
-                        $scope.newFileInputBtnClick = function(){
-                            fileEl.click();
-                        };
-
-                        var processingThumbnail = false,
-                            resizedImage = null,
-                            resizedImageName = null;
-                        $scope.newFileInputChange = function(){
-                            if (!processingThumbnail) {
-                                processingThumbnail = true;
-                                thumbnail(fileEl.files[0], 196).then(function (data) {
-                                    resizedImage = data.blob;
-                                    resizedImageName = data.name;
-                                    if(data.image) {
-                                        imgEl.src = data.image.src;
-                                    } else {
-                                        imgEl.src = '';
-                                    }
-                                    processingThumbnail = false;
-                                }, function (error) {
-                                    processingThumbnail = false;
-                                });
+                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_CANCEL, function(){
+                            if ($scope.newType === 'folder') {
+                                $scope.newFolderBtnClick();
+                            } else {
+                                $scope.newDocumentBtnClick();
                             }
-                        };
-
-                        var sendingCreateFolderApiRequest = false;
-                        $scope.createNewFolderBtnClick = function(){
-                            if(!sendingCreateFolderApiRequest){
-                                sendingCreateFolderApiRequest = true;
-                                api.v1.treeNode.createFolder($scope.folderId, $scope.newFolderName).then(function(folder){
-                                    sendingCreateFolderApiRequest = false;
-                                    $scope.selectedControl = '';
-                                    $location.path('/folder/'+folder.id);
-                                }, function(errorId){
-                                    //TODO
-                                    sendingCreateFolderApiRequest = false;
-                                });
-                            }
-                        };
-
-                        var sendingCreateFileApiRequest = false;
-                        $scope.createNewFileBtnClick = function(){
-                            if(!sendingCreateFileApiRequest && fileEl.files[0]){
-                                sendingCreateFileApiRequest = true;
-                                api.v1.treeNode.createDocument($scope.folderId, $scope.newFileName, '', fileEl.files[0]).then(function(folder){
-                                    sendingCreateFileApiRequest = false;
-                                    $scope.selectedControl = '';
-                                }, function(errorId){
-                                    //TODO
-                                    sendingCreateFileApiRequest = false;
-                                });
-                            }
-                        };
+                        });
 
                         var loadNextTreeNodeBatch,
                             filter = 'folder',

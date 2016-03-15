@@ -7,8 +7,8 @@
                     <div class="name">{{::txt('newFolder')}}</div>
                     <div class="highlight"></div>
                 </div>
-                <div class="mh-def control" ng-class="{selected: selectedControl === 'newFile'}" ng-click="newFileBtnClick()">
-                    <div class="name">{{::txt('newFile')}}</div>
+                <div class="mh-def control" ng-class="{selected: selectedControl === 'newDocument'}" ng-click="newDocumentBtnClick()">
+                    <div class="name">{{::txt('newDocument')}}</div>
                     <div class="highlight"></div>
                 </div>
             </div>
@@ -20,30 +20,14 @@
             <div>{{txt('loadingError', childrenLoadingError)}}</div>
         </div>
         <div class="mh-def mh-row children" ng-show="children && !childrenLoadingError">
-            <div class="mh-def new-folder-form" ng-class="{show: selectedControl === 'newFolder'}">
-                <div class="thumbnail"></div>
-                <input type="text" placeholder="{{::txt('folderName')}}" ng-model="newFolderName"/>
-                <div class="mh-def btns">
-                    <div class="create" ng-click="createNewFolderBtnClick()">{{::txt('create')}}</div>
-                    <div class="cancel" ng-click="newFolderBtnClick()">{{::txt('cancel')}}</div>
-                </div>
-            </div>
-            <div class="mh-def new-file-form" ng-class="{show: selectedControl === 'newFile'}">
-                <div class="thumbnail" ng-click="newFileInputBtnClick()"></div>
-                <input type="file" class="new-file-input" onchange="angular.element(this).scope().newFileInputChange()"/>
-                <input type="text" placeholder="{{::txt('fileName')}}" ng-model="newFileName"/>
-                <div class="mh-def btns">
-                    <div class="create" ng-click="createNewFileBtnClick()">{{::txt('create')}}</div>
-                    <div class="cancel" ng-click="newFileBtnClick()">{{::txt('cancel')}}</div>
-                </div>
-            </div>
-            <div class="mh-def project" ng-repeat="child in children track by $index" ng-click="childClick(child)">
+            <mh-thumbnail-create-form new-type="{{newType}}" ng-show="selectedControl === 'newFolder' || selectedControl === 'newDocument'"></mh-thumbnail-create-form>
+            <div class="mh-def child" ng-repeat="child in children track by $index" ng-click="childClick(child)">
                 <div class="thumbnail">
-                    <img ng-src="/api/v1/project/getImage/{{::project.id}}.{{::project.imageFileExtension}}" ng-show="::project.imageFileExtension"/>
+                    <img ng-src="/api/v1/project/getImage/{{child.versionId}}.{{child.thumbnailFileExtension}}" ng-if="child.thumbnailFileExtension"/>
                 </div>
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{::project.name}}</div>
-                    <div class="created mh-ellip" >{{::dt(project.created, 'L')}}</div>
+                    <div class="type mh-ellip" >{{::dt(project.created)}}</div>
                     <div class="role mh-ellip">{{::txt(project.role)}}</div>
                 </div>
             </div>

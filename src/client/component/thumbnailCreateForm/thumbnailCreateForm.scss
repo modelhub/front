@@ -9,10 +9,21 @@ mh-thumbnail-create-form {
       @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
       border-bottom: $border1;
       background-size: 60px 60px;
+      cursor: pointer;
       &.project{
-        background: url("/resource/image/img.png") center no-repeat;
+        background: url("/resource/image/camera.png") center no-repeat;
         &:hover{
-          background: url("/resource/image/img-selected.png") center no-repeat;
+          background: url("/resource/image/camera-selected.png") center no-repeat;
+        }
+      }
+      &.folder{
+        cursor: default;
+        background: url("/resource/image/folder.png") center no-repeat;
+      }
+      &.document, .documentVersion{
+        background: url("/resource/image/upload.png") center no-repeat;
+        &:hover{
+          background: url("/resource/image/upload-selected.png") center no-repeat;
         }
       }
       img{

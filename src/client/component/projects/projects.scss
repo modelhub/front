@@ -84,7 +84,7 @@ mh-projects {
           > .thumbnail{
             @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
             border-bottom: $border1;
-            background: url("/resource/image/img.png") center no-repeat;
+            background: url("/resource/image/camera.png") center no-repeat;
             img{
               @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
               background-color: $background1;
