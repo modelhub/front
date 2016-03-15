@@ -198,7 +198,7 @@ define('service/api', [
                                     return doJsonReq('/api/v1/treeNode/createFolder', {parent: parent, name: name});
                                 },
 
-                                createDocument: function (parent, name, uploadComment, file) {
+                                createDocument: function (parent, name, uploadComment, file, thumbnailName, thumbnail) {
                                     name = name || "";
                                     uploadComment = uploadComment || "";
                                     var data = new FormData();
@@ -206,6 +206,9 @@ define('service/api', [
                                     data.append('name', name);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
+                                    if(thumbnail) {
+                                        data.append('thumbnail', thumbnail, thumbnailName);
+                                    }
                                     return doFormReq('/api/v1/treeNode/createDocument', data);
                                 },
 
@@ -245,13 +248,16 @@ define('service/api', [
 
                             documentVersion: {
 
-                                create: function (document, uploadComment, file) {
+                                create: function (document, uploadComment, file, thumbnailName, thumbnail) {
                                     name = name || "";
                                     uploadComment = uploadComment || "";
                                     var data = new FormData();
                                     data.append('document', document);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
+                                    if(thumbnail) {
+                                        data.append('thumbnail', thumbnail, thumbnailName);
+                                    }
                                     return doFormReq('/api/v1/documentVersion/create', data);
                                 },
 
