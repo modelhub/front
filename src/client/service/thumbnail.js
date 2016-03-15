@@ -38,7 +38,7 @@ define('service/thumbnail', [
                                     return target.width;
                                 };
                                 getTargetHeight = function () {
-                                    return target.width;
+                                    return target.height;
                                 };
                                 addOnLoadHandler = function (fn) {
                                     target.addEventListener('load', fn);
