@@ -144,6 +144,11 @@ mh-projects {
         }
         > .project{
           cursor: pointer;
+          > .thumbnail{
+            img{
+              background-color: $background1;
+            }
+          }
           > .info{
             > * {
               margin-left: 8px;
