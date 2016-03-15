@@ -1,0 +1,11 @@
+<div class="mh-def mh-fill root">
+    <div class="thumbnail {{newType}}" ng-class="{'multi-files': multiFiles}" ng-click="::newFileInputBtnClick()">
+        <img ng-show="showImgEl"/>
+    </div>
+    <input type="file" class="new-file-input" onchange="angular.element(this).scope().newFileInputChange()"/>
+    <input type="text" placeholder="{{::txt('name')}}" ng-model="name"/>
+    <div class="mh-def btns">
+        <div class="create" ng-click="createBtnClick()">{{::txt('create')}}</div>
+        <div class="cancel" ng-click="cancelBtnClick()">{{::txt('cancel')}}</div>
+    </div>
+</div>

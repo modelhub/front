@@ -25,6 +25,7 @@ define('registry', [
     'rootLayout/rootLayout',
     'search/search',
     'settings/settings',
+    'thumbnailCreateForm/thumbnailCreateForm',
     'uploads/uploads',
     'viewer/viewer'
 ], function(
@@ -54,6 +55,7 @@ define('registry', [
     rootLayout,
     search,
     settings,
+    thumbnailCreateForm,
     uploads,
     viewer
 ){

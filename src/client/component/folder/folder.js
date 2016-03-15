@@ -52,6 +52,27 @@ define('folder/folder', [
                             fileEl.click();
                         };
 
+                        var processingThumbnail = false,
+                            resizedImage = null,
+                            resizedImageName = null;
+                        $scope.newFileInputChange = function(){
+                            if (!processingThumbnail) {
+                                processingThumbnail = true;
+                                thumbnail(fileEl.files[0], 196).then(function (data) {
+                                    resizedImage = data.blob;
+                                    resizedImageName = data.name;
+                                    if(data.image) {
+                                        imgEl.src = data.image.src;
+                                    } else {
+                                        imgEl.src = '';
+                                    }
+                                    processingThumbnail = false;
+                                }, function (error) {
+                                    processingThumbnail = false;
+                                });
+                            }
+                        };
+
                         var sendingCreateFolderApiRequest = false;
                         $scope.createNewFolderBtnClick = function(){
                             if(!sendingCreateFolderApiRequest){
@@ -84,13 +105,15 @@ define('folder/folder', [
                         var loadNextTreeNodeBatch,
                             filter = 'folder',
                             offset = 0,
-                            limit = 20,
+                            defaultLimit = 20,
+                            limit = defaultLimit,
                             totalResults = null;
                         $scope.loadingChildren = true;
                         loadNextTreeNodeBatch = function(){
                             if(filter) {
                                 $scope.loadingChildren = true;
                                 api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit).then(function (result) {
+                                    limit = defaultLimit;
                                     totalResults = result.totalResults;
                                     if (!$scope.children){
                                         $scope.children = result.results;
@@ -102,7 +125,14 @@ define('folder/folder', [
                                         loadNextTreeNodeBatch();
                                     } else if (filter === 'folder' ){
                                         filter = 'document';
+                                        limit = defaultLimit - (offset % defaultLimit);
+                                        if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight) {
+                                            loadNextTreeNodeBatch();
+                                        } else {
+                                            $scope.loadingChildren = false;
+                                        }
                                     } else {
+                                        filter = null;
                                         $scope.loadingChildren = false;
                                     }
                                 }, function (errorId) {

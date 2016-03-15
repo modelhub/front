@@ -19,65 +19,31 @@ define('projects/projects', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$location', '$scope', '$window', 'api', 'currentUser', 'i18n', 'thumbnail', function($element, $location, $scope, $window, api, currentUser, i18n, thumbnail){
+                    controller: ['$element', '$location', '$rootScope', '$scope', 'api', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $scope, api, currentUser, EVENT, i18n){
                         i18n($scope, txt);
 
                         var scrollEl = $element[0].getElementsByClassName('root')[0];
-                        var fileEl = $element[0].getElementsByClassName('new-project-thumbnail-input')[0];
-                        var imgEl = $element[0].getElementsByClassName('new-project-thumbnail-preview')[0];
 
                         $scope.my = currentUser();
 
                         $scope.newProjectBtnClick = function(){
-                            fileEl.value = '';
-                            imgEl.src = '';
-                            $scope.newProjectName = '';
                             if ($scope.selectedControl === 'newProject') {
+                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
+                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
                                 $scope.selectedControl = 'newProject';
                             }
                         };
 
-                        $scope.newProjectThumbnailBtnClick = function(){
-                            fileEl.click();
-                        };
+                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_CANCEL, function(){
+                            $scope.newProjectBtnClick();
+                        });
 
-                        var processingThumbnail = false,
-                            resizedImage = null,
-                            resizedImageName = null;
-                        $scope.newProjectThumbnailFileChange = function(){
-                            if (!processingThumbnail) {
-                                processingThumbnail = true;
-                                thumbnail(fileEl.files[0], 196).then(function (data) {
-                                    resizedImage = data.blob;
-                                    resizedImageName = data.name;
-                                    if(data.image) {
-                                        imgEl.src = data.image.src;
-                                    } else {
-                                        imgEl.src = '';
-                                    }
-                                    processingThumbnail = false;
-                                }, function (error) {
-                                    processingThumbnail = false;
-                                });
-                            }
-                        };
-
-                        var sendingCreateApiRequest = false;
-                        $scope.createNewProjectBtnClick = function(){
-                            if(!processingThumbnail && !sendingCreateApiRequest){
-                                sendingCreateApiRequest = true;
-                                api.v1.project.create($scope.newProjectName, resizedImageName, resizedImage).then(function(project){
-                                    sendingCreateApiRequest = false;
-                                    $scope.selectedControl = '';
-                                    $location.path('/folder/'+project.id);
-                                }, function(errorId){
-                                    //TODO
-                                    sendingCreateApiRequest = false;
-                                });
-                            }
-                        };
+                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, function(event, project){
+                            $scope.newProjectBtnClick();
+                            $location.path('/folder/'+project.id);
+                        });
 
                         var loadNextProjectBatch,
                             offset = 0,

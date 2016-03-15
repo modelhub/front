@@ -1,0 +1,71 @@
+@import "../../global";
+
+mh-thumbnail-create-form {
+  > .root {
+    @include fill($width: $thumbnailWidth, $height: 285px);
+    background: $background1;
+    align-items: center;
+    > .thumbnail{
+      @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+      border-bottom: $border1;
+      background-size: 60px 60px;
+      &.project{
+        background: url("/resource/image/img.png") center no-repeat;
+        &:hover{
+          background: url("/resource/image/img-selected.png") center no-repeat;
+        }
+      }
+      img{
+        @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+        background-color: $background1;
+      }
+    }
+    > input[type="file"] {
+      display: none;
+    }
+    > input[type="text"] {
+      @include fill($width: calc(100% - 16px), $height: 20px);
+      margin-top: 6px;
+      text-align: center;
+      outline: none;
+      border: $border1;
+      border-radius: 10px;
+      background: $background2;
+      color: $color2;
+      &:focus{
+        border: 1px solid $highlight1;
+      }
+    }
+    > .btns{
+      width: calc(100% - 16px);
+      justify-content: space-between;
+      > * {
+        margin-top: 6px;
+        @include fill($height: 20px);
+        border-radius: 25px;
+        cursor: pointer;
+        text-align: center;
+        color: $color2;
+      }
+      .create{
+        background: $highlight1;
+        &:hover{
+          background: $highlight1Hover;
+        }
+        &:active{
+          background: $highlight1;
+        }
+      }
+      .cancel{
+        background: $background2;
+        &:hover{
+          background: $background1;
+          border: $border1;
+        }
+        &:active{
+          background: $background2;
+        }
+      }
+    }
+  }
+}

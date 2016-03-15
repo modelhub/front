@@ -64,16 +64,16 @@ mh-folder {
         margin: 8px;
         flex-wrap: wrap;
         > * {
-          @include fill($width: 196px, $height: 285px);
+          @include fill($width: $thumbnailWidth, $height: 285px);
           background: $background1;
           margin: 8px;
           > .thumbnail{
-            @include fill($width: 196px, $height: 196px);
+            @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
             border-bottom: $border1;
             background: url("/resource/image/folder.png") center no-repeat;
             background-size: 60px 60px;
             img{
-              @include fill($width: 196px, $height: 196px);
+              @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
             }
           }
         }

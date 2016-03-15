@@ -1,0 +1,16 @@
+﻿{
+  "langs": ["en"],
+
+  "name": {
+    "en": "Name"
+  },
+
+  "create": {
+    "en": "Create"
+  },
+
+  "cancel": {
+    "en": "Cancel"
+  }
+
+}

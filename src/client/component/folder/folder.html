@@ -30,7 +30,7 @@
             </div>
             <div class="mh-def new-file-form" ng-class="{show: selectedControl === 'newFile'}">
                 <div class="thumbnail" ng-click="newFileInputBtnClick()"></div>
-                <input type="file" class="new-file-input"/>
+                <input type="file" class="new-file-input" onchange="angular.element(this).scope().newFileInputChange()"/>
                 <input type="text" placeholder="{{::txt('fileName')}}" ng-model="newFileName"/>
                 <div class="mh-def btns">
                     <div class="create" ng-click="createNewFileBtnClick()">{{::txt('create')}}</div>
