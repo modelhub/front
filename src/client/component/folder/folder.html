@@ -20,15 +20,14 @@
             <div>{{txt('loadingError', childrenLoadingError)}}</div>
         </div>
         <div class="mh-def mh-row children" ng-show="children && !childrenLoadingError">
-            <mh-thumbnail-create-form new-type="{{newType}}" ng-show="selectedControl === 'newFolder' || selectedControl === 'newDocument'"></mh-thumbnail-create-form>
+            <mh-thumbnail-create-form new-type="{{newType}}" parent-id="{{folderId}}" ng-show="selectedControl"></mh-thumbnail-create-form>
             <div class="mh-def child" ng-repeat="child in children track by $index" ng-click="childClick(child)">
                 <div class="thumbnail">
                     <img ng-src="/api/v1/project/getImage/{{child.versionId}}.{{child.thumbnailFileExtension}}" ng-if="child.thumbnailFileExtension"/>
                 </div>
                 <div class="mh-def info">
-                    <div class="name mh-ellip">{{::project.name}}</div>
-                    <div class="type mh-ellip" >{{::dt(project.created)}}</div>
-                    <div class="role mh-ellip">{{::txt(project.role)}}</div>
+                    <div class="name mh-ellip">{{::child.name}}</div>
+                    <div class="type mh-ellip" >{{::txt(child.nodeType)}}</div>
                 </div>
             </div>
         </div>

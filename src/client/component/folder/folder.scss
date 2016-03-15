@@ -67,86 +67,18 @@ mh-folder {
           @include fill($width: $thumbnailWidth, $height: 285px);
           background: $background1;
           margin: 8px;
+        }
+        > .child{
+          cursor: pointer;
           > .thumbnail{
             @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
             border-bottom: $border1;
             background: url("/resource/image/folder.png") center no-repeat;
-            background-size: 60px 60px;
             img{
               @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+              background-color: $background1;
             }
           }
-        }
-        > .new-folder-form, > .new-file-form {
-          align-items: center;
-          display: none;
-          &.show{
-            display: flex;
-          }
-          > .thumbnail{
-            border-bottom: $border1;
-          }
-          > input[type="file"] {
-            display: none;
-          }
-          > input[type="text"] {
-            @include fill($width: calc(100% - 16px), $height: 20px);
-            margin-top: 6px;
-            text-align: center;
-            outline: none;
-            border: $border1;
-            border-radius: 10px;
-            background: $background2;
-            color: $color2;
-            &:focus{
-              border: 1px solid $highlight1;
-            }
-          }
-          > .btns{
-            width: calc(100% - 16px);
-            justify-content: space-between;
-            > * {
-              margin-top: 6px;
-              @include fill($height: 20px);
-              border-radius: 25px;
-              cursor: pointer;
-              text-align: center;
-              color: $color2;
-            }
-            .create{
-              background: $highlight1;
-              &:hover{
-                background: $highlight1Hover;
-              }
-              &:active{
-                background: $highlight1;
-              }
-            }
-            .cancel{
-              background: $background2;
-              &:hover{
-                background: $background1;
-                border: $border1;
-              }
-              &:active{
-                background: $background2;
-              }
-            }
-          }
-        }
-        > .new-file-form{
-          > .thumbnail{
-            cursor: pointer;
-            background: url("/resource/image/upload.png") center no-repeat;
-            background-size: 60px 60px;
-            &:hover{
-              background: url("/resource/image/upload-selected.png") center no-repeat;
-              background-size: 60px 60px;
-            }
-          }
-        }
-        > .project{
-          cursor: pointer;
           > .info{
             > * {
               margin-left: 8px;

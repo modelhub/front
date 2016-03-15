@@ -25,6 +25,12 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                     controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail){
                         i18n($scope, txt);
 
+                        if($scope.newType === 'project'){
+                            $scope.fileInputAccept = 'image/*';
+                        } else {
+                            $scope.fileInputAccept = '*/*';
+                        }
+
                         var fileEl = $element[0].getElementsByClassName('new-file-input')[0],
                             imgEl = $element[0].getElementsByTagName('img')[0];
 
@@ -36,7 +42,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                         });
 
                         $scope.newFileInputBtnClick = function(){
-                            if (!processingThumbnail) {
+                            if (!processingThumbnail && $scope.newType !== 'folder') {
                                 fileEl.click();
                             }
                         };
@@ -46,7 +52,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
 
                         var processingThumbnail = false,
                             resizedImage = null,
-                            resizedImageName = null;
+                            resizedImageType = null;
                         $scope.newFileInputChange = function(){
                             if (!processingThumbnail) {
                                 if (fileEl.files.length === 1 || ($scope.newType === 'project' && fileEl.files.length > 1)) {
@@ -54,7 +60,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                     processingThumbnail = true;
                                     thumbnail(fileEl.files[0], 196).then(function (data) {
                                         resizedImage = data.blob;
-                                        resizedImageName = data.name;
+                                        resizedImageType = data.type;
                                         if (data.image) {
                                             imgEl.src = data.image.src;
                                             $scope.showImgEl = true;
@@ -86,7 +92,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                 switch($scope.newType){
                                     case 'project':
                                         sendingCreateApiRequest = true;
-                                        api.v1.project.create($scope.name, resizedImageName, resizedImage).then(function(project){
+                                        api.v1.project.create($scope.name, resizedImageType, resizedImage).then(function(project){
                                             sendingCreateApiRequest = false;
                                             $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, project);
                                         }, function(errorId){

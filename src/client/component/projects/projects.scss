@@ -73,12 +73,6 @@ mh-projects {
           background: $background1;
           margin: 8px;
         }
-        > mh-thumbnail-create-form {
-          display: none;
-          &.show {
-            display: flex;
-          }
-        }
         > .project{
           cursor: pointer;
           > .thumbnail{

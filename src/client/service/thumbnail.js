@@ -87,7 +87,7 @@ define('service/thumbnail', [
                                     var dataUrl = canvas.toDataURL(file.type);
                                     var resizedImage = new $window.Image();
                                     resizedImage.src = dataUrl;
-                                    resolve({image: resizedImage, blob: dataURLToBlob(dataUrl), name: dataUrl.substring(5, dataUrl.indexOf(';')).replace('/', '.')});
+                                    resolve({image: resizedImage, blob: dataURLToBlob(dataUrl), type: dataUrl.substring(5, dataUrl.indexOf(';'))});
                                 });
                                 target.addEventListener('error', function (error) {
                                     reject(error);

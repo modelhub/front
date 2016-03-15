@@ -27,6 +27,18 @@
 
   "cancel": {
     "en": "Cancel"
+  },
+
+  "folder": {
+    "en": "folder"
+  },
+
+  "document": {
+    "en": "document"
+  },
+
+  "viewerState": {
+    "en": "viewer state"
   }
 
 }

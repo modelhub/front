@@ -82,6 +82,7 @@ define('folder/folder', [
                                     } else if (filter === 'folder' ){
                                         filter = 'document';
                                         limit = defaultLimit - (offset % defaultLimit);
+                                        offset = 0;
                                         if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight) {
                                             loadNextTreeNodeBatch();
                                         } else {

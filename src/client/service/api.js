@@ -128,12 +128,13 @@ define('service/api', [
 
                             project: {
 
-                                create: function (name, fileName, image) {
+                                create: function (name, thumbnailType, thumbnail) {
                                     name = name || "";
                                     var data = new FormData();
                                     data.append('name', name);
-                                    if(image) {
-                                        data.append('file', image, fileName);
+                                    if(thumbnail && thumbnailType) {
+                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnailType', thumbnailType);
                                     }
                                     return doFormReq('/api/v1/project/create', data);
                                 },
@@ -142,13 +143,14 @@ define('service/api', [
                                     return doJsonReq('/api/v1/project/setName', {id: id, name: name});
                                 },
 
-                                setImage: function (id, image) {
+                                setThumbnail: function (id, thumbnailType, thumbnail) {
                                     var data = new FormData();
                                     data.append('id', id);
-                                    if(image) {
-                                        data.append('file', image);
+                                    if(thumbnail && thumbnailType) {
+                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnailType', thumbnailType);
                                     }
-                                    return doFormReq('/api/v1/project/setImage', data);
+                                    return doFormReq('/api/v1/project/setThumbnail', data);
                                 },
 
                                 addUsers: function (id, role, users) {
@@ -198,7 +200,7 @@ define('service/api', [
                                     return doJsonReq('/api/v1/treeNode/createFolder', {parent: parent, name: name});
                                 },
 
-                                createDocument: function (parent, name, uploadComment, file, thumbnailName, thumbnail) {
+                                createDocument: function (parent, name, uploadComment, fileType, file, thumbnailType, thumbnail) {
                                     name = name || "";
                                     uploadComment = uploadComment || "";
                                     var data = new FormData();
@@ -206,8 +208,10 @@ define('service/api', [
                                     data.append('name', name);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
-                                    if(thumbnail) {
-                                        data.append('thumbnail', thumbnail, thumbnailName);
+                                    data.append('fileType', fileType);
+                                    if(thumbnail && thumbnailType) {
+                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnailType', thumbnailType);
                                     }
                                     return doFormReq('/api/v1/treeNode/createDocument', data);
                                 },
@@ -248,15 +252,17 @@ define('service/api', [
 
                             documentVersion: {
 
-                                create: function (document, uploadComment, file, thumbnailName, thumbnail) {
+                                create: function (document, uploadComment, fileType, file, thumbnailType, thumbnail) {
                                     name = name || "";
                                     uploadComment = uploadComment || "";
                                     var data = new FormData();
                                     data.append('document', document);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
-                                    if(thumbnail) {
-                                        data.append('thumbnail', thumbnail, thumbnailName);
+                                    data.append('fileType', fileType);
+                                    if(thumbnail && thumbnailType) {
+                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnailType', thumbnailType);
                                     }
                                     return doFormReq('/api/v1/documentVersion/create', data);
                                 },
