@@ -5,12 +5,28 @@
     "en": "Name"
   },
 
-  "create": {
+  "projectAction": {
     "en": "Create"
+  },
+
+  "folderAction": {
+    "en": "Create"
+  },
+
+  "documentAction": {
+    "en": "Upload"
+  },
+
+  "documentVersionAction": {
+    "en": "Upload"
   },
 
   "cancel": {
     "en": "Cancel"
+  },
+
+  "multiFiles": {
+    "en": "(multiple files)"
   }
 
 }

@@ -9,7 +9,8 @@ mh-thumbnail-create-form {
     > .thumbnail{
       @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
       border-bottom: $border1;
-      background-size: 60px 60px;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
       &.project{
         background: url("/resource/image/camera.png") center no-repeat;
@@ -25,6 +26,22 @@ mh-thumbnail-create-form {
         background: url("/resource/image/upload.png") center no-repeat;
         &:hover{
           background: url("/resource/image/upload-selected.png") center no-repeat;
+          color: $color2;
+        }
+        &.multi-files{
+          background: url("/resource/image/multi-document.png") center no-repeat;
+          &:hover{
+            background: url("/resource/image/multi-document-selected.png") center no-repeat;
+          }
+        }
+        &.single-file{
+          background: url("/resource/image/document.png") center no-repeat;
+          &:hover{
+            background: url("/resource/image/document-selected.png") center no-repeat;
+          }
+        }
+        > .file-ext {
+          font-size: 18px;
         }
       }
       img{

@@ -1,9 +1,10 @@
 <div class="mh-def mh-fill root">
-    <div class="thumbnail {{newType}}" ng-class="{'multi-files': multiFiles}" ng-click="::newFileInputBtnClick()">
+    <div class="mh-def thumbnail {{newType}}" ng-class="{'multi-files': multiFiles, 'single-file': singleFile}" ng-click="::newFileInputBtnClick()">
+        <div class="mh-def file-ext" ng-show="!showImgEl && fileExtension">{{fileExtension}}</div>
         <img ng-show="showImgEl"/>
     </div>
-    <input type="file" class="new-file-input" accept="{{fileInputAccept}}" multiple onchange="angular.element(this).scope().newFileInputChange()"/>
-    <input type="text" placeholder="{{::txt('name')}}" ng-model="name"/>
-    <div class="create" ng-click="createBtnClick()">{{::txt('create')}}</div>
+    <input type="file" class="file-input" accept="{{fileInputAccept}}" multiple onchange="angular.element(this).scope().newFileInputChange()"/>
+    <input type="text" ng-attr-placeholder="{{!multiFiles && txt('name') || txt('multiFiles')}}" ng-model="name" ng-disabled="multiFiles" ng-show="newType !== 'documentVersion'"/>
+    <div class="create" ng-click="createBtnClick()" ng-if="newType">{{txt(newType+'Action')}}</div>
     <div class="cancel" ng-click="cancelBtnClick()">{{::txt('cancel')}}</div>
 </div>

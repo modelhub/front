@@ -58,6 +58,15 @@ define('folder/folder', [
                             }
                         });
 
+                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, function(event, node){
+                            if ($scope.newType === 'folder') {
+                                $scope.newFolderBtnClick();
+                                $location.path('/folder/'+node.id);
+                            } else {
+                                $scope.newDocumentBtnClick();
+                            }
+                        });
+
                         var loadNextTreeNodeBatch,
                             filter = 'folder',
                             offset = 0,

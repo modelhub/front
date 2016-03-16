@@ -22,7 +22,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                         newType: '@',
                         parentId: '@'
                     },
-                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail){
+                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', 'upload', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail, uploads){
                         i18n($scope, txt);
 
                         if($scope.newType === 'project'){
@@ -31,15 +31,24 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             $scope.fileInputAccept = '*/*';
                         }
 
-                        var fileEl = $element[0].getElementsByClassName('new-file-input')[0],
+                        var fileEl = $element[0].getElementsByClassName('file-input')[0],
                             imgEl = $element[0].getElementsByTagName('img')[0];
 
-                        $scope.$on(EVENT.HIDE_THUMBNAIL_CREATE_FORM, function(){
+                        function resetForm(){
                             fileEl.value = '';
                             imgEl.src = '';
                             $scope.name = '';
                             $scope.showImgEl = false;
-                        });
+                            $scope.multiFiles = false;
+                            $scope.singleFile = false;
+                            $scope.fileExtension = '';
+                        }
+
+                        resetForm();
+
+                        $scope.$on(EVENT.SHOW_THUMBNAIL_CREATE_FORM, resetForm);
+
+                        $scope.$on(EVENT.HIDE_THUMBNAIL_CREATE_FORM, resetForm);
 
                         $scope.newFileInputBtnClick = function(){
                             if (!processingThumbnail && $scope.newType !== 'folder') {
@@ -47,15 +56,13 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             }
                         };
 
-                        $scope.showImgEl = false;
-                        $scope.multiFiles = false;
-
                         var processingThumbnail = false,
                             resizedImage = null,
                             resizedImageType = null;
                         $scope.newFileInputChange = function(){
                             if (!processingThumbnail) {
-                                if (fileEl.files.length === 1 || ($scope.newType === 'project' && fileEl.files.length > 1)) {
+                                if (fileEl.files.length === 1 || ($scope.newType === 'project' && fileEl.files.length >= 1)) {
+                                    $scope.singleFile = true;
                                     $scope.multiFiles = false;
                                     processingThumbnail = true;
                                     thumbnail(fileEl.files[0], 196).then(function (data) {
@@ -75,12 +82,27 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                         imgEl.src = '';
                                         fileEl.value= '';
                                     });
+                                    if ($scope.newType !== 'project') {
+                                        var lastIdxOfDot = fileEl.files[0].name.lastIndexOf('.');
+                                        if (lastIdxOfDot !== -1) {
+                                            $scope.fileExtension = fileEl.files[0].name.substring(lastIdxOfDot + 1);
+                                        }
+                                        if (lastIdxOfDot !== -1) {
+                                            $scope.name = fileEl.files[0].name.substring(0, lastIdxOfDot)
+                                        } else {
+                                            $scope.name = fileEl.files[0].name;
+                                        }
+                                    }
                                 } else if (fileEl.files.length > 1){
+                                    $scope.singleFile = false;
                                     $scope.showImgEl = false;
                                     $scope.multiFiles = true;
+                                    $scope.fileExtension = '';
+                                    $scope.name = '';
+                                    $scope.$evalAsync();
                                 } else {
-                                    $scope.multiFiles = false;
-                                    $scope.showImgEl = false;
+                                    resetForm();
+                                    $scope.$evalAsync();
                                 }
                             }
                         };
@@ -91,7 +113,6 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                 sendingCreateApiRequest = true;
                                 switch($scope.newType){
                                     case 'project':
-                                        sendingCreateApiRequest = true;
                                         api.v1.project.create($scope.name, resizedImageType, resizedImage).then(function(project){
                                             sendingCreateApiRequest = false;
                                             $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, project);
@@ -110,8 +131,22 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                         });
                                         break;
                                     case 'document':
+                                        api.v1.treeNode.createDocument($scope.parentId, $scope.name).then(function(document){
+                                            sendingCreateApiRequest = false;
+                                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, document);
+                                        }, function(errorId){
+                                            //TODO
+                                            sendingCreateApiRequest = false;
+                                        });
                                         break;
                                     case 'documentVersion':
+                                        api.v1.documentVersion.create($scope.parentId, $scope.name).then(function(document){
+                                            sendingCreateApiRequest = false;
+                                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, document);
+                                        }, function(errorId){
+                                            //TODO
+                                            sendingCreateApiRequest = false;
+                                        });
                                         break;
                                 }
                             }

@@ -36,6 +36,12 @@ require([
             .when('/folder/:folderId', {
                 template: '<mh-folder-route class="mh-def mh-fill" ng-cloak></mh-folder-route>'
             })
+            .when('/document/:documentId', {
+                template: '<mh-document-route class="mh-def mh-fill" ng-cloak></mh-document-route>'
+            })
+            .when('/documentVersion/:documentVersionId', {
+                template: '<mh-document-version-route class="mh-def mh-fill" ng-cloak></mh-document-version-route>'
+            })
             .otherwise({
                 redirectTo: '/projects'
             });

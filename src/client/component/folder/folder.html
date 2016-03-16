@@ -23,7 +23,7 @@
             <mh-thumbnail-create-form new-type="{{newType}}" parent-id="{{folderId}}" ng-show="selectedControl"></mh-thumbnail-create-form>
             <div class="mh-def child" ng-repeat="child in children track by $index" ng-click="childClick(child)">
                 <div class="thumbnail">
-                    <img ng-src="/api/v1/project/getImage/{{child.versionId}}.{{child.thumbnailFileExtension}}" ng-if="child.thumbnailFileExtension"/>
+                    <img ng-src="{{child.thumbnailUrl}}" ng-if="child.thumbnailUrlReady"/>
                 </div>
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{::child.name}}</div>
