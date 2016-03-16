@@ -200,7 +200,7 @@ define('service/api', [
                                     return doJsonReq('/api/v1/treeNode/createFolder', {parent: parent, name: name});
                                 },
 
-                                createDocument: function (parent, name, uploadComment, fileType, file, thumbnailType, thumbnail) {
+                                createDocument: function (parent, name, uploadComment, file, thumbnailType, thumbnail) {
                                     name = name || "";
                                     uploadComment = uploadComment || "";
                                     var data = new FormData();
@@ -208,7 +208,7 @@ define('service/api', [
                                     data.append('name', name);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
-                                    data.append('fileType', fileType);
+                                    data.append('fileType', file.Type);
                                     if(thumbnail && thumbnailType) {
                                         data.append('thumbnail', thumbnail, '');
                                         data.append('thumbnailType', thumbnailType);
@@ -252,14 +252,14 @@ define('service/api', [
 
                             documentVersion: {
 
-                                create: function (document, uploadComment, fileType, file, thumbnailType, thumbnail) {
+                                create: function (document, uploadComment, file, thumbnailType, thumbnail) {
                                     name = name || "";
                                     uploadComment = uploadComment || "";
                                     var data = new FormData();
                                     data.append('document', document);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
-                                    data.append('fileType', fileType);
+                                    data.append('fileType', file.type);
                                     if(thumbnail && thumbnailType) {
                                         data.append('thumbnail', thumbnail, '');
                                         data.append('thumbnailType', thumbnailType);
