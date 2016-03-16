@@ -133,7 +133,7 @@ define('service/api', [
                                     var data = new FormData();
                                     data.append('name', name);
                                     if(thumbnail && thumbnailType) {
-                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnail', thumbnail, 'a.a');
                                         data.append('thumbnailType', thumbnailType);
                                     }
                                     return doFormReq('/api/v1/project/create', data);
@@ -210,7 +210,7 @@ define('service/api', [
                                     data.append('file', file);
                                     data.append('fileType', file.Type);
                                     if(thumbnail && thumbnailType) {
-                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnail', thumbnail, 'a.a');
                                         data.append('thumbnailType', thumbnailType);
                                     }
                                     return doFormReq('/api/v1/treeNode/createDocument', data);
@@ -261,7 +261,7 @@ define('service/api', [
                                     data.append('file', file);
                                     data.append('fileType', file.type);
                                     if(thumbnail && thumbnailType) {
-                                        data.append('thumbnail', thumbnail, '');
+                                        data.append('thumbnail', thumbnail, 'a.a');
                                         data.append('thumbnailType', thumbnailType);
                                     }
                                     return doFormReq('/api/v1/documentVersion/create', data);
