@@ -5,6 +5,7 @@ mh-thumbnail-create-form {
     @include fill($width: $thumbnailWidth, $height: 285px);
     background: $background1;
     align-items: center;
+    justify-content: space-between;
     > .thumbnail{
       @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
       border-bottom: $border1;
@@ -34,48 +35,44 @@ mh-thumbnail-create-form {
     > input[type="file"] {
       display: none;
     }
-    > input[type="text"] {
+    > *:not(.thumbnail) {
       @include fill($width: calc(100% - 16px), $height: 20px);
-      margin-top: 6px;
+      text-align: center;
+      border-radius: 20px;
+      cursor: pointer;
+      text-align: center;
+      color: $color2;
+    }
+    > input[type="text"] {
+      cursor: text;
       text-align: center;
       outline: none;
       border: $border1;
       border-radius: 10px;
       background: $background2;
-      color: $color2;
       &:focus{
         border: 1px solid $highlight1;
       }
     }
-    > .btns{
-      width: calc(100% - 16px);
-      justify-content: space-between;
-      > * {
-        margin-top: 6px;
-        @include fill($height: 20px);
-        border-radius: 25px;
-        cursor: pointer;
-        text-align: center;
-        color: $color2;
+    .create{
+      background: $highlight1;
+      &:hover{
+        background: $highlight1Hover;
       }
-      .create{
+      &:active{
         background: $highlight1;
-        &:hover{
-          background: $highlight1Hover;
-        }
-        &:active{
-          background: $highlight1;
-        }
       }
-      .cancel{
+    }
+    .cancel{
+      background: $background2;
+      margin-bottom: 5px;
+      border: 1px solid $background1;
+      &:hover{
+        background: $background1;
+        border: $border1;
+      }
+      &:active{
         background: $background2;
-        &:hover{
-          background: $background1;
-          border: $border1;
-        }
-        &:active{
-          background: $background2;
-        }
       }
     }
   }

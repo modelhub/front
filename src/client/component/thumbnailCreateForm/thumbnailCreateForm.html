@@ -4,8 +4,6 @@
     </div>
     <input type="file" class="new-file-input" accept="{{fileInputAccept}}" onchange="angular.element(this).scope().newFileInputChange()"/>
     <input type="text" placeholder="{{::txt('name')}}" ng-model="name"/>
-    <div class="mh-def btns">
-        <div class="create" ng-click="createBtnClick()">{{::txt('create')}}</div>
-        <div class="cancel" ng-click="cancelBtnClick()">{{::txt('cancel')}}</div>
-    </div>
+    <div class="create" ng-click="createBtnClick()">{{::txt('create')}}</div>
+    <div class="cancel" ng-click="cancelBtnClick()">{{::txt('cancel')}}</div>
 </div>
