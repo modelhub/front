@@ -147,11 +147,13 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                         for(var i = 0, l = files.length; i < l; i++){
                                             uploader.start(files[i]);
                                         }
+                                        $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS);
                                         break;
                                     case 'documentVersion':
                                         if(singleFileEl.files.length === 1) {
                                             uploader.start(singleFileEl.files[0]);
                                         }
+                                        $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS);
                                         break;
                                 }
                             }

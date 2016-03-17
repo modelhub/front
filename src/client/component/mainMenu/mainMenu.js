@@ -64,6 +64,7 @@ define('mainMenu/mainMenu', [
                         };
 
                         $scope.$on('$locationChangeSuccess', function(){
+                            $scope.search = '';
                             $scope.selected = $location.path().split('/')[1];
                         });
                     }]

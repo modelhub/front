@@ -63,12 +63,12 @@ define('projects/projects', [
                                         $scope.projects.push.apply($scope.projects, result.results);
                                     }
                                     offset = $scope.projects.length;
+                                    loadingNextProjectBatch = false;
                                     if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                         loadNextProjectBatch();
                                     } else {
                                         $scope.loadingProjects = false;
                                     }
-                                    loadingNextProjectBatch = false;
                                 }, function (errorId) {
                                     $scope.projectsLoadingError = errorId;
                                     $scope.loadingProjects = false;
@@ -102,8 +102,6 @@ define('projects/projects', [
                         $scope.$on('$destroy', function(){
                             $window.removeEventListener('resize', windowResizeHandler);
                         });
-
-
 
                         $scope.projectClick = function(project){
                             $location.path('/folder/'+project.id);

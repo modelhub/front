@@ -72,10 +72,12 @@ define('folder/folder', [
                             offset = 0,
                             defaultLimit = 20,
                             limit = defaultLimit,
-                            totalResults = null;
-                        $scope.loadingChildren = true;
+                            totalResults = null,
+                            loadingNextTreeNodeBatch = false;
+                        $scope.loadingChildren = false;
                         loadNextTreeNodeBatch = function(){
-                            if(filter) {
+                            if(filter && !loadingNextTreeNodeBatch) {
+                                loadingNextTreeNodeBatch = true;
                                 $scope.loadingChildren = true;
                                 api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit).then(function (result) {
                                     limit = defaultLimit;
@@ -86,13 +88,14 @@ define('folder/folder', [
                                         $scope.children.push.apply($scope.children, result.results);
                                     }
                                     offset = $scope.children.length;
-                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight) {
+                                    loadingNextTreeNodeBatch = false;
+                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                         loadNextTreeNodeBatch();
                                     } else if (filter === 'folder' ){
                                         filter = 'document';
                                         limit = defaultLimit - (offset % defaultLimit);
                                         offset = 0;
-                                        if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight) {
+                                        if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                             loadNextTreeNodeBatch();
                                         } else {
                                             $scope.loadingChildren = false;
@@ -104,6 +107,7 @@ define('folder/folder', [
                                 }, function (errorId) {
                                     $scope.childrenLoadingError = errorId;
                                     $scope.loadingChildren = false;
+                                    loadingNextTreeNodeBatch = false;
                                 });
                             }
                         };
@@ -114,6 +118,24 @@ define('folder/folder', [
                                 lastScrollTop = scrollEl.scrollTop;
                                 loadNextTreeNodeBatch();
                             }
+                        });
+
+                        $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
+                            $window.setTimeout(function(){
+                                if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                    loadNextTreeNodeBatch();
+                                }
+                            }, 100);
+                        });
+
+                        function windowResizeHandler(){
+                            if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                loadNextTreeNodeBatch();
+                            }
+                        }
+                        $window.addEventListener('resize', windowResizeHandler);
+                        $scope.$on('$destroy', function(){
+                            $window.removeEventListener('resize', windowResizeHandler);
                         });
 
                         $scope.childClick = function(child){
