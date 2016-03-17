@@ -5,13 +5,13 @@ define('service/api', [
 ){
     return function(ngModule){
         ngModule
-            .service('api', ['$document', '$http', '$q', '$window', 'csrfToken', 'currentUser', function($document, $http, $q, $window, csrfToken, currentUser){
+            .service('api', ['$document', '$http', '$q', '$rootScope', '$window', 'csrfToken', 'currentUser', 'EVENT', function($document, $http, $q, $rootScope, $window, csrfToken, currentUser, EVENT){
                 var currentUserV1 = currentUser(),
                     userCacheV1 = {},
                     pendingUserIdToPromiseIdMapV1 = {},
                     pendingUserPromisesV1 = {},
                     promiseIdSrc = 0,
-                    uploadProgressIdSrc = 0,
+                    uploadIdSrc = 0,
                     newPromiseId = function(){return ''+promiseIdSrc++;},
                     doJsonReq = function(path, data){
                         return $q(function (resolve, reject) {
@@ -39,32 +39,30 @@ define('service/api', [
                         });
                     },
                     doUploadProgressReq = function(path, data){
-                        //var uploadProgressId = uploadProgressIdSrc++;
-                        //return $q(function(resolve, reject){
-                        //
-                        //});
-                        //var completedPromis = $q(function(resolve, reject){
-                        //
-                        //});
-                        xhr = new $window.XMLHttpRequest();
-                        xhr.setRequestHeader('Csrf-Token', csrfToken());
-                        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-                        xhr.upload.addEventListener('loadstart', function(e){
-                            console.log('loadstart: ', e);
+                        var uploadId = uploadIdSrc++;
+                        return $q(function(resolve, reject){
+                            var xhr = new $window.XMLHttpRequest();
+                            xhr.open("POST", path, true);
+                            xhr.setRequestHeader('Csrf-Token', csrfToken());
+                            xhr.upload.addEventListener('progress', function(e){
+                                $rootScope.$broadcast(EVENT.UPLOAD_PROGRESS, {uploadId: uploadId, event: e});
+                            });
+                            xhr.upload.addEventListener('load', function(e){
+                                $rootScope.$broadcast(EVENT.UPLOAD_SUCCESS, {uploadId: uploadId, event: e});
+                            });
+                            xhr.upload.addEventListener('error', function(e){
+                                $rootScope.$broadcast(EVENT.UPLOAD_ERROR, {uploadId: uploadId, event: e});
+                            });
+                            xhr.onreadystatechange = function(e){
+                                if(xhr.readyState === 4 && xhr.status === 200){
+                                    $rootScope.$broadcast(EVENT.UPLOAD_REQUEST_SUCCESS, {uploadId: uploadId});
+                                } else if (xhr.readystate === 4 && xhr.status !== 200){
+                                    $rootScope.$broadcast(EVENT.UPLOAD_REQUEST_ERROR, {uploadId: uploadId, errorId: xhr.responseText});
+                                }
+                            };
+                            xhr.send(data);
+                            resolve({uploadId: uploadId});
                         });
-                        xhr.upload.addEventListener('progress', function(e){
-                            console.log('progress: ', e);
-                        });
-                        xhr.upload.addEventListener('load', function(e){
-                            console.log('load: ', e);
-                        });
-                        xhr.onreadystatechange = function(e){
-                            if(xhr.readyState === 4 && xhr.status === 200){
-                                console.log('onreadystatechange: ', xhr.responseText);
-                            }
-                        };
-                        xhr.open("POST", path, true);
-                        xhr.send(data);
                     },
                     api = {
 
