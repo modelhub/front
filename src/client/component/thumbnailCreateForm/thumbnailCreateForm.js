@@ -22,7 +22,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                         newType: '@',
                         parentId: '@'
                     },
-                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', 'upload', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail, uploads){
+                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', 'uploader', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail, uploader){
                         i18n($scope, txt);
 
                         if($scope.newType === 'project'){
@@ -31,10 +31,20 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             $scope.fileInputAccept = '*/*';
                         }
 
-                        var fileEl = $element[0].getElementsByClassName('file-input')[0];
+                        var multiFilesEl = $element[0].getElementsByClassName('multi-files')[0],
+                            singleFileEl = $element[0].getElementsByClassName('single-file')[0];
+
+                        function currentFileEl(){
+                            if($scope.newType === 'document'){
+                                return multiFilesEl;
+                            } else {
+                                return singleFileEl;
+                            }
+                        }
 
                         function resetForm(){
-                            fileEl.value = '';
+                            multiFilesEl.value = '';
+                            singleFileEl.value = '';
                             $scope.imgSrc = '';
                             $scope.name = '';
                             $scope.multiFiles = false;
@@ -50,7 +60,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
 
                         $scope.newFileInputBtnClick = function(){
                             if (!processingThumbnail && $scope.newType !== 'folder') {
-                                fileEl.click();
+                                currentFileEl().click();
                             }
                         };
 
@@ -65,11 +75,11 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             resizedImageType = null;
                         $scope.newFileInputChange = function(){
                             if (!processingThumbnail) {
-                                if (fileEl.files.length === 1 || ($scope.newType === 'project' && fileEl.files.length >= 1)) {
+                                if (currentFileEl().files.length === 1 || ($scope.newType === 'project' && currentFileEl().files.length >= 1)) {
                                     $scope.singleFile = true;
                                     $scope.multiFiles = false;
                                     processingThumbnail = true;
-                                    thumbnail(fileEl.files[0], 196).then(function (data) {
+                                    thumbnail(currentFileEl().files[0], 196).then(function (data) {
                                         resizedImage = data.blob;
                                         resizedImageType = data.type;
                                         if (data.image) {
@@ -81,20 +91,20 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                     }, function (error) {
                                         processingThumbnail = false;
                                         $scope.imgSrc = '';
-                                        fileEl.value= '';
+                                        currentFileEl().value= '';
                                     });
                                     if ($scope.newType !== 'project') {
-                                        var lastIdxOfDot = fileEl.files[0].name.lastIndexOf('.');
+                                        var lastIdxOfDot = currentFileEl().files[0].name.lastIndexOf('.');
                                         if (lastIdxOfDot !== -1) {
-                                            $scope.fileExtension = fileEl.files[0].name.substring(lastIdxOfDot + 1);
+                                            $scope.fileExtension = currentFileEl().files[0].name.substring(lastIdxOfDot + 1);
                                         }
                                         if (lastIdxOfDot !== -1) {
-                                            $scope.name = fileEl.files[0].name.substring(0, lastIdxOfDot)
+                                            $scope.name = currentFileEl().files[0].name.substring(0, lastIdxOfDot)
                                         } else {
-                                            $scope.name = fileEl.files[0].name;
+                                            $scope.name = currentFileEl().files[0].name;
                                         }
                                     }
-                                } else if (fileEl.files.length > 1){
+                                } else if (currentFileEl().files.length > 1){
                                     $scope.singleFile = false;
                                     $scope.imgSrc = '';
                                     $scope.multiFiles = true;
@@ -133,22 +143,15 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                         });
                                         break;
                                     case 'document':
-                                        api.v1.treeNode.createDocument($scope.parentId, $scope.name).then(function(document){
-                                            $scope.sendingCreateApiRequest = false;
-                                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, document);
-                                        }, function(errorId){
-                                            //TODO
-                                            $scope.sendingCreateApiRequest = false;
-                                        });
+                                        var files = multiFilesEl.files;
+                                        for(var i = 0, l = files.length; i < l; i++){
+                                            uploader.start(files[i]);
+                                        }
                                         break;
                                     case 'documentVersion':
-                                        api.v1.documentVersion.create($scope.parentId, $scope.name).then(function(document){
-                                            $scope.sendingCreateApiRequest = false;
-                                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, document);
-                                        }, function(errorId){
-                                            //TODO
-                                            $scope.sendingCreateApiRequest = false;
-                                        });
+                                        if(singleFileEl.files.length === 1) {
+                                            uploader.start(singleFileEl.files[0]);
+                                        }
                                         break;
                                 }
                             }

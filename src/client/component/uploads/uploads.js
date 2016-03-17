@@ -19,7 +19,7 @@ define('uploads/uploads', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'i18n', function($scope, i18n){
+                    controller: ['$scope', 'i18n', 'uploader', function($scope, i18n, uploader){
                         i18n($scope, txt);
                     }]
                 };

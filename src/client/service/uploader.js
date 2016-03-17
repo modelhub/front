@@ -1,12 +1,12 @@
-define('service/upload', [
+define('service/uploader', [
 ], function(
 ){
     return function(ngModule){
         ngModule
-            .service('upload', ['thumbnail', function(thumbnail){
+            .service('uploader', ['thumbnail', function(thumbnail){
                 var entries = [];
                 return {
-                    upload: function(file){
+                    start: function(file){
 
                     },
                     getUploads: function(){

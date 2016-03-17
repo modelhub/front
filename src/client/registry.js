@@ -11,7 +11,7 @@ define('registry', [
     'service/lmvLoader',
     'service/logout',
     'service/thumbnail',
-    'service/upload',
+    'service/uploader',
     //components
     'aggregationViewer/aggregationViewer',
     'breadcrumbs/breadcrumbs',
@@ -42,7 +42,7 @@ define('registry', [
     lmvLoader,
     logoutService,
     thumbnail,
-    upload,
+    uploader,
     //components
     aggregationViewer,
     breadcrumbs,

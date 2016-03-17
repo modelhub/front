@@ -19,7 +19,7 @@ define('projects/projects', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$location', '$rootScope', '$scope', 'api', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $scope, api, currentUser, EVENT, i18n){
+                    controller: ['$element', '$location', '$rootScope', '$scope', '$window', 'api', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $scope, $window, api, currentUser, EVENT, i18n){
                         i18n($scope, txt);
 
                         var scrollEl = $element[0].getElementsByClassName('root')[0];
@@ -48,10 +48,12 @@ define('projects/projects', [
                         var loadNextProjectBatch,
                             offset = 0,
                             limit = 20,
-                            totalResults = null;
+                            totalResults = null,
+                            loadingNextProjectBatch = false;
                         $scope.loadingProjects = true;
                         loadNextProjectBatch = function(){
-                            if(!$scope.projects || totalResults === null || offset < totalResults) {
+                            if(!loadingNextProjectBatch && !$scope.projects || totalResults === null || offset < totalResults) {
+                                loadingNextProjectBatch = true;
                                 $scope.loadingProjects = true;
                                 api.v1.project.getInUserContext($scope.my.id, 'any', offset, limit).then(function (result) {
                                     totalResults = result.totalResults;
@@ -61,14 +63,16 @@ define('projects/projects', [
                                         $scope.projects.push.apply($scope.projects, result.results);
                                     }
                                     offset = $scope.projects.length;
-                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight) {
+                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                         loadNextProjectBatch();
                                     } else {
                                         $scope.loadingProjects = false;
                                     }
+                                    loadingNextProjectBatch = false;
                                 }, function (errorId) {
                                     $scope.projectsLoadingError = errorId;
                                     $scope.loadingProjects = false;
+                                    loadingNextProjectBatch = false;
                                 });
                             }
                         };
@@ -76,10 +80,30 @@ define('projects/projects', [
                         var lastScrollTop = 0;
                         scrollEl.addEventListener('scroll', function(){
                             if (lastScrollTop < scrollEl.scrollTop && scrollEl.scrollHeight - (scrollEl.scrollTop + scrollEl.clientHeight) < 10){
-                                lastScrollTop = scrollEl.scrollTop;
                                 loadNextProjectBatch();
                             }
+                            lastScrollTop = scrollEl.scrollTop;
                         });
+
+                        $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
+                            $window.setTimeout(function(){
+                                if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                    loadNextProjectBatch();
+                                }
+                            }, 100);
+                        });
+
+                        function windowResizeHandler(){
+                            if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                loadNextProjectBatch();
+                            }
+                        }
+                        $window.addEventListener('resize', windowResizeHandler);
+                        $scope.$on('$destroy', function(){
+                            $window.removeEventListener('resize', windowResizeHandler);
+                        });
+
+
 
                         $scope.projectClick = function(project){
                             $location.path('/folder/'+project.id);
