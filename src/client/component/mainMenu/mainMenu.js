@@ -19,7 +19,7 @@ define('mainMenu/mainMenu', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$element', '$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $route, $scope, currentUser, EVENT, i18n){
+                    controller: ['$location', '$rootScope', '$route', '$scope', 'currentUser', 'EVENT', 'i18n', function($location, $rootScope, $route, $scope, currentUser, EVENT, i18n){
 
                         i18n($scope, txt);
 
@@ -49,7 +49,7 @@ define('mainMenu/mainMenu', [
                             $location.path('/uploads');
                         };
 
-                        $element[0].getElementsByTagName('input')[0].addEventListener('keypress', function(e){
+                        $scope.searchInputKeyPress = function(e){
                             if(e.keyCode == 13) { //enter
                                 $scope.search = $scope.search.trim();
                                 if ($scope.search.length > 0) {
@@ -57,7 +57,7 @@ define('mainMenu/mainMenu', [
                                     $scope.$evalAsync();
                                 }
                             }
-                        });
+                        };
 
                         $scope.aggregationBtnClick = function(){
                             $location.path('/aggregation');

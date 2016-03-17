@@ -41,12 +41,19 @@ mh-thumbnail-create-form {
           }
         }
         > .file-ext {
+          justify-content: center;
+          align-items: center;
           font-size: 18px;
         }
       }
       img{
-        @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+        //@include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
         background-color: $background1;
+      }
+      > * {
+        position: absolute;
+        top: 0;
+        left: 0;
       }
     }
     > input[type="file"] {

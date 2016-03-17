@@ -31,14 +31,12 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             $scope.fileInputAccept = '*/*';
                         }
 
-                        var fileEl = $element[0].getElementsByClassName('file-input')[0],
-                            imgEl = $element[0].getElementsByTagName('img')[0];
+                        var fileEl = $element[0].getElementsByClassName('file-input')[0];
 
                         function resetForm(){
                             fileEl.value = '';
-                            imgEl.src = '';
+                            $scope.imgSrc = '';
                             $scope.name = '';
-                            $scope.showImgEl = false;
                             $scope.multiFiles = false;
                             $scope.singleFile = false;
                             $scope.fileExtension = '';
@@ -56,6 +54,12 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             }
                         };
 
+                        $scope.nameInputKeyPress = function(e){
+                            if(e.keyCode == 13) { //enter
+                                $scope.createBtnClick();
+                            }
+                        };
+
                         var processingThumbnail = false,
                             resizedImage = null,
                             resizedImageType = null;
@@ -69,17 +73,14 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                         resizedImage = data.blob;
                                         resizedImageType = data.type;
                                         if (data.image) {
-                                            imgEl.src = data.image.src;
-                                            $scope.showImgEl = true;
+                                            $scope.imgSrc = data.image.src;
                                         } else {
-                                            $scope.showImgEl = false;
-                                            imgEl.src = '';
+                                            $scope.imgSrc = '';
                                         }
                                         processingThumbnail = false;
                                     }, function (error) {
                                         processingThumbnail = false;
-                                        $scope.showImgEl = false;
-                                        imgEl.src = '';
+                                        $scope.imgSrc = '';
                                         fileEl.value= '';
                                     });
                                     if ($scope.newType !== 'project') {
@@ -95,7 +96,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                     }
                                 } else if (fileEl.files.length > 1){
                                     $scope.singleFile = false;
-                                    $scope.showImgEl = false;
+                                    $scope.imgSrc = '';
                                     $scope.multiFiles = true;
                                     $scope.fileExtension = '';
                                     $scope.name = '';
@@ -107,53 +108,56 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                             }
                         };
 
-                        var sendingCreateApiRequest = false;
+                        $scope.sendingCreateApiRequest = false;
                         $scope.createBtnClick = function(){
-                            if(!sendingCreateApiRequest && !processingThumbnail){
-                                sendingCreateApiRequest = true;
+                            if(!$scope.sendingCreateApiRequest && !processingThumbnail){
+                                $scope.sendingCreateApiRequest = true;
+                                $scope.name = $scope.name.trim();
                                 switch($scope.newType){
                                     case 'project':
                                         api.v1.project.create($scope.name, resizedImageType, resizedImage).then(function(project){
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                             $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, project);
                                         }, function(errorId){
                                             //TODO
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                         });
                                         break;
                                     case 'folder':
                                         api.v1.treeNode.createFolder($scope.parentId, $scope.name).then(function(folder){
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                             $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, folder);
                                         }, function(errorId){
                                             //TODO
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                         });
                                         break;
                                     case 'document':
                                         api.v1.treeNode.createDocument($scope.parentId, $scope.name).then(function(document){
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                             $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, document);
                                         }, function(errorId){
                                             //TODO
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                         });
                                         break;
                                     case 'documentVersion':
                                         api.v1.documentVersion.create($scope.parentId, $scope.name).then(function(document){
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                             $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, document);
                                         }, function(errorId){
                                             //TODO
-                                            sendingCreateApiRequest = false;
+                                            $scope.sendingCreateApiRequest = false;
                                         });
                                         break;
                                 }
                             }
                         };
 
-                        $scope.cancelBtnClick = function(){
-                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_CANCEL);
+                        $scope.cancelBtnClick = function() {
+                            if (!$scope.sendingCreateApiRequest && !processingThumbnail) {
+                                $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_CANCEL);
+                            }
                         };
                     }]
                 };
