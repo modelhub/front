@@ -145,14 +145,18 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                     case 'document':
                                         var files = multiFilesEl.files;
                                         for(var i = 0, l = files.length; i < l; i++){
-                                            uploader.start(files[i]);
+                                            if(l === 1){
+                                                uploader.start('document', $scope.parentId, $scope.name, files[i]);
+                                            } else {
+                                                uploader.start('document', $scope.parentId, files[i].name, files[i]);
+                                            }
                                         }
                                         $scope.sendingCreateApiRequest = false;
                                         $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS);
                                         break;
                                     case 'documentVersion':
                                         if(singleFileEl.files.length === 1) {
-                                            uploader.start(singleFileEl.files[0]);
+                                            uploader.start('documentVersion', $scope.parentId, singleFileEl.files[0].name, singleFileEl.files[0]);
                                         }
                                         $scope.sendingCreateApiRequest = false;
                                         $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS);

@@ -5,12 +5,13 @@ define('service/api', [
 ){
     return function(ngModule){
         ngModule
-            .service('api', ['$document', '$http', '$q', 'csrfToken', 'currentUser', function($document, $http, $q, csrfToken, currentUser){
+            .service('api', ['$document', '$http', '$q', '$window', 'csrfToken', 'currentUser', function($document, $http, $q, $window, csrfToken, currentUser){
                 var currentUserV1 = currentUser(),
                     userCacheV1 = {},
                     pendingUserIdToPromiseIdMapV1 = {},
                     pendingUserPromisesV1 = {},
                     promiseIdSrc = 0,
+                    uploadProgressIdSrc = 0,
                     newPromiseId = function(){return ''+promiseIdSrc++;},
                     doJsonReq = function(path, data){
                         return $q(function (resolve, reject) {
@@ -36,6 +37,34 @@ define('service/api', [
                                 reject(resp.data);
                             });
                         });
+                    },
+                    doUploadProgressReq = function(path, data){
+                        //var uploadProgressId = uploadProgressIdSrc++;
+                        //return $q(function(resolve, reject){
+                        //
+                        //});
+                        //var completedPromis = $q(function(resolve, reject){
+                        //
+                        //});
+                        xhr = new $window.XMLHttpRequest();
+                        xhr.setRequestHeader('Csrf-Token', csrfToken());
+                        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+                        xhr.upload.addEventListener('loadstart', function(e){
+                            console.log('loadstart: ', e);
+                        });
+                        xhr.upload.addEventListener('progress', function(e){
+                            console.log('progress: ', e);
+                        });
+                        xhr.upload.addEventListener('load', function(e){
+                            console.log('load: ', e);
+                        });
+                        xhr.onreadystatechange = function(e){
+                            if(xhr.readyState === 4 && xhr.status === 200){
+                                console.log('onreadystatechange: ', xhr.responseText);
+                            }
+                        };
+                        xhr.open("POST", path, true);
+                        xhr.send(data);
                     },
                     api = {
 
@@ -217,7 +246,7 @@ define('service/api', [
                                         data.append('thumbnail', thumbnail, 'a.a');
                                         data.append('thumbnailType', thumbnailType);
                                     }
-                                    return doFormReq('/api/v1/treeNode/createDocument', data);
+                                    return doUploadProgressReq('/api/v1/treeNode/createDocument', data);
                                 },
 
                                 createViewerState: function() {
@@ -268,7 +297,7 @@ define('service/api', [
                                         data.append('thumbnail', thumbnail, 'a.a');
                                         data.append('thumbnailType', thumbnailType);
                                     }
-                                    return doFormReq('/api/v1/documentVersion/create', data);
+                                    return doUploadProgressReq('/api/v1/documentVersion/create', data);
                                 },
 
                                 get: function (ids) {
