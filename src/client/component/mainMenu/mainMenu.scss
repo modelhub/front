@@ -128,6 +128,16 @@ mh-main-menu {
               background-image: url("/resource/image/upload-selected.png");
             }
           }
+          > .txt {
+            justify-content: space-between;
+            > .count {
+              margin-right: 8px;
+              background: $background2;
+              border-radius: 5px;
+              padding-left: 4px;
+              padding-right: 4px;
+            }
+          }
         }
 
         &.search{

@@ -67,6 +67,15 @@ define('mainMenu/mainMenu', [
                             $scope.search = '';
                             $scope.selected = $location.path().split('/')[1];
                         });
+
+                        $scope.uploadCount = 0;
+                        $scope.$on(EVENT.UPLOAD_START, function(){
+                            $scope.uploadCount++
+                        });
+
+                        $scope.$on(EVENT.UPLOADS_CLEARED, function(event, data){
+                            $scope.uploadCount = data.remaining;
+                        });
                     }]
                 };
             });

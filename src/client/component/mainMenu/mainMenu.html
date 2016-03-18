@@ -29,7 +29,10 @@
         <div class="mh-def mh-row btn uploads" ng-class="{selected: selected === 'uploads'}" ng-click="uploadsBtnClick()">
             <div class="highlight"></div>
             <div class="icon"></div>
-            <div class="txt mh-ellip">{{::txt('uploads')}}</div>
+            <div class=" mh-def mh-row txt mh-ellip">
+                <div class="name">{{::txt('uploads')}}</div>
+                <div class="count" ng-show="uploadCount">{{uploadCount}}</div>
+            </div>
         </div>
         <div class="mh-def mh-row btn search" ng-class="{selected: selected === 'search'}">
             <div class="highlight"></div>

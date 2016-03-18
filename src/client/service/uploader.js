@@ -1,5 +1,7 @@
 define('service/uploader', [
+    'ng'
 ], function(
+    ng
 ){
     return function(ngModule){
         ngModule
@@ -10,6 +12,7 @@ define('service/uploader', [
                         return function(obj){
                             entries.push({uploadId: obj.uploadId, progress: 0, name: name, parentId: parentId, newType: newType, status: 'uploading', image: thumbnailData.image});
                             idx[obj.uploadId] = entries.length - 1;
+                            $rootScope.$broadcast(EVENT.UPLOAD_START, entries[entries.length - 1]);
                         };
                     },
                     uploadHelper = function(newType, parentId, name, file, thumbnailData){
@@ -57,10 +60,22 @@ define('service/uploader', [
                         }
                     },
                     getUploads: function(){
-
+                        var res = [];
+                        for(var i = 0, l = entries.length; i < l; i++) {
+                            res.push(ng.copy(entries[i]));
+                        }
                     },
-                    clearCompletedAndFailed: function(){
-
+                    clearFinished: function(){
+                        idx = {};
+                        for(var i = 0; i < entries.length; i++) {
+                            if(entries[i].status === 'error' || entries[i].status === 'success'){
+                                entries.splice(i, 1);
+                                i--;
+                            } else {
+                                idx[entries[i].uploadId] = i;
+                            }
+                        }
+                        $rootScope.$broadcast(EVENT.UPLOADS_CLEARED, {remaining: entries.length});
                     }
                 };
             }]);
