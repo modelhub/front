@@ -73,7 +73,6 @@ mh-folder {
           > .thumbnail{
             @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
             border-bottom: $border1;
-            background: url("/resource/image/folder.png") center no-repeat;
             img{
               @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
               background-color: $background1;
@@ -86,6 +85,16 @@ mh-folder {
             }
             > .name {
               color: $color2;
+            }
+          }
+          &.folder {
+            > .thumbnail{
+              background: url("/resource/image/folder.png") center no-repeat;
+            }
+          }
+          &.document{
+            > .thumbnail{
+              background: url("/resource/image/document.png") center no-repeat;
             }
           }
         }
