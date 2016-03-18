@@ -94,7 +94,7 @@ define('folder/folder', [
                                         offset = $scope.children.length - folderCount;
                                     }
                                     loadingNextTreeNodeBatch = false;
-                                    if (offset < totalResults + folderCount && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                         loadNextTreeNodeBatch();
                                     } else if (filter === 'folder' ){
                                         filter = 'document';
