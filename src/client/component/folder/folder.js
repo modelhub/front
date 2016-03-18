@@ -69,6 +69,7 @@ define('folder/folder', [
 
                         var loadNextTreeNodeBatch,
                             filter = 'folder',
+                            folderCount = 0,
                             offset = 0,
                             defaultLimit = 20,
                             limit = defaultLimit,
@@ -87,21 +88,28 @@ define('folder/folder', [
                                     } else {
                                         $scope.children.push.apply($scope.children, result.results);
                                     }
-                                    offset = $scope.children.length;
+                                    if (filter === 'folder') {
+                                        offset = $scope.children.length;
+                                    } else {
+                                        offset = $scope.children.length - folderCount;
+                                    }
                                     loadingNextTreeNodeBatch = false;
-                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                    if (offset < totalResults + folderCount && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                         loadNextTreeNodeBatch();
                                     } else if (filter === 'folder' ){
                                         filter = 'document';
                                         limit = defaultLimit - (offset % defaultLimit);
                                         offset = 0;
+                                        folderCount = $scope.children.length;
                                         if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                             loadNextTreeNodeBatch();
                                         } else {
                                             $scope.loadingChildren = false;
                                         }
-                                    } else {
+                                    } else if (offset >= totalResults) {
                                         filter = null;
+                                        $scope.loadingChildren = false;
+                                    } else {
                                         $scope.loadingChildren = false;
                                     }
                                 }, function (errorId) {
@@ -115,9 +123,9 @@ define('folder/folder', [
                         var lastScrollTop = 0;
                         scrollEl.addEventListener('scroll', function(){
                             if (lastScrollTop < scrollEl.scrollTop && scrollEl.scrollHeight - (scrollEl.scrollTop + scrollEl.clientHeight) < 10){
-                                lastScrollTop = scrollEl.scrollTop;
                                 loadNextTreeNodeBatch();
                             }
+                            lastScrollTop = scrollEl.scrollTop;
                         });
 
                         $scope.$on(EVENT.HIDE_MAIN_MENU, function(){

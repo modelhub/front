@@ -20,7 +20,7 @@
             <div>{{txt('loadingError', childrenLoadingError)}}</div>
         </div>
         <div class="mh-def mh-row children" ng-show="children && !childrenLoadingError">
-            <mh-thumbnail-create-form new-type="{{newType}}" parent-id="{{folderId}}" ng-show="selectedControl"></mh-thumbnail-create-form>
+            <mh-create-form new-type="{{newType}}" parent-id="{{folderId}}" ng-show="selectedControl"></mh-create-form>
             <div class="mh-def child" ng-repeat="child in children track by $index" ng-click="childClick(child)">
                 <div class="thumbnail">
                     <img ng-src="{{child.thumbnailUrl}}" ng-if="child.thumbnailUrlReady"/>

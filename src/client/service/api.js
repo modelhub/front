@@ -56,7 +56,7 @@ define('service/api', [
                             xhr.onreadystatechange = function(e){
                                 if(xhr.readyState === 4 && xhr.status === 200){
                                     $rootScope.$broadcast(EVENT.UPLOAD_REQUEST_SUCCESS, {uploadId: uploadId});
-                                } else if (xhr.readystate === 4 && xhr.status !== 200){
+                                } else if (xhr.readyState === 4 && xhr.status !== 200){
                                     $rootScope.$broadcast(EVENT.UPLOAD_REQUEST_ERROR, {uploadId: uploadId, errorId: xhr.responseText});
                                 }
                             };
@@ -239,7 +239,7 @@ define('service/api', [
                                     data.append('name', name);
                                     data.append('uploadComment', uploadComment);
                                     data.append('file', file);
-                                    data.append('fileType', file.Type);
+                                    data.append('fileType', file.type);
                                     if(thumbnail && thumbnailType) {
                                         data.append('thumbnail', thumbnail, 'a.a');
                                         data.append('thumbnailType', thumbnailType);

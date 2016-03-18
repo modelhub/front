@@ -1,8 +1,8 @@
-define('thumbnailCreateForm/thumbnailCreateForm', [
+define('createForm/createForm', [
     'styler',
-    'text!thumbnailCreateForm/thumbnailCreateForm.css',
-    'text!thumbnailCreateForm/thumbnailCreateForm.html',
-    'text!thumbnailCreateForm/thumbnailCreateForm.txt.json'
+    'text!createForm/createForm.css',
+    'text!createForm/createForm.html',
+    'text!createForm/createForm.txt.json'
 ], function(
     styler,
     style,
@@ -14,7 +14,7 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
 
     return function(ngModule){
         ngModule
-            .directive('mhThumbnailCreateForm', function(){
+            .directive('mhCreateForm', function(){
                 return {
                     restrict: 'E',
                     template: tpl,
@@ -91,7 +91,6 @@ define('thumbnailCreateForm/thumbnailCreateForm', [
                                     }, function (error) {
                                         processingThumbnail = false;
                                         $scope.imgSrc = '';
-                                        currentFileEl().value= '';
                                     });
                                     if ($scope.newType !== 'project') {
                                         var lastIdxOfDot = currentFileEl().files[0].name.lastIndexOf('.');

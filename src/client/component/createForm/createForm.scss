@@ -1,6 +1,6 @@
 @import "../../global";
 
-mh-thumbnail-create-form {
+mh-create-form {
   > .root {
     @include fill($width: $thumbnailWidth, $height: 285px);
     background: $background1;
@@ -64,7 +64,6 @@ mh-thumbnail-create-form {
       text-align: center;
       border-radius: 20px;
       cursor: pointer;
-      text-align: center;
       color: $color2;
     }
     > input[type="text"] {

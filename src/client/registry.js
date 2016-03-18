@@ -15,6 +15,7 @@ define('registry', [
     //components
     'aggregationViewer/aggregationViewer',
     'breadcrumbs/breadcrumbs',
+    'createForm/createForm',
     'folder/folder',
     'folderRoute/folderRoute',
     'invites/invites',
@@ -26,7 +27,6 @@ define('registry', [
     'rootLayout/rootLayout',
     'search/search',
     'settings/settings',
-    'thumbnailCreateForm/thumbnailCreateForm',
     'uploads/uploads',
     'viewer/viewer'
 ], function(
@@ -46,6 +46,7 @@ define('registry', [
     //components
     aggregationViewer,
     breadcrumbs,
+    createForm,
     folder,
     folderRoute,
     invites,
@@ -57,7 +58,6 @@ define('registry', [
     rootLayout,
     search,
     settings,
-    thumbnailCreateForm,
     uploads,
     viewer
 ){
