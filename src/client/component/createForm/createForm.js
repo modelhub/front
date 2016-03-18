@@ -94,13 +94,10 @@ define('createForm/createForm', [
                                     });
                                     if ($scope.newType !== 'project') {
                                         var lastIdxOfDot = currentFileEl().files[0].name.lastIndexOf('.');
+                                        $scope.name = currentFileEl().files[0].name;
                                         if (lastIdxOfDot !== -1) {
                                             $scope.fileExtension = currentFileEl().files[0].name.substring(lastIdxOfDot + 1);
-                                        }
-                                        if (lastIdxOfDot !== -1) {
                                             $scope.name = currentFileEl().files[0].name.substring(0, lastIdxOfDot)
-                                        } else {
-                                            $scope.name = currentFileEl().files[0].name;
                                         }
                                     }
                                 } else if (currentFileEl().files.length > 1){
@@ -147,7 +144,12 @@ define('createForm/createForm', [
                                             if(l === 1){
                                                 uploader.start('document', $scope.parentId, $scope.name, files[i]);
                                             } else {
-                                                uploader.start('document', $scope.parentId, files[i].name, files[i]);
+                                                var lastIdxOfDot = files[i].name.lastIndexOf('.');
+                                                var name = files[i].name;
+                                                if (lastIdxOfDot !== -1) {
+                                                    name = files[i].name.substring(0, lastIdxOfDot)
+                                                }
+                                                uploader.start('document', $scope.parentId, name, files[i]);
                                             }
                                         }
                                         $scope.sendingCreateApiRequest = false;
