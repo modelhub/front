@@ -50,6 +50,7 @@ mh-main-menu {
 
     > .options {
       overflow: auto;
+      @include fill($width: 100%, $height: calc(100% - 51px));
       > * {
         @include fill($height: 32px);
         align-items: center;
