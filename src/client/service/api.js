@@ -279,7 +279,7 @@ define('service/api', [
                                     return doJsonReq('/api/v1/treeNode/projectSearch', {project: project, search: search, nodeType: nodeType, offset: offset, limit: limit, sortBy: sortBy});
                                 },
 
-                                getChildren: function (id, offset, limit, sortBy) {
+                                getChildrenDocumentNodes: function (id, offset, limit, sortBy) {
                                     return doJsonReq('/api/v1/treeNode/getChildrenDocumentNodes', {id: id, offset: offset, limit: limit, sortBy: sortBy});
                                 }
                                 
