@@ -80,7 +80,7 @@ define('folder/folder', [
                             if(filter && !loadingNextTreeNodeBatch) {
                                 loadingNextTreeNodeBatch = true;
                                 $scope.loadingChildren = true;
-                                api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit).then(function (result) {
+                                var successCallback = function (result) {
                                     limit = defaultLimit;
                                     totalResults = result.totalResults;
                                     if (!$scope.children){
@@ -112,11 +112,17 @@ define('folder/folder', [
                                     } else {
                                         $scope.loadingChildren = false;
                                     }
-                                }, function (errorId) {
+                                };
+                                var errorCallback = function(errorId) {
                                     $scope.childrenLoadingError = errorId;
                                     $scope.loadingChildren = false;
                                     loadingNextTreeNodeBatch = false;
-                                });
+                                };
+                                if (filter !== 'document') {
+                                    api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit, 'nameAsc').then(successCallback, errorCallback);
+                                } else {
+                                    api.v1.treeNode.getChildrenDocumentNodes($scope.folderId, offset, limit, 'nameAsc').then(successCallback, errorCallback);
+                                }
                             }
                         };
 
