@@ -121,7 +121,7 @@ define('folder/folder', [
                                 if (filter !== 'document') {
                                     api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit, 'nameAsc').then(successCallback, errorCallback);
                                 } else {
-                                    api.v1.helper.treeNode.getChildrenDocumentsWithLatestVersion($scope.folderId, offset, limit, 'nameAsc').then(successCallback, errorCallback);
+                                    api.v1.helper.treeNode.getChildrenDocumentsWithLatestVersionAndFirstSheet($scope.folderId, offset, limit, 'nameAsc').then(successCallback, errorCallback);
                                 }
                             }
                         };

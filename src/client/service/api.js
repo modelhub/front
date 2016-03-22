@@ -336,8 +336,8 @@ define('service/api', [
 
                                 treeNode: {
 
-                                    getChildrenDocumentsWithLatestVersion: function (id, offset, limit, sortBy) {
-                                        return doJsonReq('/api/v1/helper/treeNode/getChildrenDocumentsWithLatestVersion', {id: id, offset: offset, limit: limit, sortBy: sortBy});
+                                    getChildrenDocumentsWithLatestVersionAndFirstSheet: function (id, offset, limit, sortBy) {
+                                        return doJsonReq('/api/v1/helper/treeNode/getChildrenDocumentsWithLatestVersionAndFirstSheet', {id: id, offset: offset, limit: limit, sortBy: sortBy});
                                     }
 
                                 }
