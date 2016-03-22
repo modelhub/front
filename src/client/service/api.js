@@ -277,10 +277,6 @@ define('service/api', [
 
                                 projectSearch: function (project, search, nodeType, offset, limit, sortBy) {
                                     return doJsonReq('/api/v1/treeNode/projectSearch', {project: project, search: search, nodeType: nodeType, offset: offset, limit: limit, sortBy: sortBy});
-                                },
-
-                                getChildrenDocumentNodes: function (id, offset, limit, sortBy) {
-                                    return doJsonReq('/api/v1/treeNode/getChildrenDocumentNodes', {id: id, offset: offset, limit: limit, sortBy: sortBy});
                                 }
                                 
                             },
@@ -332,6 +328,18 @@ define('service/api', [
 
                                 projectSearch: function (project, search, offset, limit, sortBy) {
                                     return doJsonReq('/api/v1/sheet/globalSearch', {project: project, search: search, offset: offset, limit: limit, sortBy: sortBy});
+                                }
+
+                            },
+
+                            helper: {
+
+                                treeNode: {
+
+                                    getChildrenDocumentsWithLatestVersion: function (id, offset, limit, sortBy) {
+                                        return doJsonReq('/api/v1/helper/treeNode/getChildrenDocumentsWithLatestVersion', {id: id, offset: offset, limit: limit, sortBy: sortBy});
+                                    }
+
                                 }
 
                             }

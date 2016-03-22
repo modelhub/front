@@ -38,5 +38,9 @@
     "keyFile": [],
     "csrfAuthKey": "b8c05f3a50ffb76b23e38cabd09a706faaff6b95b64043aff3222e7cf88cf832",
     "openIdProvider": "https://accounts.autodesk.com"
+  },
+
+  "restApi": {
+    "getLatestVersionsTimeOut": "6s"
   }
 }

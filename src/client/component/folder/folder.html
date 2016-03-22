@@ -23,11 +23,15 @@
             <mh-create-form new-type="{{newType}}" parent-id="{{::folderId}}" ng-show="selectedControl"></mh-create-form>
             <div class="mh-def child {{::child.nodeType}}" ng-repeat="child in children track by $index" ng-click="::childClick(child)">
                 <div class="thumbnail">
-                    <img ng-src="{{child.thumbnailUrl}}" ng-if="child.thumbnailUrlReady"/>
+                    <div  class="mh-def mh-fill file-ext" ng-if="::!child.latestVersion || !child.latestVersion.thumbnailType">
+                        <div class="mh-def" >{{::child.latestVersion.fileExtension}}</div>
+                    </div>
+                    <img ng-src="/api/v1/documentVersion/getThumbnail/{{::child.latestVersion.id}}/{{::child.latestVersion.thumbnailType}}" ng-if="::child.latestVersion && child.latestVersion.thumbnailType"/>
                 </div>
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{::child.name}}</div>
-                    <div class="type mh-ellip">{{::txt(child.nodeType)}}</div>
+                    <div class="ext mh-ellip" ng-if="::child.latestVersion && !child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::child.latestVersion.fileExtension}}</div>
+                    <div class="ext mh-ellip" ng-if="::child.latestVersion && child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::txt(child.latestVersion.fileType.match('^(image|video|audio)')[0])}}</div>
                 </div>
             </div>
         </div>

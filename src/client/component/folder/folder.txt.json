@@ -39,6 +39,18 @@
 
   "viewerState": {
     "en": "viewer state"
+  },
+
+  "image": {
+    "en": "image"
+  },
+
+  "video": {
+    "en": "video"
+  },
+
+  "audio": {
+    "en": "audio"
   }
 
 }
