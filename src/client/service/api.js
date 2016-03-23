@@ -334,12 +334,8 @@ define('service/api', [
 
                             helper: {
 
-                                treeNode: {
-
-                                    getChildrenDocumentsWithLatestVersionAndFirstSheet: function (id, offset, limit, sortBy) {
-                                        return doJsonReq('/api/v1/helper/treeNode/getChildrenDocumentsWithLatestVersionAndFirstSheet', {id: id, offset: offset, limit: limit, sortBy: sortBy});
-                                    }
-
+                                getChildrenDocumentsWithLatestVersionAndFirstSheetInfo: function (folder, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/helper/getChildrenDocumentsWithLatestVersionAndFirstSheetInfo', {folder: folder, offset: offset, limit: limit, sortBy: sortBy});
                                 }
 
                             }
