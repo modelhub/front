@@ -22,7 +22,7 @@
         <div class="mh-def mh-row children" ng-show="children && !childrenLoadingError">
             <mh-create-form new-type="{{newType}}" parent-id="{{::folderId}}" ng-show="selectedControl"></mh-create-form>
             <div class="mh-def child {{::child.nodeType}}" ng-repeat="child in children track by $index" ng-click="::childClick(child)">
-                <div class="thumbnail">
+                <div class="mh-def thumbnail">
                     <div  class="mh-def mh-fill file-ext">
                         <div class="mh-def" >{{::child.latestVersion.fileExtension}}</div>
                     </div>
