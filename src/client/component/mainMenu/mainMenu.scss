@@ -142,11 +142,19 @@ mh-main-menu {
         }
 
         &.search{
+          > .icon {
+            margin-right: 3px;
+            background-image: url("/resource/image/search.png");
+          }
+          &.selected, &:hover {
+            > .icon {
+              background-image: url("/resource/image/search-selected.png");
+            }
+          }
           input {
-            @include fill($width: calc(100% - 38px), $height: 20px);
-            margin-left: 13px;
+            padding-left: 10px;
+            width: calc(100% - 71px);
             outline: none;
-            text-align: center;
             border: $border1;
             border-radius: 10px;
             background: $background2;

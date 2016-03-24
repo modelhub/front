@@ -36,7 +36,8 @@
         </div>
         <div class="mh-def mh-row btn search" ng-class="{selected: selected === 'search'}">
             <div class="highlight"></div>
-            <input type="text" placeholder="{{txt('search')}}" ng-model="search" onkeypress="angular.element(this).scope().searchInputKeyPress(event)">
+            <div class="icon"></div>
+            <input class="txt" type="text" placeholder="{{txt('search')}}" ng-model="search" onkeypress="angular.element(this).scope().searchInputKeyPress(event)">
         </div>
         <div class="mh-def mh-row btn aggregation" ng-class="{selected: selected === 'aggregation'}" ng-click="aggregationBtnClick()">
             <div class="highlight"></div>

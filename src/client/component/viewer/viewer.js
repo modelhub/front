@@ -25,9 +25,16 @@ define('viewer/viewer', [
 
                         $scope.state = 'init';
 
+                        $scope.$on('$destroy', function(){
+                            if($scope.viewer){
+                                $scope.viewer.finish();
+                            }
+                        });
+
 
                         lmv($element[0].getElementsByClassName('lmv')[0]).then(function(viewer){
 
+                            $scope.viewer = viewer;
                             $scope.state = 'ready';
 
                             $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
