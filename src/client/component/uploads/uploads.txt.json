@@ -25,6 +25,10 @@
     "en": "audio"
   },
 
+  "queued": {
+    "en": "Queued: {0}%"
+  },
+
   "uploading": {
     "en": "Uploading: {0}%"
   },
