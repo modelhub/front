@@ -23,6 +23,18 @@
 
   "audio": {
     "en": "audio"
+  },
+
+  "uploading": {
+    "en": "Uploading: {0}%"
+  },
+
+  "success": {
+    "en": "Success: {0}%"
+  },
+
+  "error": {
+    "en": "Error: {0}%"
   }
 
 }

@@ -14,14 +14,20 @@
             <div class="mh-def upload" ng-repeat="upload in uploads">
                 <div class="mh-def thumbnail">
                     <div  class="mh-def mh-fill file-ext">
-                        <div class="mh-def" >{{::upload.fileExtension}}</div>
+                        <div class="mh-def" >{{upload.fileExtension}}</div>
                     </div>
                     <img class="mh-fill" ng-src="{{upload.image.src}}" ng-if="upload.image"/>
                 </div>
                 <div class="mh-def info">
-                    <div class="name mh-ellip">{{::upload.name}}</div>
-                    <div class="ext mh-ellip" ng-if="::!upload.fileType.match('^(image|video|audio)/').length">{{::upload.fileExtension}}</div>
-                    <div class="ext mh-ellip" ng-if="::upload.fileType.match('^(image|video|audio)/').length">{{::txt(upload.fileType.match('^(image|video|audio)')[0])}}</div>
+                    <div class="name mh-ellip">{{upload.name}}</div>
+                    <div class="ext mh-ellip" ng-if="!upload.fileType.match('^(image|video|audio)/').length">{{upload.fileExtension}}</div>
+                    <div class="ext mh-ellip" ng-if="upload.fileType.match('^(image|video|audio)/').length">{{txt(upload.fileType.match('^(image|video|audio)')[0])}}</div>
+                    <div class="mh-def progress-bar">
+                        <div class="mh-def mh-fill progress-fill {{upload.status}}" style="width: {{upload.progress}}%"></div>
+                        <div class="mh-def mh-fill txt-align">
+                            <div class="mh-def txt">{{txt(upload.status, upload.progress)}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

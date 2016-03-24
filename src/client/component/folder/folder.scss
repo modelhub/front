@@ -90,6 +90,7 @@ mh-folder {
             }
           }
           > .info{
+            flex-grow: 1;
             > * {
               margin-left: 8px;
               margin-right: 8px;

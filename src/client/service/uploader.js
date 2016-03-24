@@ -12,7 +12,7 @@ define('service/uploader', [
                         var fileExtension = "";
                         var lastIdx = fileName.lastIndexOf(".");
                         if (lastIdx !== -1) {
-                            fileExtension = fileName.substring(lastIdx);
+                            fileExtension = fileName.substring(lastIdx+1);
                         }
                         return function(obj){
                             entries.push({uploadId: obj.uploadId, progress: 0, name: name, fileExtension: fileExtension, fileType: fileType, parentId: parentId, newType: newType, status: 'uploading', image: thumbnailData.image});
