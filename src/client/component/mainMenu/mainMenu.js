@@ -69,12 +69,8 @@ define('mainMenu/mainMenu', [
                         });
 
                         $scope.uploadCount = 0;
-                        $scope.$on(EVENT.UPLOAD_START, function(){
-                            $scope.uploadCount++
-                        });
-
-                        $scope.$on(EVENT.UPLOADS_CLEARED, function(event, data){
-                            $scope.uploadCount = data.remaining;
+                        $scope.$on(EVENT.UPLOADS_COUNT_CHANGE, function(event, data){
+                            $scope.uploadCount = data.count;
                         });
                     }]
                 };

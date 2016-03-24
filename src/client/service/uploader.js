@@ -6,53 +6,90 @@ define('service/uploader', [
     return function(ngModule){
         ngModule
             .service('uploader', ['$rootScope', '$window', 'api', 'thumbnail', 'EVENT', function($rootScope, $window, api, thumbnail, EVENT){
-                var idx = {},
-                    entries = [],
-                    addToEntries = function(newType, parentId, name, fileName, fileType, thumbnailData){
-                        var fileExtension = "";
-                        var lastIdx = fileName.lastIndexOf(".");
-                        if (lastIdx !== -1) {
-                            fileExtension = fileName.substring(lastIdx+1);
-                        }
+                var maxActive = 2,
+                    finished = [],
+                    active = [],
+                    queued = [],
+                    startCallback = function(entry){
                         return function(obj){
-                            entries.push({uploadId: obj.uploadId, progress: 0, name: name, fileExtension: fileExtension, fileType: fileType, parentId: parentId, newType: newType, status: 'uploading', image: thumbnailData.image});
-                            idx[obj.uploadId] = entries.length - 1;
-                            $rootScope.$broadcast(EVENT.UPLOAD_START, entries[entries.length - 1]);
+                            entry.uploadId = obj.uploadId;
+                            $rootScope.$broadcast(EVENT.UPLOADS_COUNT_CHANGE, {count: finished.length + active.length + queued.length});
                             $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
-                        };
+                        }
+                    },
+                    getActiveIdx = function(uploadId){
+                        for(var i = 0; i < active.length; i++){
+                            if(active[i].uploadId === uploadId){
+                                return i;
+                            }
+                        }
+                    },
+                    startUpload = function(entry){
+                        entry.status = 'uploading';
+                        active.push(entry);
+                        if (entry.newType === 'document') {
+                            api.v1.treeNode.createDocument(entry.parentId, entry.name, '', entry.file, entry.thumbnailData.type, entry.thumbnailData.blob).then(startCallback(entry));
+                        } else {
+                            api.v1.documentVersion.create(entry.parentId, '', entry.file, entry.thumbnailData.type, entry.thumbnailData.blob).then(startCallback(entry));
+                        }
                     },
                     uploadHelper = function(newType, parentId, name, file, thumbnailData){
-                        if(newType === 'document'){
-                            api.v1.treeNode.createDocument(parentId, name, '', file, thumbnailData.type, thumbnailData.blob).then(addToEntries(newType, parentId, name, file.name, file.type, thumbnailData));
+                        var fileExtension = "",
+                            lastIdx = file.name.lastIndexOf(".");
+                        if (lastIdx !== -1) {
+                            fileExtension = file.name.substring(lastIdx+1);
+                        }
+                        var entry = {uploadId: -1, progress: 0, name: name, fileExtension: fileExtension, file: file, parentId: parentId, newType: newType, status: 'queued', thumbnailData: thumbnailData};
+                        if(active.length >= maxActive){
+                            queued.push(entry);
                         } else {
-                            api.v1.documentVersion.create(parentId, '', file, thumbnailData.type, thumbnailData.blob).then(addToEntries(newType, parentId, name, file.name, file.type, thumbnailData));
+                            startUpload(entry);
                         }
                     };
 
                 $rootScope.$on(EVENT.UPLOAD_PROGRESS, function(event, data){
                     var done = data.event.loaded || data.event.position,
                         total = data.event.total || data.event.totalSize;
-                    entries[idx[data.uploadId]].progress = $window.Math.round((done / total) * 100);
+                    active[getActiveIdx(data.uploadId)].progress = $window.Math.round((done / total) * 100);
                     $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_SUCCESS, function(event, data){
-                    entries[idx[data.uploadId]].progress = 100;
+                    active[getActiveIdx(data.uploadId)].progress = 100;
                     $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_ERROR, function(event, data){
-                    entries[idx[data.uploadId]].status = 'error';
+                    var entry = active.splice(getActiveIdx(data.uploadId), 1)[0];
+                    entry.status = 'error';
+                    finished.push(entry);
+                    entry = queued.splice(0, 1)[0];
+                    if(entry){
+                        startUpload(entry);
+                    }
                     $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_REQUEST_SUCCESS, function(event, data){
-                    entries[idx[data.uploadId]].status = 'success';
+                    var entry = active.splice(getActiveIdx(data.uploadId), 1)[0];
+                    entry.status = 'success';
+                    entry.progress = 100;
+                    finished.push(entry);
+                    entry = queued.splice(0, 1)[0];
+                    if(entry){
+                        startUpload(entry);
+                    }
                     $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_REQUEST_ERROR, function(event, data){
-                    entries[idx[data.uploadId]].status = 'error';
+                    var entry = active.splice(getActiveIdx(data.uploadId), 1)[0];
+                    entry.status = 'error';
+                    finished.push(entry);
+                    entry = queued.splice(0, 1)[0];
+                    if(entry){
+                        startUpload(entry);
+                    }
                     $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
@@ -72,22 +109,20 @@ define('service/uploader', [
                     },
                     getUploads: function(){
                         var res = [];
-                        for(var i = 0, l = entries.length; i < l; i++) {
-                            res.push(ng.copy(entries[i]));
+                        for(var i = 0, l = finished.length; i < l; i++) {
+                            res.push(ng.copy(finished[i]));
+                        }
+                        for(var i = 0, l = active.length; i < l; i++) {
+                            res.push(ng.copy(active[i]));
+                        }
+                        for(var i = 0, l = queued.length; i < l; i++) {
+                            res.push(ng.copy(queued[i]));
                         }
                         return res;
                     },
                     clearFinished: function(){
-                        idx = {};
-                        for(var i = 0; i < entries.length; i++) {
-                            if(entries[i].status === 'error' || entries[i].status === 'success'){
-                                entries.splice(i, 1);
-                                i--;
-                            } else {
-                                idx[entries[i].uploadId] = i;
-                            }
-                        }
-                        $rootScope.$broadcast(EVENT.UPLOADS_CLEARED, {remaining: entries.length});
+                        finished = [];
+                        $rootScope.$broadcast(EVENT.UPLOADS_COUNT_CHANGE, {count: finished.length + active.length + queued.length});
                         $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
                 };

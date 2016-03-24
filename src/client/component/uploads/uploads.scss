@@ -108,6 +108,16 @@ mh-uploads {
                 border-radius: 10px;
                 background: $highlight1;
               }
+              &.error{
+                > .progress-fill {
+                  background: $errorHighlight;
+                }
+              }
+              &.success{
+                > .progress-fill {
+                  background: $successHighlight;
+                }
+              }
               > .txt-align {
                 justify-content: center;
                 align-items: center;
