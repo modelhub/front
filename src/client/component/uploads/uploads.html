@@ -1,3 +1,32 @@
-<div class="mh-def mh-fill">
-    <div class="mh-def">{{txt('msg')}}</div>
+<div class="mh-def mh-fill root">
+    <div class="mh-def content">
+        <div class="mh-def mh-row header">
+            <div class="icon"></div>
+            <div class="title">{{::txt('uploads')}}</div>
+            <div class="mh-def mh-row controls">
+                <div class="mh-def control"  ng-click="clearBtnClick()">
+                    <div class="name">{{::txt('clear')}}</div>
+                    <div class="highlight"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mh-def mh-row uploads" ng-show="uploads.length">
+            <div class="mh-def upload" ng-repeat="upload in uploads">
+                <div class="mh-def thumbnail">
+                    <div  class="mh-def mh-fill file-ext">
+                        <div class="mh-def" >{{::upload.fileExtension}}</div>
+                    </div>
+                    <img class="mh-fill" ng-src="{{upload.image.src}}" ng-if="upload.image"/>
+                </div>
+                <div class="mh-def info">
+                    <div class="name mh-ellip">{{::upload.name}}</div>
+                    <div class="ext mh-ellip" ng-if="::!upload.fileType.match('^(image|video|audio)/').length">{{::upload.fileExtension}}</div>
+                    <div class="ext mh-ellip" ng-if="::upload.fileType.match('^(image|video|audio)/').length">{{::txt(upload.fileType.match('^(image|video|audio)')[0])}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="mh-def no-uploads" ng-show="!uploads.length">
+            <div class="mh-def msg">{{::txt('noUploads')}}</div>
+        </div>
+    </div>
 </div>

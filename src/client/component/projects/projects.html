@@ -16,7 +16,7 @@
         <div class="mh-def mh-row projects" ng-show="projects && !projectsLoadingError">
             <mh-create-form new-type="project" ng-show="selectedControl"></mh-create-form>
             <div class="mh-def project" ng-repeat="project in projects track by $index" ng-click="projectClick(project)">
-                <div class="thumbnail">
+                <div class="mh-def thumbnail">
                     <img ng-src="/api/v1/project/getThumbnail/{{::project.id}}/{{::project.thumbnailType}}" ng-if="::project.thumbnailType"/>
                 </div>
                 <div class="mh-def info">

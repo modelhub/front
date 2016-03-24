@@ -31,8 +31,9 @@
                 </div>
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{::child.name}}</div>
-                    <div class="ext mh-ellip" ng-if="::child.latestVersion && !child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::child.latestVersion.fileExtension}}</div>
-                    <div class="ext mh-ellip" ng-if="::child.latestVersion && child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::txt(child.latestVersion.fileType.match('^(image|video|audio)')[0])}}</div>
+                    <div class="ext mh-ellip" ng-if="::child.nodeType === 'folder'">{{::txt('folder')}}</div>
+                    <div class="ext mh-ellip" ng-if="::child.nodeType !== 'folder' && child.latestVersion && !child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::child.latestVersion.fileExtension}}</div>
+                    <div class="ext mh-ellip" ng-if="::child.nodeType !== 'folder' && child.latestVersion && child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::txt(child.latestVersion.fileType.match('^(image|video|audio)')[0])}}</div>
                 </div>
             </div>
         </div>

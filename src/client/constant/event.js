@@ -18,7 +18,8 @@ define('constant/event', [
                 UPLOAD_ERROR: 'UPLOAD_ERROR',
                 UPLOAD_REQUEST_SUCCESS: 'UPLOAD_REQUEST_SUCCESS',
                 UPLOAD_REQUEST_ERROR: 'UPLOAD_REQUEST_ERROR',
-                UPLOADS_CLEARED: 'UPLOADS_CLEARED'
+                UPLOADS_CLEARED: 'UPLOADS_CLEARED',
+                UPLOADS_CHANGED: 'UPLOADS_CHANGED'
             });
     }
 });

@@ -19,8 +19,18 @@ define('uploads/uploads', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'i18n', 'uploader', function($scope, i18n, uploader){
+                    controller: ['$scope', 'EVENT', 'i18n', 'uploader', function($scope, EVENT, i18n, uploader){
                         i18n($scope, txt);
+
+                        $scope.uploads = uploader.getUploads();
+
+                        $scope.$on(EVENT.UPLOADS_CHANGED, function(){
+                            $scope.uploads = uploader.getUploads();
+                        });
+
+                        $scope.clearBtnClick = function(){
+                            uploader.clearFinished();
+                        };
                     }]
                 };
             });

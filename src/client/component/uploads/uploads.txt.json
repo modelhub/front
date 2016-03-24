@@ -1,8 +1,28 @@
 ﻿{
   "langs": ["en"],
 
-  "msg": {
-    "en": "UPLOADS"
+  "uploads": {
+    "en": "Uploads"
+  },
+
+  "noUploads": {
+    "en": "No Uploads"
+  },
+
+  "clear": {
+    "en": "Clear"
+  },
+
+  "image": {
+    "en": "image"
+  },
+
+  "video": {
+    "en": "video"
+  },
+
+  "audio": {
+    "en": "audio"
   }
 
 }
