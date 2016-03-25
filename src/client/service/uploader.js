@@ -39,6 +39,10 @@ define('service/uploader', [
                         if (lastIdx !== -1) {
                             fileExtension = file.name.substring(lastIdx+1);
                         }
+                        var matches = file.type.match('^(image|video|audio)/');
+                        if(matches && matches.length > 0){
+                            fileExtension = matches[0];
+                        }
                         var entry = {uploadId: -1, progress: 0, name: name, fileExtension: fileExtension, file: file, parentId: parentId, newType: newType, status: 'queued', thumbnailData: thumbnailData};
                         if(active.length >= maxActive){
                             queued.push(entry);
@@ -49,48 +53,63 @@ define('service/uploader', [
 
                 $rootScope.$on(EVENT.UPLOAD_PROGRESS, function(event, data){
                     var done = data.event.loaded || data.event.position,
-                        total = data.event.total || data.event.totalSize;
-                    active[getActiveIdx(data.uploadId)].progress = $window.Math.round((done / total) * 100);
-                    $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
+                        total = data.event.total || data.event.totalSize,
+                        idx = getActiveIdx(data.uploadId);
+                    if (typeof idx === 'number') {
+                        active[idx].progress = $window.Math.round((done / total) * 100);
+                        $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
+                    }
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_SUCCESS, function(event, data){
-                    active[getActiveIdx(data.uploadId)].progress = 100;
-                    $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
+                    var idx = getActiveIdx(data.uploadId);
+                    if (typeof idx === 'number') {
+                        active[idx].progress = 100;
+                        $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
+                    }
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_ERROR, function(event, data){
-                    var entry = active.splice(getActiveIdx(data.uploadId), 1)[0];
-                    entry.status = 'error';
-                    finished.push(entry);
-                    entry = queued.splice(0, 1)[0];
-                    if(entry){
-                        startUpload(entry);
+                    var idx = getActiveIdx(data.uploadId);
+                    if (typeof idx === 'number') {
+                        var entry = active.splice(idx, 1)[0];
+                        entry.status = 'error';
+                        finished.push(entry);
+                        entry = queued.splice(0, 1)[0];
+                        if (entry) {
+                            startUpload(entry);
+                        }
+                        $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
-                    $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_REQUEST_SUCCESS, function(event, data){
-                    var entry = active.splice(getActiveIdx(data.uploadId), 1)[0];
-                    entry.status = 'success';
-                    entry.progress = 100;
-                    finished.push(entry);
-                    entry = queued.splice(0, 1)[0];
-                    if(entry){
-                        startUpload(entry);
+                    var idx = getActiveIdx(data.uploadId);
+                    if (typeof idx === 'number') {
+                        var entry = active.splice(idx, 1)[0];
+                        entry.status = 'success';
+                        entry.progress = 100;
+                        finished.push(entry);
+                        entry = queued.splice(0, 1)[0];
+                        if (entry) {
+                            startUpload(entry);
+                        }
+                        $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
-                    $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 $rootScope.$on(EVENT.UPLOAD_REQUEST_ERROR, function(event, data){
-                    var entry = active.splice(getActiveIdx(data.uploadId), 1)[0];
-                    entry.status = 'error';
-                    finished.push(entry);
-                    entry = queued.splice(0, 1)[0];
-                    if(entry){
-                        startUpload(entry);
+                    var idx = getActiveIdx(data.uploadId);
+                    if (typeof idx === 'number') {
+                        var entry = active.splice(idx, 1)[0];
+                        entry.status = 'error';
+                        finished.push(entry);
+                        entry = queued.splice(0, 1)[0];
+                        if (entry) {
+                            startUpload(entry);
+                        }
+                        $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
-                    $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                 });
 
                 return {
