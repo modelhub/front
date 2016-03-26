@@ -106,16 +106,30 @@ mh-uploads {
               }
               > .progress-fill {
                 border-radius: 10px;
-                background: $highlight1;
+                background: rgba(255, 255, 255, 0.5);
               }
-              &.error{
+              &.uploading {
+                background: darkblue;
                 > .progress-fill {
-                  background: $errorHighlight;
+                  background: $highlight1;
+                }
+              }
+              &.processing {
+                background: darkblue;
+                > .progress-fill {
+                  background: $highlight1;
                 }
               }
               &.success{
+                background: darkgreen;
                 > .progress-fill {
                   background: $successHighlight;
+                }
+              }
+              &.error{
+                  background: darkred;
+                > .progress-fill {
+                  background: $errorHighlight;
                 }
               }
               > .txt-align {

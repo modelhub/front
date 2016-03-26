@@ -26,7 +26,7 @@ define('uploads/uploads', [
 
                         $scope.$on(EVENT.UPLOADS_CHANGED, function(){
                             $scope.uploads = uploader.getUploads();
-                            //$scope.$evalAsync();
+                            $scope.$evalAsync();
                         });
 
                         $scope.clearBtnClick = function(){

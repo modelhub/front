@@ -33,7 +33,7 @@ define('service/uploader', [
                             api.v1.documentVersion.create(entry.parentId, '', entry.file, entry.thumbnailData.type, entry.thumbnailData.blob).then(startCallback(entry));
                         }
                     },
-                    uploadHelper = function(newType, parentId, name, file, thumbnailData){
+                    initEntry = function(newType, parentId, name, file, thumbnailData){
                         var fileExtension = "",
                             lastIdx = file.name.lastIndexOf(".");
                         if (lastIdx !== -1) {
@@ -57,6 +57,9 @@ define('service/uploader', [
                         idx = getActiveIdx(data.uploadId);
                     if (typeof idx === 'number') {
                         active[idx].progress = $window.Math.round((done / total) * 100);
+                        if(active[idx].progress === 100){
+                            active[idx].status = 'processing';
+                        }
                         $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
                 });
@@ -65,6 +68,7 @@ define('service/uploader', [
                     var idx = getActiveIdx(data.uploadId);
                     if (typeof idx === 'number') {
                         active[idx].progress = 100;
+                        active[idx].status = 'processing';
                         $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
                 });
@@ -117,12 +121,12 @@ define('service/uploader', [
                         if(file) {
                             if (file.type.match(/(image.*|video.*)/)) {
                                 thumbnail(file, 196).then(function (thumbnailData) {
-                                    uploadHelper(newType, parentId, name, file, thumbnailData);
+                                    initEntry(newType, parentId, name, file, thumbnailData);
                                 }, function (error) {
-                                    uploadHelper(newType, parentId, name, file, {image: null, type: null, blob: null});
+                                    initEntry(newType, parentId, name, file, {image: null, type: null, blob: null});
                                 });
                             } else {
-                                uploadHelper(newType, parentId, name, file, {image: null, type: null, blob: null});
+                                initEntry(newType, parentId, name, file, {image: null, type: null, blob: null});
                             }
                         }
                     },

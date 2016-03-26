@@ -21,8 +21,8 @@
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{upload.name}}</div>
                     <div class="ext mh-ellip">{{upload.fileExtension}}</div>
-                    <div class="mh-def progress-bar">
-                        <div class="mh-def mh-fill progress-fill {{upload.status}}" style="width: {{upload.progress}}%"></div>
+                    <div class="mh-def progress-bar {{upload.status}}">
+                        <div class="mh-def mh-fill progress-fill" style="width: {{upload.progress}}%"></div>
                         <div class="mh-def mh-fill txt-align">
                             <div class="mh-def txt">{{txt(upload.status, upload.progress)}}</div>
                         </div>
