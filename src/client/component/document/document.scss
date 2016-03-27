@@ -1,0 +1,120 @@
+@import "../../global";
+
+mh-document {
+  * {
+    flex-shrink: 0;
+  }
+  > div.root {
+    @include IEScrollbars();
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    > div.content{
+      max-width: 1292px;
+      width: 100%;
+      min-height: 100%;
+      > * {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+      > .header {
+        height: 50px;
+        border-bottom: 1px solid $background1;
+        align-items: flex-end;
+        > .icon {
+          @include fill($width: 30px, $height: 30px);
+          margin-right: 10px;
+          margin-bottom: 10px;
+          background: url("/resource/image/folder-selected.png") center no-repeat;
+          background-size: 30px 30px;
+        }
+        > .controls{
+          > .control {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            color: $color1;
+            margin-right: 16px;
+            > .name {
+              margin-bottom: 5px;
+            }
+            &:hover, &.selected {
+              color: $color2;
+            }
+            &.selected {
+              .highlight {
+                background: $highlight1;
+              }
+            }
+            .highlight {
+              @include fill($height: 5px);
+            }
+          }
+        }
+      }
+      > mh-loader{
+        flex-grow: 1;
+      }
+      > .children-loading-error{
+        flex-grow: 1;
+        > div{
+          margin: auto;
+        }
+      }
+      > .children{
+        margin: 8px;
+        flex-wrap: wrap;
+        > * {
+          @include fill($width: $thumbnailWidth, $height: 285px);
+          background: $background1;
+          margin: 8px;
+        }
+        > .child{
+          cursor: pointer;
+          > .thumbnail{
+            @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+            border-bottom: $border1;
+            img{
+              @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+              background-color: $background1;
+            }
+            > .file-ext {
+              justify-content: center;
+              align-items: center;
+              font-size: 18px;
+            }
+            > * {
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+          }
+          > .info{
+            flex-grow: 1;
+            > * {
+              margin-left: 8px;
+              margin-right: 8px;
+              margin-top: 8px;
+            }
+            > .name {
+              color: $color2;
+            }
+            > .child-count{
+              color: $linkColor;
+            }
+          }
+          &.folder {
+            > .thumbnail{
+              background: url("/resource/image/folder.png") center no-repeat;
+            }
+          }
+          &.document{
+            > .thumbnail{
+              background: url("/resource/image/document.png") center no-repeat;
+            }
+          }
+        }
+      }
+    }
+  }
+}
