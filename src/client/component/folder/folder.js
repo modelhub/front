@@ -152,8 +152,18 @@ define('folder/folder', [
                             $window.removeEventListener('resize', windowResizeHandler);
                         });
 
-                        $scope.childClick = function(child){
-                            $location.path('/'+child.nodeType+'/'+child.id);
+                        $scope.childClick = function(child) {
+                            if (child.nodeType === 'folder') {
+                                $location.path('/folder/' + child.id);
+                            } else if (child.nodeType === 'document') {
+                                $location.path('/documentVersion/' + child.latestVersion.id);
+                            } else if (child.nodeType === 'viewerState') {
+                                //TODO trigger event to load sheets into aggregation viewer
+                            }
+                        };
+
+                        $scope.childVersionsClick = function(child){
+                            $location.path('/document/'+child.id);
                         };
 
                         loadNextTreeNodeBatch();

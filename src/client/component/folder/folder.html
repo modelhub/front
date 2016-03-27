@@ -34,6 +34,8 @@
                     <div class="ext mh-ellip" ng-if="::child.nodeType === 'folder'">{{::txt('folder')}}</div>
                     <div class="ext mh-ellip" ng-if="::child.nodeType !== 'folder' && child.latestVersion && !child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::child.latestVersion.fileExtension}}</div>
                     <div class="ext mh-ellip" ng-if="::child.nodeType !== 'folder' && child.latestVersion && child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::txt(child.latestVersion.fileType.match('^(image|video|audio)')[0])}}</div>
+                    <div class="child-count mh-ellip" ng-if="::child.nodeType === 'folder'">{{::txt('children', child.childCount)}}</div>
+                    <div class="child-count mh-ellip" ng-if="::child.nodeType !== 'folder'" ng-click="::childVersionsClick(child)">{{::txt('versions', child.childCount)}}</div>
                 </div>
             </div>
         </div>

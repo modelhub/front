@@ -51,6 +51,14 @@
 
   "audio": {
     "en": "audio"
+  },
+
+  "children": {
+    "en": "Children: {0}"
+  },
+
+  "versions": {
+    "en": "Versions: {0}"
   }
 
 }

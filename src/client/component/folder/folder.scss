@@ -99,6 +99,9 @@ mh-folder {
             > .name {
               color: $color2;
             }
+            > .child-count{
+              color: $linkColor;
+            }
           }
           &.folder {
             > .thumbnail{
