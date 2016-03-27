@@ -39,7 +39,7 @@ define('service/uploader', [
                         if (lastIdx !== -1) {
                             fileExtension = file.name.substring(lastIdx+1);
                         }
-                        var matches = file.type.match('^(image|video|audio)/');
+                        var matches = file.type.match('^(image|video|audio)');
                         if(matches && matches.length > 0){
                             fileExtension = matches[0];
                         }
