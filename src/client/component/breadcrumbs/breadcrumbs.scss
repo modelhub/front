@@ -8,6 +8,7 @@ mh-breadcrumbs {
     flex-wrap: nowrap;
     overflow-x: auto;
     > * {
+      align-items: center;
       &:first-child {
         margin-left: 8px;
       }
@@ -16,7 +17,6 @@ mh-breadcrumbs {
       &:hover{
         color: $color2;
         > .icon {
-          @include fill($width: 6px, $height: 18px);
           background: url("/resource/image/breadcrumb-selected.png") no-repeat;
           background-size: contain;
         }
@@ -26,7 +26,7 @@ mh-breadcrumbs {
         margin-right: 8px;
       }
       > .icon {
-        @include fill($width: 6px, $height: 18px);
+        @include fill($width: 4px, $height: 12px);
         background: url("/resource/image/breadcrumb.png") no-repeat;
         background-size: contain;
       }
