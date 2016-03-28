@@ -54,9 +54,9 @@ define('createForm/createForm', [
 
                         resetForm();
 
-                        $scope.$on(EVENT.SHOW_THUMBNAIL_CREATE_FORM, resetForm);
+                        $scope.$on(EVENT.SHOW_CREATE_FORM, resetForm);
 
-                        $scope.$on(EVENT.HIDE_THUMBNAIL_CREATE_FORM, resetForm);
+                        $scope.$on(EVENT.HIDE_CREATE_FORM, resetForm);
 
                         $scope.newFileInputBtnClick = function(){
                             if (!processingThumbnail && $scope.newType !== 'folder') {
@@ -123,7 +123,7 @@ define('createForm/createForm', [
                                     case 'project':
                                         api.v1.project.create($scope.name, resizedImageType, resizedImage).then(function(project){
                                             $scope.sendingCreateApiRequest = false;
-                                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, project);
+                                            $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS, project);
                                         }, function(errorId){
                                             //TODO
                                             $scope.sendingCreateApiRequest = false;
@@ -132,7 +132,7 @@ define('createForm/createForm', [
                                     case 'folder':
                                         api.v1.treeNode.createFolder($scope.parentId, $scope.name).then(function(folder){
                                             $scope.sendingCreateApiRequest = false;
-                                            $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, folder);
+                                            $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS, folder);
                                         }, function(errorId){
                                             //TODO
                                             $scope.sendingCreateApiRequest = false;
@@ -153,14 +153,14 @@ define('createForm/createForm', [
                                             }
                                         }
                                         $scope.sendingCreateApiRequest = false;
-                                        $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS);
+                                        $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS);
                                         break;
                                     case 'documentVersion':
                                         if(singleFileEl.files.length === 1) {
                                             uploader.start('documentVersion', $scope.parentId, singleFileEl.files[0].name, singleFileEl.files[0]);
                                         }
                                         $scope.sendingCreateApiRequest = false;
-                                        $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS);
+                                        $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS);
                                         break;
                                 }
                             }
@@ -168,7 +168,7 @@ define('createForm/createForm', [
 
                         $scope.cancelBtnClick = function() {
                             if (!$scope.sendingCreateApiRequest && !processingThumbnail) {
-                                $rootScope.$broadcast(EVENT.THUMBNAIL_CREATE_FORM_CANCEL);
+                                $rootScope.$broadcast(EVENT.CREATE_FORM_CANCEL);
                             }
                         };
                     }]

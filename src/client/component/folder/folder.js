@@ -31,10 +31,10 @@ define('folder/folder', [
                         $scope.newFolderBtnClick = function(){
                             $scope.newType = 'folder';
                             if ($scope.selectedControl === 'newFolder') {
-                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
+                                $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
-                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
+                                $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
                                 $scope.selectedControl = 'newFolder';
                             }
                         };
@@ -42,15 +42,15 @@ define('folder/folder', [
                         $scope.newDocumentBtnClick = function(){
                             $scope.newType = 'document';
                             if ($scope.selectedControl === 'newDocument') {
-                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
+                                $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
-                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
+                                $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
                                 $scope.selectedControl = 'newDocument';
                             }
                         };
 
-                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_CANCEL, function(){
+                        $scope.$on(EVENT.CREATE_FORM_CANCEL, function(){
                             if ($scope.newType === 'folder') {
                                 $scope.newFolderBtnClick();
                             } else {
@@ -58,7 +58,7 @@ define('folder/folder', [
                             }
                         });
 
-                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, function(event, node){
+                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(event, node){
                             if ($scope.newType === 'folder') {
                                 $scope.newFolderBtnClick();
                                 $location.path('/folder/'+node.id);

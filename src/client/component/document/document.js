@@ -28,108 +28,64 @@ define('document/document', [
 
                         $scope.my = currentUser();
 
-                        $scope.newFolderBtnClick = function(){
-                            $scope.newType = 'folder';
-                            if ($scope.selectedControl === 'newFolder') {
-                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
+                        $scope.newVersionBtnClick = function(){
+                            if ($scope.selectedControl === 'newVersion') {
+                                $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
-                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
-                                $scope.selectedControl = 'newFolder';
+                                $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
+                                $scope.selectedControl = 'newVersion';
                             }
                         };
 
-                        $scope.newDocumentBtnClick = function(){
-                            $scope.newType = 'document';
-                            if ($scope.selectedControl === 'newDocument') {
-                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
-                                $scope.selectedControl = '';
+                        $scope.$on(EVENT.CREATE_FORM_CANCEL, function(){
+                            if ($scope.newType === 'documentVersion') {
+                                $scope.newVersionBtnClick();
                             } else {
-                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
-                                $scope.selectedControl = 'newDocument';
-                            }
-                        };
-
-                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_CANCEL, function(){
-                            if ($scope.newType === 'folder') {
-                                $scope.newFolderBtnClick();
-                            } else {
-                                $scope.newDocumentBtnClick();
+                                $scope.newVersionBtnClick();
                             }
                         });
 
-                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, function(event, node){
-                            if ($scope.newType === 'folder') {
-                                $scope.newFolderBtnClick();
-                                $location.path('/folder/'+node.id);
-                            } else {
-                                $scope.newDocumentBtnClick();
-                            }
+                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(event, node){
+                            $scope.newVersionBtnClick();
                         });
 
-                        var loadNextTreeNodeBatch,
-                            filter = 'folder',
-                            folderCount = 0,
+                        var loadNextVersionBatch,
                             offset = 0,
-                            defaultLimit = 20,
-                            limit = defaultLimit,
+                            limit = 20,
                             totalResults = null,
-                            loadingNextTreeNodeBatch = false;
-                        $scope.loadingChildren = false;
-                        loadNextTreeNodeBatch = function(){
-                            if(filter && !loadingNextTreeNodeBatch) {
-                                loadingNextTreeNodeBatch = true;
-                                $scope.loadingChildren = true;
-                                var successCallback = function (result) {
-                                    limit = defaultLimit;
+                            loadingNextVersionBatch = false;
+                        $scope.loadingVersions = true;
+                        loadNextVersionBatch = function(){
+                            if(!loadingNextVersionBatch && !$scope.versions || totalResults === null || offset < totalResults) {
+                                loadingNextVersionBatch = true;
+                                $scope.loadingVersions = true;
+                                api.v1.helper.getDocumentVersionsWithFirstSheetInfo($scope.documentId, offset, limit, 'versionDesc').then(function (result) {
                                     totalResults = result.totalResults;
-                                    if (!$scope.children){
-                                        $scope.children = result.results;
+                                    if (!$scope.versions){
+                                        $scope.versions = result.results;
                                     } else {
-                                        $scope.children.push.apply($scope.children, result.results);
+                                        $scope.projects.push.apply($scope.versions, result.results);
                                     }
-                                    if (filter === 'folder') {
-                                        offset = $scope.children.length;
-                                    } else {
-                                        offset = $scope.children.length - folderCount;
-                                    }
-                                    loadingNextTreeNodeBatch = false;
+                                    offset = $scope.versions.length;
+                                    loadingNextVersionBatch = false;
                                     if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
-                                        loadNextTreeNodeBatch();
-                                    } else if (filter === 'folder' ){
-                                        filter = 'document';
-                                        limit = defaultLimit - (offset % defaultLimit);
-                                        offset = 0;
-                                        folderCount = $scope.children.length;
-                                        if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
-                                            loadNextTreeNodeBatch();
-                                        } else {
-                                            $scope.loadingChildren = false;
-                                        }
-                                    } else if (offset >= totalResults) {
-                                        filter = null;
-                                        $scope.loadingChildren = false;
+                                        loadNextVersionBatch();
                                     } else {
-                                        $scope.loadingChildren = false;
+                                        $scope.loadingVersions = false;
                                     }
-                                };
-                                var errorCallback = function(errorId) {
-                                    $scope.childrenLoadingError = errorId;
-                                    $scope.loadingChildren = false;
-                                    loadingNextTreeNodeBatch = false;
-                                };
-                                if (filter !== 'document') {
-                                    api.v1.treeNode.getChildren($scope.documentId, filter, offset, limit, 'nameAsc').then(successCallback, errorCallback);
-                                } else {
-                                    api.v1.helper.getChildrenDocumentsWithLatestVersionAndFirstSheetInfo($scope.documentId, offset, limit, 'nameAsc').then(successCallback, errorCallback);
-                                }
+                                }, function (errorId) {
+                                    $scope.versionsLoadingError = errorId;
+                                    $scope.loadingVersions = false;
+                                    loadingNextVersionBatch = false;
+                                });
                             }
                         };
 
                         var lastScrollTop = 0;
                         scrollEl.addEventListener('scroll', function(){
                             if (lastScrollTop < scrollEl.scrollTop && scrollEl.scrollHeight - (scrollEl.scrollTop + scrollEl.clientHeight) < 10){
-                                loadNextTreeNodeBatch();
+                                loadNextVersionBatch();
                             }
                             lastScrollTop = scrollEl.scrollTop;
                         });
@@ -137,14 +93,14 @@ define('document/document', [
                         $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
                             $window.setTimeout(function(){
                                 if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
-                                    loadNextTreeNodeBatch();
+                                    loadNextVersionBatch();
                                 }
                             }, 100);
                         });
 
                         function windowResizeHandler(){
                             if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
-                                loadNextTreeNodeBatch();
+                                loadNextVersionBatch();
                             }
                         }
                         $window.addEventListener('resize', windowResizeHandler);
@@ -152,21 +108,15 @@ define('document/document', [
                             $window.removeEventListener('resize', windowResizeHandler);
                         });
 
-                        $scope.childClick = function(child) {
-                            if (child.nodeType === 'folder') {
-                                $location.path('/folder/' + child.id);
-                            } else if (child.nodeType === 'document') {
-                                $location.path('/documentVersion/' + child.latestVersion.id);
-                            } else if (child.nodeType === 'viewerState') {
-                                //TODO trigger event to load sheets into aggregation viewer
-                            }
+                        $scope.versionClick = function(version) {
+                            $location.path('/documentVersion/' + version.id);
                         };
 
-                        $scope.childVersionsClick = function(child){
-                            $location.path('/document/'+child.id);
+                        $scope.versionSheetsClick = function(version){
+                            $location.path('/sheets/'+version.id);
                         };
 
-                        loadNextTreeNodeBatch();
+                        loadNextVersionBatch();
                     }]
                 };
             });

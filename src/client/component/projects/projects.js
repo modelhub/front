@@ -28,19 +28,19 @@ define('projects/projects', [
 
                         $scope.newProjectBtnClick = function(){
                             if ($scope.selectedControl === 'newProject') {
-                                $rootScope.$broadcast(EVENT.HIDE_THUMBNAIL_CREATE_FORM);
+                                $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
                                 $scope.selectedControl = '';
                             } else {
-                                $rootScope.$broadcast(EVENT.SHOW_THUMBNAIL_CREATE_FORM);
+                                $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
                                 $scope.selectedControl = 'newProject';
                             }
                         };
 
-                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_CANCEL, function(){
+                        $scope.$on(EVENT.CREATE_FORM_CANCEL, function(){
                             $scope.newProjectBtnClick();
                         });
 
-                        $scope.$on(EVENT.THUMBNAIL_CREATE_FORM_SUCCESS, function(event, project){
+                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(event, project){
                             $scope.newProjectBtnClick();
                             $location.path('/folder/'+project.id);
                         });
