@@ -96,11 +96,11 @@ mh-folder {
               margin-right: 8px;
               margin-top: 8px;
             }
-            > .name {
+            > .name, > .child-count {
               color: $color2;
             }
-            > .child-count{
-              color: $linkColor;
+            > .child-count:hover {
+              color: $highlight1;
             }
           }
           &.folder {

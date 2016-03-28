@@ -1,5 +1,35 @@
 @import "../../global";
 
 mh-breadcrumbs {
-
+  > .root {
+    min-height: 40px;
+    align-items: center;
+    color: $color1;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    > * {
+      &:first-child {
+        margin-left: 8px;
+      }
+      flex-shrink: 0;
+      cursor: pointer;
+      &:hover{
+        color: $color2;
+        > .icon {
+          @include fill($width: 6px, $height: 18px);
+          background: url("/resource/image/breadcrumb-selected.png") no-repeat;
+          background-size: contain;
+        }
+      }
+      > * {
+        flex-shrink: 0;
+        margin-right: 8px;
+      }
+      > .icon {
+        @include fill($width: 6px, $height: 18px);
+        background: url("/resource/image/breadcrumb.png") no-repeat;
+        background-size: contain;
+      }
+    }
+  }
 }

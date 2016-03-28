@@ -1,1 +1,14 @@
-{{entityType}} {{entityId}}
+<div class="mh-def mh-row mh-fill root">
+    <div class="mh-def mh-row project" ng-if="project">
+        <div class="mh-def name">{{::project.name}}</div>
+        <div class="mh-def icon"></div>
+    </div>
+    <div class="mh-def mh-row folder" ng-repeat="parent in parents track by $index" ng-click="treeNodeClick(parent)">
+        <div class="mh-def name" ng-if="::parent.parent === rootParent">{{::txt('root')}}</div>
+        <div class="mh-def name" ng-if="::parent.parent !== rootParent">{{::parent.name}}</div>
+        <div class="mh-def icon" ng-if="::parents.length - 1 !== $index || versionEntity"></div>
+    </div>
+    <div class="mh-def mh-row version-entity" ng-if="versionEntity">
+        <div class="mh-def name">{{::txt('v', versionEntity.version)}}</div>
+    </div>
+</div>
