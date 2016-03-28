@@ -20,16 +20,11 @@ define('createForm/createForm', [
                     template: tpl,
                     scope: {
                         newType: '@',
+                        fileInputAccept: '@',
                         parentId: '@'
                     },
                     controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', 'uploader', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail, uploader){
                         i18n($scope, txt);
-
-                        if($scope.newType === 'project'){
-                            $scope.fileInputAccept = 'image/*';
-                        } else {
-                            $scope.fileInputAccept = '*/*';
-                        }
 
                         var multiFilesEl = $element[0].getElementsByClassName('multi-files')[0],
                             singleFileEl = $element[0].getElementsByClassName('single-file')[0];

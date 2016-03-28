@@ -25,8 +25,13 @@ mh-document {
           @include fill($width: 30px, $height: 30px);
           margin-right: 10px;
           margin-bottom: 10px;
-          background: url("/resource/image/folder-selected.png") center no-repeat;
+          background: url("/resource/image/document-selected.png") center no-repeat;
           background-size: 30px 30px;
+          > .file-ext {
+            justify-content: center;
+            align-items: center;
+            font-size: 6px;
+          }
         }
         > .controls{
           > .control {
@@ -100,15 +105,8 @@ mh-document {
               color: $color2;
             }
           }
-          &.folder {
-            > .thumbnail{
-              background: url("/resource/image/folder.png") center no-repeat;
-            }
-          }
-          &.document{
-            > .thumbnail{
-              background: url("/resource/image/document.png") center no-repeat;
-            }
+          > .thumbnail{
+            background: url("/resource/image/document.png") center no-repeat;
           }
         }
       }

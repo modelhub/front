@@ -20,11 +20,12 @@
             <div>{{txt('loadingError', childrenLoadingError)}}</div>
         </div>
         <div class="mh-def mh-row children" ng-show="children && !childrenLoadingError">
-            <mh-create-form new-type="{{newType}}" parent-id="{{::folderId}}" ng-show="selectedControl"></mh-create-form>
+            <mh-create-form file-input-accept="*/*" new-type="{{newType}}" parent-id="{{::folderId}}" ng-show="selectedControl"></mh-create-form>
             <div class="mh-def child {{::child.nodeType}}" ng-repeat="child in children track by $index" ng-click="::childClick(child)">
                 <div class="mh-def thumbnail">
                     <div  class="mh-def mh-fill file-ext">
-                        <div class="mh-def" >{{::child.latestVersion.fileExtension}}</div>
+                        <div class="mh-def" ng-if="::child.latestVersion && !child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::child.latestVersion.fileExtension}}</div>
+                        <div class="mh-def" ng-if="::child.latestVersion && child.latestVersion.fileType.match('^(image|video|audio)/').length">{{::txt(child.latestVersion.fileType.match('^(image|video|audio)')[0])}}</div>
                     </div>
                     <img ng-src="/api/v1/documentVersion/getThumbnail/{{::child.latestVersion.id}}/{{::child.latestVersion.thumbnailType}}" ng-if="::child.latestVersion && child.latestVersion.thumbnailType"/>
                     <img ng-src="/api/v1/sheet/getItem/{{::child.latestVersion.firstSheet.id}}/{{::child.latestVersion.firstSheet.thumbnails[1]}}" ng-if="::child.latestVersion && !child.latestVersion.thumbnailType && child.latestVersion.firstSheet && child.latestVersion.firstSheet.thumbnails[1]"/>
