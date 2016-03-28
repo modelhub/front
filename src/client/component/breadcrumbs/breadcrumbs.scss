@@ -16,10 +16,6 @@ mh-breadcrumbs {
       cursor: pointer;
       &:hover{
         color: $color2;
-        > .icon {
-          background: url("/resource/image/breadcrumb-selected.png") no-repeat;
-          background-size: contain;
-        }
       }
       > * {
         flex-shrink: 0;
