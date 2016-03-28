@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="mh-def mh-row uploads" ng-show="uploads.length">
-            <div class="mh-def upload" ng-repeat="upload in uploads">
+            <div class="mh-def upload" ng-repeat="upload in uploads" ng-click="uploadClick(upload);">
                 <div class="mh-def thumbnail">
                     <div  class="mh-def mh-fill file-ext">
                         <div class="mh-def" >{{upload.fileExtension}}</div>

@@ -19,7 +19,7 @@ define('uploads/uploads', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$scope', 'EVENT', 'i18n', 'uploader', function($scope, EVENT, i18n, uploader){
+                    controller: ['$location', '$scope', 'EVENT', 'i18n', 'uploader', function($location, $scope, EVENT, i18n, uploader){
                         i18n($scope, txt);
 
                         $scope.uploads = uploader.getUploads();
@@ -31,6 +31,17 @@ define('uploads/uploads', [
 
                         $scope.clearBtnClick = function(){
                             uploader.clearFinished();
+                        };
+
+                        $scope.uploadClick = function(upload) {
+                            switch(upload.newType){
+                                case 'document':
+                                    $location.path('/folder/'+upload.parentId);
+                                    break;
+                                case 'documentVersion':
+                                    $location.path('/document/'+upload.parentId);
+                                    break;
+                            }
                         };
                     }]
                 };
