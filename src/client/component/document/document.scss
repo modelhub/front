@@ -62,7 +62,7 @@ mh-document {
         }
       }
       > .children{
-        margin: -8px 8px 8px 8px;
+        margin: 0px 8px 8px 8px;
         flex-wrap: wrap;
         > * {
           @include fill($width: $thumbnailWidth, $height: 285px);
