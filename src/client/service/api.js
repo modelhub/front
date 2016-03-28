@@ -336,6 +336,10 @@ define('service/api', [
 
                                 getChildrenDocumentsWithLatestVersionAndFirstSheetInfo: function (folder, offset, limit, sortBy) {
                                     return doJsonReq('/api/v1/helper/getChildrenDocumentsWithLatestVersionAndFirstSheetInfo', {folder: folder, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                getDocumentVersionsWithFirstSheetInfo: function (document, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/helper/getDocumentVersionsWithFirstSheetInfo', {document: document, offset: offset, limit: limit, sortBy: sortBy});
                                 }
 
                             }
