@@ -28,6 +28,10 @@ define('document/document', [
 
                         $scope.my = currentUser();
 
+                        api.v1.treeNode.get([$scope.documentId]).then(function(nodes){
+                            $scope.document = nodes[0]
+                        });
+
                         $scope.newVersionBtnClick = function(){
                             if ($scope.selectedControl === 'newVersion') {
                                 $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
