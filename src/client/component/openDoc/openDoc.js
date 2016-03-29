@@ -1,16 +1,13 @@
 define('openDoc/openDoc', [
     'styler',
     'text!openDoc/openDoc.css',
-    'text!openDoc/openDoc.html',
-    'text!openDoc/openDoc.txt.json'
+    'text!openDoc/openDoc.html'
 ], function(
     styler,
     style,
-    tpl,
-    txt
+    tpl
 ){
     styler(style);
-    txt = JSON.parse(txt);
 
     return function(ngModule){
         ngModule
@@ -24,8 +21,7 @@ define('openDoc/openDoc', [
                         documentVersionFileExtension: '@',
                         documentVersionId: '@'
                     },
-                    controller: ['$scope', 'i18n', function($scope, i18n){
-                        i18n($scope, txt);
+                    controller: ['$scope', function($scope){
                         $scope.docUrl = '/resource/viewerJs/#/api/v1/documentVersion/getSeedFile/'+$scope.documentVersionId+'/'+$scope.documentName+".v"+$scope.documentVersionVersion+"."+$scope.documentVersionFileExtension;
                     }]
                 };
