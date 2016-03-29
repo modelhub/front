@@ -5,60 +5,12 @@
     "en": "An error occured: {0}"
   },
 
-  "newFolder": {
-    "en": "New Folder"
+  "download": {
+    "en": "Download"
   },
 
-  "newDocument": {
-    "en": "New Document"
-  },
-
-  "folderName": {
-    "en": "Folder Name"
-  },
-
-  "fileName": {
-    "en": "File Name"
-  },
-
-  "create": {
-    "en": "Create"
-  },
-
-  "cancel": {
-    "en": "Cancel"
-  },
-
-  "folder": {
-    "en": "folder"
-  },
-
-  "document": {
-    "en": "document"
-  },
-
-  "viewerState": {
-    "en": "viewer state"
-  },
-
-  "image": {
-    "en": "image"
-  },
-
-  "video": {
-    "en": "video"
-  },
-
-  "audio": {
-    "en": "audio"
-  },
-
-  "children": {
-    "en": "Children: {0}"
-  },
-
-  "versions": {
-    "en": "Versions: {0}"
+  "v": {
+    "en": "V{0}"
   }
 
 }

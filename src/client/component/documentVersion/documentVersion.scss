@@ -25,8 +25,19 @@ mh-document-version {
           @include fill($width: 30px, $height: 30px);
           margin-right: 10px;
           margin-bottom: 10px;
-          background: url("/resource/image/folder-selected.png") center no-repeat;
+          background: url("/resource/image/document-selected.png") center no-repeat;
           background-size: 30px 30px;
+          > .file-ver {
+            justify-content: center;
+            align-items: center;
+            font-size: 6px;
+          }
+        }
+        > .title {
+          font-size: 35px;
+          font-weight: 100;
+          color: $color2;
+          margin-right: 16px;
         }
         > .controls{
           > .control {
@@ -38,10 +49,10 @@ mh-document-version {
             > .name {
               margin-bottom: 5px;
             }
-            &:hover, &.selected {
+            &:hover {
               color: $color2;
             }
-            &.selected {
+            &:active {
               .highlight {
                 background: $highlight1;
               }
@@ -55,62 +66,15 @@ mh-document-version {
       > mh-loader{
         flex-grow: 1;
       }
-      > .children-loading-error{
+      > .loading-error{
         flex-grow: 1;
         > div{
           margin: auto;
         }
       }
-      > .children{
+      > .content{
         margin: 0px 8px 8px 8px;
         flex-wrap: wrap;
-        > * {
-          @include fill($width: $thumbnailWidth, $height: 285px);
-          background: $background1;
-          margin: 8px;
-        }
-        > .child{
-          cursor: pointer;
-          > .thumbnail{
-            @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
-            border-bottom: $border1;
-            img{
-              @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
-              background-color: $background1;
-            }
-            > .file-ext {
-              justify-content: center;
-              align-items: center;
-              font-size: 18px;
-            }
-            > * {
-              position: absolute;
-              top: 0;
-              left: 0;
-            }
-          }
-          > .info{
-            flex-grow: 1;
-            > * {
-              margin-left: 8px;
-              margin-right: 8px;
-              margin-top: 8px;
-            }
-            > .name {
-              color: $color2;
-            }
-          }
-          &.folder {
-            > .thumbnail{
-              background: url("/resource/image/folder.png") center no-repeat;
-            }
-          }
-          &.document{
-            > .thumbnail{
-              background: url("/resource/image/document.png") center no-repeat;
-            }
-          }
-        }
       }
     }
   }

@@ -1,7 +1,7 @@
 <div class="mh-def mh-fill root">
     <div class="mh-def content">
         <div class="mh-def mh-row header">
-            <div class="icon {{versions[0].fileType}} {{versions[0].fileExtension}}">
+            <div class="icon">
                 <div  class="mh-def mh-fill file-ext">
                     <div class="mh-def" ng-if="!versions[0].fileType.match('^(image|video|audio)/').length">{{::versions[0].fileExtension}}</div>
                     <div class="mh-def" ng-if="versions[0].fileType.match('^(image|video|audio)/').length">{{::txt(versions[0].fileType.match('^(image|video|audio)')[0])}}</div>
