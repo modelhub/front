@@ -10,6 +10,7 @@ define('registry', [
     'service/lmv',
     'service/lmvLoader',
     'service/logout',
+    'service/md',
     'service/thumbnail',
     'service/uploader',
     //components
@@ -23,6 +24,7 @@ define('registry', [
     'folder/folder',
     'folderRoute/folderRoute',
     'invites/invites',
+    'imageDoc/imageDoc',
     'langSelector/langSelector',
     'loader/loader',
     'logout/logout',
@@ -46,6 +48,7 @@ define('registry', [
     lmv,
     lmvLoader,
     logoutService,
+    md,
     thumbnail,
     uploader,
     //components
@@ -59,6 +62,7 @@ define('registry', [
     folder,
     folderRoute,
     invites,
+    imageDoc,
     langSelector,
     loader,
     logout,
