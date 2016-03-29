@@ -1,16 +1,13 @@
 define('imageDoc/imageDoc', [
     'styler',
     'text!imageDoc/imageDoc.css',
-    'text!imageDoc/imageDoc.html',
-    'text!imageDoc/imageDoc.txt.json'
+    'text!imageDoc/imageDoc.html'
 ], function(
     styler,
     style,
-    tpl,
-    txt
+    tpl
 ){
     styler(style);
-    txt = JSON.parse(txt);
 
     return function(ngModule){
         ngModule
@@ -18,10 +15,10 @@ define('imageDoc/imageDoc', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
-                    controller: ['$scope', 'i18n', function($scope, i18n){
-                        i18n($scope, txt);
-                    }]
+                    scope: {
+                        documentVersionFileType: '@',
+                        documentVersionId: '@'
+                    }
                 };
             });
     }
