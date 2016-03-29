@@ -75,7 +75,12 @@ mh-document-version {
       }
       > .content{
         margin: 0px 8px 8px 8px;
-        flex-wrap: wrap;
+        flex-grow: 1;
+        > * {
+          @include default();
+          @include fill();
+          flex-grow: 1;
+        }
       }
     }
   }
