@@ -6,7 +6,6 @@
                     <div class="mh-def" ng-if="documentVersion.version">{{::txt('v', documentVersion.version)}}</div>
                 </div>
             </div>
-            <div class="title" ng-if="documentVersion.version">{{::txt('v', documentVersion.version)}}</div>
             <div class="mh-def mh-row controls">
                 <a class="mh-def control" ng-if="document && documentVersion" ng-href="/api/v1/documentVersion/getSeedFile/{{::documentVersion.id}}" download="{{::document.name}}.v{{::documentVersion.version}}.{{::documentVersion.fileExtension}}">
                     <div class="name">{{::txt('download')}}</div>

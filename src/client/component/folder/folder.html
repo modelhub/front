@@ -2,8 +2,6 @@
     <div class="mh-def content">
         <div class="mh-def mh-row header">
             <div class="icon"></div>
-            <div class="title" ng-if="folder.parent === rootParent">{{::txt('root')}}</div>
-            <div class="title" ng-if="folder.parent !== rootParent">{{::folder.name}}</div>
             <div class="mh-def mh-row controls" ng-show="children && !childrenLoadingError">
                 <div class="mh-def control" ng-class="{selected: selectedControl === 'newFolder'}" ng-click="newFolderBtnClick()">
                     <div class="name">{{::txt('newFolder')}}</div>

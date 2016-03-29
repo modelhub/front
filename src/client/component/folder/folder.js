@@ -28,8 +28,6 @@ define('folder/folder', [
 
                         $scope.my = currentUser();
 
-                        $scope.rootParent = '00000000000000000000000000000000';
-
                         api.v1.treeNode.get([$scope.folderId]).then(function(nodes){
                             $scope.folder = nodes[0];
                         });

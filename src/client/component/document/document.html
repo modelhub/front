@@ -7,7 +7,6 @@
                     <div class="mh-def" ng-if="versions[0].fileType.match('^(image|video|audio)/').length">{{::txt(versions[0].fileType.match('^(image|video|audio)')[0])}}</div>
                 </div>
             </div>
-            <div class="title">{{document.name}}.{{versions[0].fileExtension}}</div>
             <div class="mh-def mh-row controls" ng-show="versions && !versionsLoadingError">
                 <div class="mh-def control" ng-class="{selected: selectedControl === 'newVersion'}" ng-click="newVersionBtnClick()">
                     <div class="name">{{::txt('newVersion')}}</div>
