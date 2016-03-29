@@ -17,10 +17,10 @@
         <div class="mh-def breadcrumbs">
             <mh-breadcrumbs entity-type="documentVersion" entity-id="{{documentVersionId}}" ng-cloak></mh-breadcrumbs>
         </div>
-        <div class="mh-def loading-error" ng-show="loadingError">
-            <div>{{txt('loadingError', versionsLoadingError)}}</div>
+        <div class="mh-def loading-error" ng-if="loadingError">
+            <div>{{::txt('loadingError', versionsLoadingError)}}</div>
         </div>
-        <div class="mh-def content" ng-show="!loading && !loadingError">
+        <div class="mh-def {{documentVersion.fileType}} content" ng-show="!loading && !loadingError">
             <mh-image-doc document-version-id="{{documentVersion.id}}" document-version-file-type="{{documentVersion.fileType}}" ng-if="documentVersion.fileType.indexOf('image') === 0"></mh-image-doc>
             <mh-video-doc document-version-id="{{documentVersion.id}}" document-version-file-type="{{documentVersion.fileType}}" ng-if="documentVersion.fileType.indexOf('video') === 0"></mh-video-doc>
             <mh-audio-doc document-version-id="{{documentVersion.id}}" document-version-file-type="{{documentVersion.fileType}}" ng-if="documentVersion.fileType.indexOf('audio') === 0"></mh-audio-doc>
@@ -28,6 +28,11 @@
             <mh-md-doc document-version-id="{{documentVersion.id}}" ng-if="documentVersion.fileType === 'md'"></mh-md-doc>
             <mh-text-doc document-version-id="{{documentVersion.id}}" ng-if="documentVersion.fileType === 'text'"></mh-text-doc>
             <mh-lmv-doc document-version-id="{{documentVersion.id}}" ng-if="documentVersion.fileType === 'lmv'"></mh-lmv-doc>
+            <div class="mh-def " ng-if="documentVersion && documentVersion.fileType === ''">
+                <div class="mh-def txt">
+                    {{::txt('unknown')}}
+                </div>
+            </div>
         </div>
         <mh-loader class="mh-def bar-spinner" ng-show="loading && !loadingError"></mh-loader>
     </div>

@@ -11,6 +11,10 @@
 
   "v": {
     "en": "V{0}"
+  },
+
+  "unknown": {
+    "en": "Unknown document type."
   }
 
 }
