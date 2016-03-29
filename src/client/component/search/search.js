@@ -18,7 +18,10 @@ define('search/search', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        project: '@',
+                        search: '@'
+                    },
                     controller: ['$scope', 'i18n', function($scope, i18n){
                         i18n($scope, txt);
                     }]

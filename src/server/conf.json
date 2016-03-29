@@ -32,7 +32,7 @@
   },
 
   "web": {
-    "host": "modelhub.autodesk.com",
+    "host": "shf60zpj32.ads.autodesk.com",
     "port": 8080,
     "publicDir": ["..", "client"],
     "certFile": [],

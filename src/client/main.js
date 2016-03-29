@@ -27,11 +27,11 @@ require([
             .when('/uploads', {
                 template: '<mh-uploads class="mh-def mh-fill" ng-cloak></mh-uploads>'
             })
+            .when('/search/:project/:search', {
+                template: '<mh-search-route class="mh-def mh-fill" ng-cloak></mh-search-route>'
+            })
             .when('/aggregation', {
                 template: ''
-            })
-            .when('/search/:project/:search', {
-                template: '<mh-search class="mh-def mh-fill" ng-cloak></mh-search>'
             })
             .when('/folder/:folderId', {
                 template: '<mh-folder-route class="mh-def mh-fill" ng-cloak></mh-folder-route>'

@@ -30,6 +30,7 @@ define('registry', [
     'projects/projects',
     'rootLayout/rootLayout',
     'search/search',
+    'searchRoute/searchRoute',
     'settings/settings',
     'uploads/uploads',
     'viewer/viewer'
@@ -65,6 +66,7 @@ define('registry', [
     projects,
     rootLayout,
     search,
+    searchRoute,
     settings,
     uploads,
     viewer
