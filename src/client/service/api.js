@@ -304,6 +304,23 @@ define('service/api', [
 
                                 getForDocument: function (document, offset, limit, sortBy) {
                                     return doJsonReq('/api/v1/documentVersion/getForDocument', {document: document, offset: offset, limit: limit, sortBy: sortBy});
+                                },
+
+                                getSeedFile: function (id, ext, fileType) {
+                                    var path = '/api/v1/documentVersion/getSeedFile/'+id;
+                                    if (ext){
+                                        path += '.'+ext;
+                                    }
+                                    if (fileType){
+                                        path += '/'+fileType;
+                                    }
+                                    return $q(function(resolve, reject){
+                                        $http.get(path).then(function(resp){
+                                            resolve(resp.data)
+                                        }, function(resp){
+                                            reject(resp.data);
+                                        });
+                                    });
                                 }
 
                             },

@@ -26,12 +26,21 @@ define('documentVersion/documentVersion', [
 
                         $scope.my = currentUser();
 
+                        $scope.loading = true;
+
+                        function errorHandler(errorId){
+                            $scope.loadingError = errorId;
+                        }
+
                         api.v1.documentVersion.get([$scope.documentVersionId]).then(function(documentVersions){
                             $scope.documentVersion = documentVersions[0];
                             api.v1.treeNode.get([documentVersions[0].document]).then(function(nodes){
                                 $scope.document = nodes[0];
-                            });
-                        });
+                                $scope.loading = false;
+                            }, errorHandler);
+                        }, errorHandler);
+
+
                     }]
                 };
             });
