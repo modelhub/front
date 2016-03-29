@@ -1,0 +1,7 @@
+{
+  "langs": ["en"],
+
+  "unsupported": {
+    "en": "Video format is not supported by the browser."
+  }
+}

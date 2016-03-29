@@ -1,0 +1,7 @@
+{
+  "langs": ["en"],
+
+  "unsupported": {
+    "en": "Audio format is not supported by the browser."
+  }
+}

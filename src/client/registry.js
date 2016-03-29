@@ -15,6 +15,7 @@ define('registry', [
     'service/uploader',
     //components
     'aggregationViewer/aggregationViewer',
+    'audioDoc/audioDoc',
     'breadcrumbs/breadcrumbs',
     'createForm/createForm',
     'document/document',
@@ -35,6 +36,7 @@ define('registry', [
     'searchRoute/searchRoute',
     'settings/settings',
     'uploads/uploads',
+    'videoDoc/videoDoc',
     'viewer/viewer'
 ], function(
     ng,
@@ -53,6 +55,7 @@ define('registry', [
     uploader,
     //components
     aggregationViewer,
+    audioDoc,
     breadcrumbs,
     createForm,
     document,
@@ -73,6 +76,7 @@ define('registry', [
     searchRoute,
     settings,
     uploads,
+    videoDoc,
     viewer
 ){
     var registry = ng.module('mh.registry', []);

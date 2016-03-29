@@ -1,0 +1,13 @@
+@import "../../global";
+
+mh-video-doc {
+  > .root {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    > video {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
