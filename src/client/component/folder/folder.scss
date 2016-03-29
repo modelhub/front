@@ -28,6 +28,12 @@ mh-folder {
           background: url("/resource/image/folder-selected.png") center no-repeat;
           background-size: 30px 30px;
         }
+        > .title {
+          font-size: 35px;
+          font-weight: 100;
+          color: $color2;
+          margin-right: 16px;
+        }
         > .controls{
           > .control {
             cursor: pointer;

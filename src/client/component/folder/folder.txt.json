@@ -5,6 +5,10 @@
     "en": "An error occured: {0}"
   },
 
+  "root": {
+    "en": "root"
+  },
+
   "newFolder": {
     "en": "New Folder"
   },
