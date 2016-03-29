@@ -1,0 +1,13 @@
+@import "../../global";
+
+mh-open-doc {
+  > .root {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    > iframe {
+      flex-grow: 1;
+      border: 0;
+    }
+  }
+}

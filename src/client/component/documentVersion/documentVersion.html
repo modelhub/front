@@ -24,7 +24,7 @@
             <mh-image-doc document-version-id="{{documentVersion.id}}" document-version-file-type="{{documentVersion.fileType}}" ng-if="documentVersion.fileType.indexOf('image') === 0"></mh-image-doc>
             <mh-video-doc document-version-id="{{documentVersion.id}}" document-version-file-type="{{documentVersion.fileType}}" ng-if="documentVersion.fileType.indexOf('video') === 0"></mh-video-doc>
             <mh-audio-doc document-version-id="{{documentVersion.id}}" document-version-file-type="{{documentVersion.fileType}}" ng-if="documentVersion.fileType.indexOf('audio') === 0"></mh-audio-doc>
-            <mh-od-doc document-version-id="{{documentVersion.id}}" document-version-file-extension="{{documentVersion.fileExtension}}" ng-if="documentVersion.fileType === 'od' || documentVersion.fileType === 'pdf'"></mh-od-doc>
+            <mh-open-doc document-version-id="{{documentVersion.id}}" document-version-file-extension="{{documentVersion.fileExtension}}" document-name="{{document.name}}" document-version-version="{{documentVersion.version}}" ng-if="document && (documentVersion.fileType === 'od' || documentVersion.fileType === 'pdf')"></mh-open-doc>
             <mh-md-doc document-version-id="{{documentVersion.id}}" ng-if="documentVersion.fileType === 'md'"></mh-md-doc>
             <mh-text-doc document-version-id="{{documentVersion.id}}" ng-if="documentVersion.fileType === 'text'"></mh-text-doc>
             <mh-lmv-doc document-version-id="{{documentVersion.id}}" ng-if="documentVersion.fileType === 'lmv'"></mh-lmv-doc>
