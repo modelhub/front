@@ -1,12 +1,14 @@
 define('service/md', [
-    'marked'
+    'markdown'
 ], function(
-    marked
+    markdown
 ){
     return function(ngModule){
         ngModule
             .service('md', [function(){
-                return marked
+                return function(){
+                    return markdown.toHTML.apply(markdown, arguments);
+                }
             }]);
     }
 });

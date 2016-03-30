@@ -20,7 +20,6 @@
     "angular": "~1.5.1",
     "angular-route": "~1.5.1",
     "angular-mocks": "~1.5.1",
-    "moment": "~2.10.6",
-    "marked": "https://github.com/chjj/marked.git#v0.3.5"
+    "moment": "~2.10.6"
   }
 }

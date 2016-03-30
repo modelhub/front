@@ -6,7 +6,7 @@ require.config({
         'moment': '../lib/moment/moment',
         'momentLocale': '../lib/moment/locale',
         'text': '../lib/requirejs-text/text',
-        'marked': '../lib/marked/lib/marked',
+        'markdown': '../lib/markdown/markdown',
         'registry': '../registry',
         'service': '../service',
         'constant': '../constant',
@@ -23,6 +23,9 @@ require.config({
         },
         'moment': {
             exports: 'moment'
+        },
+        'markdown': {
+            exports: 'markdown'
         }
     }
 });
