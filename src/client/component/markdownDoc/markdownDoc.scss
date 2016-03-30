@@ -2,10 +2,13 @@
 
 mh-markdown-doc {
   > .root {
-    justify-content: center;
+    justify-content: flex-start;
     flex-grow: 1;
     flex-shrink: 0;
     color: black;
     background: white;
+    mh-loader {
+      flex-grow: 1;
+    }
   }
 }
