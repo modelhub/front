@@ -108,13 +108,7 @@ mh-uploads {
                 border-radius: 10px;
                 background: rgba(255, 255, 255, 0.5);
               }
-              &.uploading {
-                background: darkblue;
-                > .progress-fill {
-                  background: $highlight1;
-                }
-              }
-              &.processing {
+              &.uploading, &.registering {
                 background: darkblue;
                 > .progress-fill {
                   background: $highlight1;

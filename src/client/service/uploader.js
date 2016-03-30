@@ -58,7 +58,7 @@ define('service/uploader', [
                     if (typeof idx === 'number') {
                         active[idx].progress = $window.Math.round((done / total) * 100);
                         if(active[idx].progress === 100){
-                            active[idx].status = 'processing';
+                            active[idx].status = 'registering';
                         }
                         $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
@@ -68,7 +68,7 @@ define('service/uploader', [
                     var idx = getActiveIdx(data.uploadId);
                     if (typeof idx === 'number') {
                         active[idx].progress = 100;
-                        active[idx].status = 'processing';
+                        active[idx].status = 'registering';
                         $rootScope.$broadcast(EVENT.UPLOADS_CHANGED);
                     }
                 });

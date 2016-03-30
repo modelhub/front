@@ -33,12 +33,12 @@
     "en": "Uploading: {0}%"
   },
 
-  "processing": {
-    "en": "Processing: {0}%"
+  "registering": {
+    "en": "Registering"
   },
 
   "success": {
-    "en": "Success: {0}%"
+    "en": "Success"
   },
 
   "error": {
