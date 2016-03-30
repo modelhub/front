@@ -18,7 +18,14 @@ define('imageDoc/imageDoc', [
                     scope: {
                         documentVersionFileType: '@',
                         documentVersionId: '@'
-                    }
+                    },
+                    controller: ['$element', '$scope', function($element, $scope){
+                        $scope.loading = true;
+                        var imgEl = $element[0].getElementsByTagName('img')[0];
+                        imgEl.addEventListener('load', function(){
+                            $scope.loading = false;
+                        })
+                    }]
                 };
             });
     }

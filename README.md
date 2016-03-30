@@ -1,13 +1,9 @@
 front
-===========
+=====
 
 The front end and **main** repo for modelhub, it is written with [**Angular**](https://angularjs.org/), [**Require**](http://requirejs.org/)
 and [**SASS**](http://sass-lang.com/) on the client side with a [**Go**](http://golang.org/) server and [**MySql**](https://www.mysql.com/) database.
-The project is configured as a single page web app. The project comes with:
-
-* Automated build and testing tasks
-* Unit tests
-* End-to-End tests
+The project is configured as a single page web app.
 
 ##Setup Checklist
 

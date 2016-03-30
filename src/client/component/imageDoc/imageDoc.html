@@ -1,3 +1,4 @@
 <div class="mh-def mh-fill root">
-    <img ng-src="/api/v1/documentVersion/getSeedFile/{{documentVersionId}}/{{documentVersionFileType}}"/>
+    <img ng-src="/api/v1/documentVersion/getSeedFile/{{documentVersionId}}/{{documentVersionFileType}}" ng-show="!loading"/>
+    <mh-loader class="mh-def bar-spinner" ng-show="loading"></mh-loader>
 </div>
