@@ -3,6 +3,7 @@
 mh-image-doc {
   > .root {
     flex-grow: 1;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     > img {

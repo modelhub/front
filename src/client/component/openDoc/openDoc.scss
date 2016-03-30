@@ -3,6 +3,7 @@
 mh-open-doc {
   > .root {
     flex-grow: 1;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     > iframe {

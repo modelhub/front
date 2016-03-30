@@ -1,0 +1,11 @@
+@import "../../global";
+
+mh-markdown-doc {
+  > .root {
+    justify-content: center;
+    flex-grow: 1;
+    flex-shrink: 0;
+    color: black;
+    background: white;
+  }
+}
