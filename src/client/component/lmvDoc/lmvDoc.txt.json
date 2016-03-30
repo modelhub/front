@@ -1,0 +1,28 @@
+﻿{
+  "langs": ["en"],
+
+  "loadingError": {
+    "en": "An error occured: {0}"
+  },
+
+  "newVersion": {
+    "en": "New Version"
+  },
+
+  "image": {
+    "en": "image"
+  },
+
+  "video": {
+    "en": "video"
+  },
+
+  "audio": {
+    "en": "audio"
+  },
+
+  "v": {
+    "en": "V{0}"
+  }
+
+}

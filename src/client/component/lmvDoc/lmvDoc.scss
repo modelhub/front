@@ -1,0 +1,74 @@
+@import "../../global";
+
+mh-lmv-doc {
+  * {
+    flex-shrink: 0;
+  }
+  > div.root {
+    @include IEScrollbars();
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    flex-grow: 1;
+    flex-shrink: 0;
+    > div.content{
+      max-width: 1292px;
+      width: 100%;
+      min-height: 100%;
+      flex-grow: 1;
+      flex-shrink: 0;
+      > mh-loader{
+        flex-grow: 1;
+      }
+      > .sheets-loading-error{
+        flex-grow: 1;
+        > div{
+          margin: auto;
+        }
+      }
+      > .sheets{
+        flex-wrap: wrap;
+        > * {
+          @include fill($width: $thumbnailWidth, $height: 285px);
+          background: $background1;
+          margin: 8px;
+        }
+        > .sheet{
+          cursor: pointer;
+          > .thumbnail{
+            @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+            border-bottom: $border1;
+            img{
+              @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+              background-color: $background1;
+            }
+            > .sheet-role {
+              justify-content: center;
+              align-items: center;
+              font-size: 18px;
+            }
+            > * {
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+          }
+          > .info{
+            flex-grow: 1;
+            > * {
+              margin-left: 8px;
+              margin-right: 8px;
+              margin-top: 8px;
+            }
+            > .name {
+              color: $color2;
+            }
+          }
+          > .thumbnail{
+            background: url("/resource/image/document.png") center no-repeat;
+          }
+        }
+      }
+    }
+  }
+}
