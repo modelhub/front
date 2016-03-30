@@ -69,7 +69,7 @@ define('document/document', [
                                     if (!$scope.versions){
                                         $scope.versions = result.results;
                                     } else {
-                                        $scope.projects.push.apply($scope.versions, result.results);
+                                        $scope.versions.push.apply($scope.versions, result.results);
                                     }
                                     offset = $scope.versions.length;
                                     loadingNextVersionBatch = false;
