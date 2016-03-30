@@ -88,6 +88,19 @@ mh-folder {
               top: 0;
               left: 0;
             }
+            > .status-icon {
+              @include fill(20px, 20px);
+              top: 115px;
+              left: 88px;
+              &.registered, &.pending, &.inprogress {
+                background: url("/resource/image/settings.png") center no-repeat;
+                background-size: 20px;
+              }
+              &.failed {
+                background: url("/resource/image/error.png") center no-repeat;
+                background-size: 20px;
+              }
+            }
           }
           > .info{
             flex-grow: 1;
