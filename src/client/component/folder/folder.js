@@ -71,12 +71,14 @@ define('folder/folder', [
                             }
                         });
 
-                        var runStatusCheck;
+                        var runStatusCheck,
+                            timeouts = {};
                         runStatusCheck = function(doc){
                             if(doc.latestVersion){
                                 var matches = doc.latestVersion.status.match(/(registered|pending|inprogress)/);
                                 if(matches && matches.length > 0) {
-                                    $window.setTimeout(function () {
+                                    var timeout = $window.setTimeout(function () {
+                                        delete timeouts[timeout];
                                         api.v1.documentVersion.get([doc.latestVersion.id]).then(function (docVers) {
                                             doc.latestVersion.status = docVers[0].status;
                                             if (doc.latestVersion.status === 'success') {
@@ -88,9 +90,18 @@ define('folder/folder', [
                                             }
                                         });
                                     }, 10000);
+                                    timeouts[timeout] = null;
                                 }
                             }
                         };
+
+                        $scope.$on('$destroy', function(){
+                            for (var property in object) {
+                                if (object.hasOwnProperty(property)) {
+                                    $window.clearTimeout(property);
+                                }
+                            }
+                        });
 
                         var loadNextTreeNodeBatch,
                             filter = 'folder',

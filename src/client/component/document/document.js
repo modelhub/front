@@ -54,11 +54,13 @@ define('document/document', [
                             $scope.newVersionBtnClick();
                         });
 
-                        var runStatusCheck;
+                        var runStatusCheck,
+                            timeouts = {};
                         runStatusCheck = function(docVer){
                             var matches = docVer.status.match(/(registered|pending|inprogress)/);
                             if(matches && matches.length > 0){
-                                $window.setTimeout(function(){
+                                var timeout = $window.setTimeout(function(){
+                                    delete timeouts[timeout];
                                     api.v1.documentVersion.get([docVer.id]).then(function(docVers){
                                         docVer.status = docVers[0].status;
                                         if(docVer.status === 'success'){
@@ -70,8 +72,17 @@ define('document/document', [
                                         }
                                     });
                                 }, 10000);
+                                timeouts[timeout] = null;
                             }
                         };
+
+                        $scope.$on('$destroy', function(){
+                            for (var property in object) {
+                                if (object.hasOwnProperty(property)) {
+                                    $window.clearTimeout(property);
+                                }
+                            }
+                        });
 
                         var loadNextVersionBatch,
                             offset = 0,
