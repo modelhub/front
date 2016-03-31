@@ -87,7 +87,7 @@ define('lmvDoc/lmvDoc', [
                             $window.removeEventListener('resize', windowResizeHandler);
                         });
 
-                        $scope.sheetsClick = function(sheet){
+                        $scope.sheetClick = function(sheet){
                             $location.path('/sheet/'+sheet.id);
                         };
 

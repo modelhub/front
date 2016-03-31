@@ -42,6 +42,9 @@ require([
             .when('/documentVersion/:documentVersionId', {
                 template: '<mh-document-version-route class="mh-def mh-fill" ng-cloak></mh-document-version-route>'
             })
+            .when('/sheet/:sheetId', {
+                template: '<mh-sheet-route class="mh-def mh-fill" ng-cloak></mh-sheet-route>'
+            })
             .otherwise({
                 redirectTo: '/projects'
             });

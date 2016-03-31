@@ -44,6 +44,9 @@ define('service/lmv', [
                                         },
                                         unloadSheet: function(id){
                                             //TODO
+                                        },
+                                        finish: function(){
+                                            viewer.finish();
                                         }
                                     });
                                 });

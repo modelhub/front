@@ -18,10 +18,16 @@ define('viewer/viewer', [
                 return {
                     restrict: 'E',
                     template: tpl,
-                    scope: {},
+                    scope: {
+                        comStr: '@'
+                    },
                     controller: ['$element', '$scope', '$rootScope', '$window', 'EVENT', 'i18n', 'lmv', function($element, $scope, $rootScope, $window, EVENT, i18n, lmv){
 
                         i18n($scope, txt);
+
+                        if ($scope.comStr){
+                            $scope.comObj = $window.JSON.parse($scope.comStr);
+                        }
 
                         $scope.state = 'init';
 
@@ -36,6 +42,12 @@ define('viewer/viewer', [
 
                             $scope.viewer = viewer;
                             $scope.state = 'ready';
+
+                            if($scope.comObj){
+                                for(var i = 0; i < $scope.comObj.sheets.length; i++){
+                                    viewer.loadSheet($scope.comObj.sheets[i].id, $scope.comObj.sheets[i].manifest);
+                                }
+                            }
 
                             $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
                                 $window.setTimeout(viewer.resize, 0);
