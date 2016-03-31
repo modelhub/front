@@ -72,14 +72,14 @@ define('document/document', [
                                         }
                                     });
                                 }, 10000);
-                                timeouts[timeout] = null;
+                                timeouts[timeout] = timeout;
                             }
                         };
 
                         $scope.$on('$destroy', function(){
-                            for (var property in timeouts) {
-                                if (timeouts.hasOwnProperty(property)) {
-                                    $window.clearTimeout(property);
+                            for (var timeout in timeouts) {
+                                if (timeouts.hasOwnProperty(timeout)) {
+                                    $window.clearTimeout(timeouts[timeout]);
                                 }
                             }
                         });
