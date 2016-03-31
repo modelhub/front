@@ -50,9 +50,28 @@ define('document/document', [
                             }
                         });
 
-                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(event, node){
+                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(){
                             $scope.newVersionBtnClick();
                         });
+
+                        var runStatusCheck;
+                        runStatusCheck = function(docVer){
+                            var matches = docVer.status.match(/(registered|pending|inprogress)/);
+                            if(matches && matches.length > 0){
+                                $window.setTimeout(function(){
+                                    api.v1.documentVersion.get([docVer.id]).then(function(docVers){
+                                        docVer.status = docVers[0].status;
+                                        if(docVer.status === 'success'){
+                                            api.v1.sheet.getForDocumentVersion(docVer.id, 0, 1, 'nameAsc').then(function(result){
+                                                docVer.firstSheet = result.results[0].thumbnails;
+                                            });
+                                        } else {
+                                            runStatusCheck(docVer);
+                                        }
+                                    });
+                                }, 10000);
+                            }
+                        };
 
                         var loadNextVersionBatch,
                             offset = 0,
@@ -66,6 +85,11 @@ define('document/document', [
                                 $scope.loadingVersions = true;
                                 api.v1.helper.getDocumentVersionsWithFirstSheetInfo($scope.documentId, offset, limit, 'versionDesc').then(function (result) {
                                     totalResults = result.totalResults;
+                                    if(result && result.results) {
+                                        for (var i = 0; i < result.results.length; i++) {
+                                            runStatusCheck(result.results[i]);
+                                        }
+                                    }
                                     if (!$scope.versions){
                                         $scope.versions = result.results;
                                     } else {

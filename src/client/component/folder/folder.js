@@ -71,6 +71,27 @@ define('folder/folder', [
                             }
                         });
 
+                        var runStatusCheck;
+                        runStatusCheck = function(doc){
+                            if(doc.latestVersion){
+                                var matches = doc.latestVersion.status.match(/(registered|pending|inprogress)/);
+                                if(matches && matches.length > 0) {
+                                    $window.setTimeout(function () {
+                                        api.v1.documentVersion.get([doc.latestVersion.id]).then(function (docVers) {
+                                            doc.latestVersion.status = docVers[0].status;
+                                            if (doc.latestVersion.status === 'success') {
+                                                api.v1.sheet.getForDocumentVersion(doc.latestVersion.id, 0, 1, 'nameAsc').then(function (sheets) {
+                                                    doc.latestVersion.firstSheet = sheets[0];
+                                                });
+                                            } else {
+                                                runStatusCheck(doc);
+                                            }
+                                        });
+                                    }, 10000);
+                                }
+                            }
+                        };
+
                         var loadNextTreeNodeBatch,
                             filter = 'folder',
                             folderCount = 0,
@@ -87,6 +108,11 @@ define('folder/folder', [
                                 var successCallback = function (result) {
                                     limit = defaultLimit;
                                     totalResults = result.totalResults;
+                                    if(result && result.results) {
+                                        for (var i = 0; i < result.results.length; i++) {
+                                            runStatusCheck(result.results[i]);
+                                        }
+                                    }
                                     if (!$scope.children){
                                         $scope.children = result.results;
                                     } else {

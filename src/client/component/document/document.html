@@ -28,7 +28,7 @@
                     <div  class="mh-def mh-fill file-ext">
                         <div class="mh-def" >{{::version.fileExtension}}</div>
                     </div>
-                    <div class="mh-def status-icon {{::version.status}}" ng-class="{'mh-rotate': version.status.match('(registered|pending|inprogress)').length > 0}"></div>
+                    <div class="mh-def status-icon {{version.status}}" ng-class="{'mh-rotate': version.status.match('(registered|pending|inprogress)').length > 0}"></div>
                     <img ng-src="/api/v1/documentVersion/getThumbnail/{{::version.id}}/{{::version.thumbnailType}}" ng-if="version && version.thumbnailType"/>
                     <img ng-src="/api/v1/sheet/getItem/{{::version.firstSheet.id}}/{{::version.firstSheet.thumbnails[1]}}" ng-if="version && !version.thumbnailType && version.firstSheet && version.firstSheet.thumbnails[1]"/>
                 </div>
