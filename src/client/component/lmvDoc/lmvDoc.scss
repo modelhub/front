@@ -20,6 +20,20 @@ mh-lmv-doc {
       > mh-loader{
         flex-grow: 1;
       }
+      > .not-ready {
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        > .icon {
+          @include fill(100px, 100px);
+          &.registered, &.pending, &.inprogress{
+            background: url("/resource/image/settings.png") center no-repeat;
+          }
+          &.failed{
+            background: url("/resource/image/error.png") center no-repeat;
+          }
+        }
+      }
       > .sheets-loading-error{
         flex-grow: 1;
         > div{

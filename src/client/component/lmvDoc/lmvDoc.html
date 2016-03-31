@@ -1,9 +1,13 @@
 <div class="mh-def mh-fill root">
     <div class="mh-def content">
-        <div class="mh-def sheets-loading-error" ng-show="sheetsLoadingError">
-            <div>{{txt('loadingError', versionsLoadingError)}}</div>
+        <div class="mh-def mh-fill not-ready" ng-if="documentVersion && documentVersion.status !== 'success'">
+            <div class="mh-def icon {{documentVersion.status}}" ng-class="{'mh-rotate': documentVersion.status.match('(registered|pending|inprogress)').length > 0}"></div>
+            <div class="mh-def text">{{txt(documentVersion.status)}}</div>
         </div>
-        <div class="mh-def mh-row sheets" ng-show="sheets && !sheetsLoadingError">
+        <div class="mh-def sheets-loading-error" ng-show="loadingError">
+            <div>{{txt('loadingError', loadingError)}}</div>
+        </div>
+        <div class="mh-def mh-row sheets" ng-show="sheets && !loadingError">
             <div class="mh-def sheet" ng-repeat="sheet in sheets track by $index" ng-click="::sheetClick(sheet)">
                 <div class="mh-def thumbnail">
                     <div  class="mh-def mh-fill sheet-role">
@@ -17,6 +21,6 @@
                 </div>
             </div>
         </div>
-        <mh-loader class="mh-def bar-spinner" ng-show="loadingSheets"></mh-loader>
+        <mh-loader class="mh-def bar-spinner" ng-show="loadingSheets && !loadingError && !(documentVersion && documentVersion.status !== 'success')"></mh-loader>
     </div>
 </div>

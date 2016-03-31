@@ -27,6 +27,7 @@ define('lmvDoc/lmvDoc', [
                         var scrollEl = $element[0].getElementsByClassName('root')[0];
 
                         $scope.my = currentUser();
+                        $scope.loading = true;
 
                         var loadNextSheetBatch,
                             offset = 0,
@@ -53,7 +54,7 @@ define('lmvDoc/lmvDoc', [
                                         $scope.loadingSheets = false;
                                     }
                                 }, function (errorId) {
-                                    $scope.sheetsLoadingError = errorId;
+                                    $scope.loadingError = errorId;
                                     $scope.loadingSheets = false;
                                     loadingNextSheetBatch = false;
                                 });
@@ -86,15 +87,53 @@ define('lmvDoc/lmvDoc', [
                             $window.removeEventListener('resize', windowResizeHandler);
                         });
 
-                        $scope.versionClick = function(version) {
-                            $location.path('/documentVersion/' + version.id);
+                        $scope.sheetsClick = function(sheet){
+                            $location.path('/sheet/'+sheet.id);
                         };
 
-                        $scope.versionSheetsClick = function(version){
-                            $location.path('/sheets/'+version.id);
+                        var runStatusCheck,
+                            timeouts = {};
+                        runStatusCheck = function(){
+                            var matches = $scope.documentVersion.status.match(/(registered|pending|inprogress)/);
+                            if(matches && matches.length > 0){
+                                var timeout = $window.setTimeout(function(){
+                                    delete timeouts[timeout];
+                                    api.v1.documentVersion.get([$scope.documentVersion.id]).then(function(docVers){
+                                        $scope.documentVersion = docVers[0];
+                                        if($scope.documentVersion.status === 'success'){
+                                            loadNextSheetBatch();
+                                        } else {
+                                            runStatusCheck();
+                                        }
+                                        $scope.loading = false;
+                                    }, function(errorId){
+                                        $scope.loadingError = errorId;
+                                        $scope.loading = false;
+                                    });
+                                }, 10000);
+                                timeouts[timeout] = null;
+                            } else if($scope.documentVersion.status === 'success'){
+                                loadNextSheetBatch();
+                            }
                         };
 
-                        loadNextSheetBatch();
+                        $scope.$on('$destroy', function(){
+                            for (var property in timeouts) {
+                                if (timeouts.hasOwnProperty(property)) {
+                                    $window.clearTimeout(property);
+                                }
+                            }
+                        });
+
+                        api.v1.documentVersion.get([$scope.documentVersionId]).then(function(docVers){
+                            $scope.documentVersion = docVers[0];
+                            $scope.loading = false;
+                            runStatusCheck();
+                        }, function(errorId){
+                            $scope.loadingError = errorId;
+                            $scope.loading = false;
+                        });
+
                     }]
                 };
             });

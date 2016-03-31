@@ -23,6 +23,22 @@
 
   "v": {
     "en": "V{0}"
+  },
+
+  "registered": {
+    "en": "Extracting sheets..."
+  },
+
+  "pending": {
+    "en": "Extracting sheets..."
+  },
+
+  "inprogress": {
+    "en": "Extracting sheets..."
+  },
+
+  "failed": {
+    "en": "Sheet extraction failed."
   }
 
 }
