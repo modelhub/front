@@ -80,8 +80,8 @@ define('folder/folder', [
                                         api.v1.documentVersion.get([doc.latestVersion.id]).then(function (docVers) {
                                             doc.latestVersion.status = docVers[0].status;
                                             if (doc.latestVersion.status === 'success') {
-                                                api.v1.sheet.getForDocumentVersion(doc.latestVersion.id, 0, 1, 'nameAsc').then(function (sheets) {
-                                                    doc.latestVersion.firstSheet = sheets[0];
+                                                api.v1.sheet.getForDocumentVersion(doc.latestVersion.id, 0, 1, 'nameAsc').then(function (result) {
+                                                    doc.latestVersion.firstSheet = result.results[0];
                                                 });
                                             } else {
                                                 runStatusCheck(doc);

@@ -63,7 +63,7 @@ define('document/document', [
                                         docVer.status = docVers[0].status;
                                         if(docVer.status === 'success'){
                                             api.v1.sheet.getForDocumentVersion(docVer.id, 0, 1, 'nameAsc').then(function(result){
-                                                docVer.firstSheet = result.results[0].thumbnails;
+                                                docVer.firstSheet = result.results[0];
                                             });
                                         } else {
                                             runStatusCheck(docVer);
