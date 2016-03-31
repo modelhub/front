@@ -26,7 +26,7 @@ define('service/lmv', [
                                 }
                             }else{
                                 //ready to init now
-                                viewer = new Autodesk.Viewing.Viewer3D(el, {});
+                                viewer = new Autodesk.Viewing.Private.GuiViewer3D(el, {});
                                 Autodesk.Viewing.Initializer(null, function(){
                                     viewer.initialize();
                                     resolve({
