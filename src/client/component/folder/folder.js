@@ -96,8 +96,8 @@ define('folder/folder', [
                         };
 
                         $scope.$on('$destroy', function(){
-                            for (var property in object) {
-                                if (object.hasOwnProperty(property)) {
+                            for (var property in timeouts) {
+                                if (timeouts.hasOwnProperty(property)) {
                                     $window.clearTimeout(property);
                                 }
                             }
