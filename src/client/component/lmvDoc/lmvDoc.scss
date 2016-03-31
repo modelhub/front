@@ -63,6 +63,9 @@ mh-lmv-doc {
             > .name {
               color: $color2;
             }
+            > .role {
+              text-transform: uppercase;
+            }
           }
           > .thumbnail{
             background: url("/resource/image/document.png") center no-repeat;

@@ -24,6 +24,19 @@
   @include ellipsis();
 }
 
+@keyframes mh-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mh-rotate {
+  animation: mh-rotate 2s linear infinite;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

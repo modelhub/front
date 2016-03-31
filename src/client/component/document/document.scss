@@ -105,6 +105,10 @@ mh-document {
                 background: url("/resource/image/error.png") center no-repeat;
                 background-size: 20px;
               }
+              &.success, &.wont_register {
+                background: url("/resource/image/success.png") center no-repeat;
+                background-size: 20px;
+              }
             }
           }
           > .info{
