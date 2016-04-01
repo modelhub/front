@@ -23,7 +23,7 @@ define('sheet/sheet', [
                             sheet,
                             loadSheet = function(){
                                 if(viewer && sheet){
-                                    viewer.loadSheet(sheet.id, sheet.manifest);
+                                    viewer.loadSheet(sheet);
                                 }
                             };
 

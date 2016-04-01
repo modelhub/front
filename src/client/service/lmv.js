@@ -1,8 +1,7 @@
 define('service/lmv', [
 ], function(
 ){
-    var lmvServiceIdSrc = 0,
-        INIT_TIMEOUT = 5000;
+    var INIT_TIMEOUT = 5000;
 
     return function(ngModule){
         ngModule
@@ -10,17 +9,13 @@ define('service/lmv', [
                 return function(el){
                     return $q(function(resolve, reject){
                         var viewer,
-                            instanceId = lmvServiceIdSrc++,
-                            elId = 'lmv-service-id-' + instanceId,
                             firstInitAttemptTime = Date.now(),
                             init;
-
-                        el.id = elId;
 
                         init = function(){
                             if(!lmvLoader.isReady()){
                                 if(Date.now() - firstInitAttemptTime <= INIT_TIMEOUT) {
-                                    setTimeout(init, 5000);
+                                    setTimeout(init, 500);
                                 }else{
                                     reject();
                                 }
@@ -30,20 +25,14 @@ define('service/lmv', [
                                 Autodesk.Viewing.Initializer(null, function(){
                                     viewer.initialize();
                                     resolve({
-                                        instanceId: function(){
-                                            return instanceId;
-                                        },
-                                        containerEl: function(){
-                                            return el;
-                                        },
-                                        loadSheet: function(id, manifestPath) {
-                                            viewer.load('/api/v1/sheet/getItem/' + id + manifestPath);
-                                        },
-                                        resize: function(){
-                                            viewer.resize();
+                                        loadSheet: function(sheet) {
+                                            viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
                                         },
                                         unloadSheet: function(id){
                                             //TODO
+                                        },
+                                        resize: function(){
+                                            viewer.resize();
                                         },
                                         finish: function(){
                                             viewer.finish();
