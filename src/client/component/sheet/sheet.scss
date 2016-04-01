@@ -1,8 +1,19 @@
 @import "../../global";
 
 mh-sheet {
-  > div {
-    justify-content: center;
-    align-items: center;
+  > .root {
+    > * {
+      flex-shrink: 0;
+    }
+    > .breadcrumbs {
+      background: $background1;
+      height: 50px;
+      flex-grow: 0;
+      border-bottom: $border1;
+    }
+    > mh-viewer{
+      flex-grow: 1;
+      @include fill($height: calc(100% - 51px));
+    }
   }
 }

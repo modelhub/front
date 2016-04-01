@@ -1,3 +1,6 @@
-<div class="mh-def mh-fill">
-    <mh-viewer parent-scope-id="{{$id}}" class="mh-def mh-fill" ng-cloak></mh-viewer>
+<div class="mh-def mh-fill root">
+    <div class="mh-def breadcrumbs">
+        <mh-breadcrumbs class="mh-def mh-fill" entity-type="sheet" entity-id="{{::sheetId}}" ng-cloak></mh-breadcrumbs>
+    </div>
+    <mh-viewer parent-scope-id="{{$id}}" class="mh-def" ng-cloak></mh-viewer>
 </div>

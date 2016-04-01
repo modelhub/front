@@ -1,6 +1,7 @@
 @import "../../global";
 
 mh-viewer {
+  background: $background2;
   >div {
     .lmv-ready {
       z-index: 1;

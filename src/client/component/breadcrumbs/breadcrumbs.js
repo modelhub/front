@@ -47,6 +47,18 @@ define('breadcrumbs/breadcrumbs', [
                                         }, 0);
                                     }, errorHandler);
                                 }, errorHandler);
+                            },
+                            versionGetter = function(versionId){
+                                api.v1.documentVersion.get([versionId]).then(function(entities){
+                                    $scope.versionEntity = entities[0];
+                                    nodeGetters(entities[0].document);
+                                }, errorHandler);
+                            },
+                            sheetGetter = function(sheetId){
+                                api.v1.sheet.get([$scope.entityId]).then(function(sheets){
+                                    $scope.sheetEntity = sheets[0];
+                                    versionGetter(sheets[0].documentVersion);
+                                }, errorHandler);
                             };
 
                         switch ($scope.entityType) {
@@ -55,10 +67,10 @@ define('breadcrumbs/breadcrumbs', [
                                 nodeGetters($scope.entityId);
                                 break;
                             case 'documentVersion':
-                                api.v1.documentVersion.get([$scope.entityId]).then(function(entities){
-                                    $scope.versionEntity = entities[0];
-                                    nodeGetters(entities[0].document);
-                                }, errorHandler);
+                                versionGetter($scope.entityId);
+                                break;
+                            case 'sheet':
+                                sheetGetter($scope.entityId);
                                 break;
                             default:
                                 throw 'unknown entity type';
@@ -66,6 +78,14 @@ define('breadcrumbs/breadcrumbs', [
 
                         $scope.treeNodeClick = function(node){
                             $location.path('/'+node.nodeType+'/'+node.id);
+                        };
+
+                        $scope.versionEntityClick = function(){
+                            $location.path('/documentVersion/'+$scope.versionEntity.id);
+                        };
+
+                        $scope.sheetEntityClick = function(){
+                            $location.path('/sheet/'+$scope.sheetEntity.id);
                         };
                     }]
                 };
