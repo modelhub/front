@@ -148,11 +148,11 @@ define('document/document', [
                         });
 
                         $scope.versionClick = function(version) {
-                            $location.path('/documentVersion/' + version.id);
-                        };
-
-                        $scope.versionSheetsClick = function(version){
-                            $location.path('/sheets/'+version.id);
+                            if (version.sheetCount === 1) {
+                                $location.path('/sheet/' + version.firstSheet.id);
+                            } else {
+                                $location.path('/documentVersion/' + version.id);
+                            }
                         };
 
                         loadNextVersionBatch();

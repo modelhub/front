@@ -197,7 +197,11 @@ define('folder/folder', [
                             if (child.nodeType === 'folder') {
                                 $location.path('/folder/' + child.id);
                             } else if (child.nodeType === 'document') {
-                                $location.path('/documentVersion/' + child.latestVersion.id);
+                                if(child.latestVersion.sheetCount === 1){
+                                    $location.path('/sheet/' + child.latestVersion.firstSheet.id);
+                                } else {
+                                    $location.path('/documentVersion/' + child.latestVersion.id);
+                                }
                             } else if (child.nodeType === 'viewerState') {
                                 //TODO trigger event to load sheets into aggregation viewer
                             }
