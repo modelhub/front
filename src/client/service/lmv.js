@@ -20,7 +20,7 @@ define('service/lmv', [
                         init = function(){
                             if(!lmvLoader.isReady()){
                                 if(Date.now() - firstInitAttemptTime <= INIT_TIMEOUT) {
-                                    setTimeout(init, 500);
+                                    setTimeout(init, 5000);
                                 }else{
                                     reject();
                                 }

@@ -18,11 +18,24 @@ define('sheet/sheet', [
                     scope: {
                         sheetId: '@'
                     },
-                    controller: ['$scope', 'api', function($scope, api){
-                        api.v1.sheet.get([$scope.sheetId]).then(function(sheets){
-                            $scope.comObj = {
-                                sheets: sheets
+                    controller: ['$scope', 'api', 'EVENT', function($scope, api, EVENT){
+                        var viewer,
+                            sheet,
+                            loadSheet = function(){
+                                if(viewer && sheet){
+                                    viewer.loadSheet(sheet.id, sheet.manifest);
+                                }
                             };
+
+                        $scope.$on(EVENT.VIEWER_READY, function(event, data){
+                            if(data.scopeId === $scope.$id){
+                                viewer = data.viewer;
+                                loadSheet();
+                            }
+                        });
+                        api.v1.sheet.get([$scope.sheetId]).then(function(sheets){
+                            sheet = sheets[0];
+                            loadSheet();
                         }, function(errorId){
                             $scope.loadingError = errorId;
                         });
