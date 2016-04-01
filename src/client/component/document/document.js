@@ -64,8 +64,11 @@ define('document/document', [
                                     api.v1.documentVersion.get([docVer.id]).then(function(docVers){
                                         docVer.status = docVers[0].status;
                                         if(docVer.status === 'success'){
-                                            api.v1.sheet.getForDocumentVersion(docVer.id, 0, 1, 'nameAsc').then(function(result){
-                                                docVer.firstSheet = result.results[0];
+                                            api.v1.documentVersion.get([docVer.id]).then(function(docVers) {
+                                                docVer.sheetCount = docVers[0].sheetCount;
+                                                api.v1.sheet.getForDocumentVersion(docVer.id, 0, 1, 'nameAsc').then(function (result) {
+                                                    docVer.firstSheet = result.results[0];
+                                                });
                                             });
                                         } else {
                                             runStatusCheck(docVer);
