@@ -27,7 +27,7 @@
     "name": "mh",
     "maxAge": 432000,
     "keyPairs": ["9fb28620b7988994f3e4752e37d9e99f08ac9e2c23e8daaf18f8bb7d5af98d1b", "22d4970ae55c4975180356741111e8f1c94fac4a09e5ceacee7b8a5049f4755f"],
-    "maxRecentSheetCount": 25,
+    "maxRecentSheetCount": 8,
     "recentSheetAccessExpiration": "5m"
   },
 
