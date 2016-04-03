@@ -40,6 +40,10 @@ mh-root-layout {
           z-index: 1;
           top: 0;
           left: 0;
+          visibility: hidden;
+          &.show{
+            visibility: visible;
+          }
         }
       }
     }
