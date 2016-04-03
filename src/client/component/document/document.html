@@ -35,7 +35,7 @@
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{::txt('v', version.version)}}</div>
                     <div class="uploaded mh-ellip">{{::dt(version.uploaded, 'L')}}</div>
-                    <div class="uploaded-by mh-ellip"></div>
+                    <div class="sheet-count mh-ellip" ng-if="version.sheetCount > 0" ng-click="::sheetsClick(version)">{{::txt('sheets', version.sheetCount)}}</div>
                 </div>
             </div>
         </div>

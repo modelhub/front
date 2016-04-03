@@ -118,8 +118,11 @@ mh-document {
               margin-right: 8px;
               margin-top: 8px;
             }
-            > .name {
+            > .name, > .sheet-count {
               color: $color2;
+            }
+            > .sheet-count:hover {
+              color: $highlight1;
             }
           }
           > .thumbnail{

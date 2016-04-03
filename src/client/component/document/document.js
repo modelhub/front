@@ -158,6 +158,10 @@ define('document/document', [
                             }
                         };
 
+                        $scope.sheetsClick = function(version) {
+                            $location.path('/documentVersion/' + version.id);
+                        };
+
                         loadNextVersionBatch();
                     }]
                 };
