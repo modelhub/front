@@ -19,7 +19,6 @@ define('rootLayout/rootLayout', [
                     controller: ['$location', '$rootScope', '$scope', 'EVENT', function($location, $rootScope, $scope, EVENT) {
 
                         $scope.showMainMenu = true;
-                        $scope.showAggregationViewer = false;
 
                         $scope.showMainMenuBtnClick = function(){
                             $scope.showMainMenu = true;
@@ -31,7 +30,12 @@ define('rootLayout/rootLayout', [
                         });
 
                         $scope.$on('$locationChangeSuccess', function(){
-                            $scope.showAggregationViewer = $location.path().substring(1) === 'aggregation';
+                            var pathParts = $location.path().split('/');
+                            if(pathParts[1] === 'projectSpace'){
+                                $scope.showProjectSpace = pathParts[2];
+                            } else {
+                                $scope.showProjectSpace = '';
+                            }
                         });
 
                     }]

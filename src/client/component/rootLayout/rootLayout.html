@@ -3,8 +3,8 @@
         <mh-main-menu class="mh-fill" ng-show="showMainMenu" ng-cloak></mh-main-menu>
         <div class="mh-def mh-fill">
             <ng-view ng-cloak></ng-view>
-            <mh-aggregation-viewer ng-class="{show: showAggregationViewer}" class ="mh-fill" ng-cloak></mh-aggregation-viewer>
+            <mh-project-space ng-show="showProjectSpace === projectSpace.id" class ="mh-fill" ng-repeat="projectSpace in projectSpaces track by $index" ng-cloak></mh-project-space>
         </div>
     </div>
-    <div class="show-main-menu-btn mh-btn" ng-class="{show: !showMainMenu}" ng-click="showMainMenuBtnClick()"></div>
+    <div class="show-main-menu-btn mh-btn" ng-show="!showMainMenu" ng-click="showMainMenuBtnClick()"></div>
 </div>

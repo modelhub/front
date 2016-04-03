@@ -14,7 +14,6 @@ define('registry', [
     'service/thumbnail',
     'service/uploader',
     //components
-    'aggregationViewer/aggregationViewer',
     'audioDoc/audioDoc',
     'breadcrumbs/breadcrumbs',
     'createForm/createForm',
@@ -34,6 +33,7 @@ define('registry', [
     'markdownDoc/markdownDoc',
     'openDoc/openDoc',
     'projects/projects',
+    'projectSpace/projectSpace',
     'rootLayout/rootLayout',
     'search/search',
     'searchRoute/searchRoute',
@@ -59,7 +59,6 @@ define('registry', [
     thumbnail,
     uploader,
     //components
-    aggregationViewer,
     audioDoc,
     breadcrumbs,
     createForm,
@@ -79,6 +78,7 @@ define('registry', [
     markdownDoc,
     openDoc,
     projects,
+    projectSpace,
     rootLayout,
     search,
     searchRoute,
