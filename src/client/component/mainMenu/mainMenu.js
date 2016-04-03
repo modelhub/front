@@ -59,13 +59,18 @@ define('mainMenu/mainMenu', [
                             }
                         };
 
-                        $scope.aggregationBtnClick = function(){
-                            $location.path('/aggregation');
+                        $scope.projectSpaceBtnClick = function(projectSpace){
+                            $location.path('/projectSpace/'+projectSpace.id);
                         };
 
                         $scope.$on('$locationChangeSuccess', function(){
                             $scope.search = '';
                             $scope.selected = $location.path().split('/')[1];
+                            if($scope.selected === 'projectSpace'){
+                                $scope.selectedProjectSpaceId = $location.path().split('/')[2];
+                            }else{
+                                $scope.selectedProjectSpaceId = '';
+                            }
                         });
 
                         $scope.uploadCount = 0;
