@@ -134,6 +134,10 @@ define('lmvDoc/lmvDoc', [
                             $scope.loading = false;
                         });
 
+                        $scope.projectSpaceBtnClick = function(sheet){
+                            $scope.$emit(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, sheet);
+                        };
+
                     }]
                 };
             });

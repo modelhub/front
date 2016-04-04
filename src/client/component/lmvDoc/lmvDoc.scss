@@ -79,6 +79,25 @@ mh-lmv-doc {
             > .role {
               text-transform: uppercase;
             }
+            > .project-space{
+              > .icon {
+                background: url("/resource/image/add.png") no-repeat;
+                background-size: contain;
+                @include fill(18px, 18px);
+                margin-right: 5px;
+              }
+              &:hover {
+                color: $color2;
+                > .icon {
+                  background: url("/resource/image/add-selected.png") no-repeat;
+                  background-size: contain;
+                }
+              }
+              > .txt {
+                flex-grow: 1;
+                flex-shrink: 1;
+              }
+            }
           }
           > .thumbnail{
             background: url("/resource/image/document.png") center no-repeat;
