@@ -1,9 +1,11 @@
 define('lmvDoc/lmvDoc', [
+    'ng',
     'styler',
     'text!lmvDoc/lmvDoc.css',
     'text!lmvDoc/lmvDoc.html',
     'text!lmvDoc/lmvDoc.txt.json'
 ], function(
+    ng,
     styler,
     style,
     tpl,
@@ -135,7 +137,7 @@ define('lmvDoc/lmvDoc', [
                         });
 
                         $scope.projectSpaceBtnClick = function(sheet){
-                            $scope.$emit(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, sheet);
+                            $rootScope.$broadcast(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, ng.copy(sheet));
                         };
 
                     }]
