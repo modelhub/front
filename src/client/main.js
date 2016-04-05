@@ -30,9 +30,6 @@ require([
             .when('/search/:project/:search', {
                 template: '<mh-search-route class="mh-def mh-fill" ng-cloak></mh-search-route>'
             })
-            .when('/aggregation', {
-                template: ''
-            })
             .when('/folder/:folderId', {
                 template: '<mh-folder-route class="mh-def mh-fill" ng-cloak></mh-folder-route>'
             })
