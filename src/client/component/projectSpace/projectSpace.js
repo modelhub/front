@@ -21,7 +21,8 @@ define('projectSpace/projectSpace', [
                         projectId: '@'
                     },
                     controller: ['$rootScope', '$scope', 'api', 'EVENT', function($rootScope, $scope, api, EVENT){
-                        var viewer,
+                        var sheets = {},
+                            viewer = null,
                             projectId = $scope.projectId,
                             broadcastReadyEvent = function(){
                                 if($scope.project && viewer) {
@@ -33,7 +34,8 @@ define('projectSpace/projectSpace', [
                             if(data.scopeId === $scope.$id){
                                 viewer = data.viewer;
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
-                                    if(sheet.project === projectId){
+                                    if(sheet.project === projectId && !sheets[sheet.id]){
+                                        sheets[sheet.id] = true;
                                         viewer.loadSheet(sheet);
                                     }
                                 });
