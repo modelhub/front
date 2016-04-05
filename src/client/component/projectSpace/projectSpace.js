@@ -34,14 +34,32 @@ define('projectSpace/projectSpace', [
                             if(data.scopeId === $scope.$id){
                                 viewer = data.viewer;
                                 viewer.addEventListener('svfLoaded', function(event){
-
+                                    var sheetId = event.svf.basePath.split('/')[5];
+                                    if(!sheetId){
+                                        throw 'couldnt find sheetId from svf basePath property';
+                                    }
+                                    sheets[sheetId].svf = event.svf;
+                                    sheets[sheetId].model = event.model;
                                 });
                                 viewer.addEventListener('geometryLoaded', function(event){
-                                    
+                                    for(var sheetId in sheets){
+                                        if(sheets.hasOwnProperty(sheetId) && sheets[sheetId].model === event.model){
+                                            sheets[sheetId].geometryLoaded = true;
+                                            return;
+                                        }
+                                    }
+                                });
+                                viewer.addEventListener('propertyDbLoaded', function(event){
+                                    for(var sheetId in sheets){
+                                        if(sheets.hasOwnProperty(sheetId) && sheets[sheetId].model === event.model){
+                                            sheets[sheetId].propertyDbLoaded = true;
+                                            return;
+                                        }
+                                    }
                                 });
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
                                     if(sheet.project === projectId && !sheets[sheet.id]){
-                                        sheets[sheet.id] = {};
+                                        sheets[sheet.id] = {svf: null, model: null, propertyDbLoaded: false, geometryLoaded: false};
                                         viewer.loadSheet(sheet);
                                     }
                                 });
