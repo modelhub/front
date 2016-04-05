@@ -29,7 +29,7 @@ define('rootLayout/rootLayout', [
                             $scope.showMainMenu = false;
                         });
 
-                        $scope.$on('$locationChangeSuccess', function(){
+                        var handleLocationChange = function(){
                             var pathParts = $location.path().split('/');
                             if(pathParts[1] === 'projectSpace'){
                                 var projectId = pathParts[2];
@@ -37,10 +37,11 @@ define('rootLayout/rootLayout', [
                                     $scope.showProjectSpace = projectId;
                                     return;
                                 }
-                                $location.path('projects');
+                                $window.history.back()
                             }
                             $scope.showProjectSpace = '';
-                        });
+                        };
+                        $scope.$on('$locationChangeSuccess', handleLocationChange);
 
                         $scope.projectSpaces = {};
                         $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
@@ -72,6 +73,7 @@ define('rootLayout/rootLayout', [
 
                         $scope.$on(EVENT.DESTROY_PROJECT_SPACE, function(event, projectId){
                             delete $scope.projectSpaces[projectId];
+                            handleLocationChange();
                         });
 
                     }]

@@ -82,6 +82,11 @@ define('mainMenu/mainMenu', [
                         $scope.$on(EVENT.PROJECT_SPACE_CREATED, function(event, project){
                             $scope.projectSpaces.push({id: project.id, name: project.name});
                         });
+
+                        $scope.closeProjectSpaceBtnClick = function(projectSpace){
+                            $rootScope.$broadcast(EVENT.DESTROY_PROJECT_SPACE, projectSpace.id);
+                            $scope.projectSpaces.splice($scope.projectSpaces.indexOf(projectSpace), 1);
+                        };
                     }]
                 };
             });
