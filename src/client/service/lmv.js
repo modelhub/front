@@ -25,6 +25,12 @@ define('service/lmv', [
                                 Autodesk.Viewing.Initializer(null, function(){
                                     viewer.initialize();
                                     resolve({
+                                        addEventListener: function(type, fn){
+                                            viewer.addEventListener(type, fn);
+                                        },
+                                        removeEventListener: function(event, fn){
+                                            viewer.removeEventListener(event, fn);
+                                        },
                                         loadSheet: function(sheet) {
                                             viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
                                         },

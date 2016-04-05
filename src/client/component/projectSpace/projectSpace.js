@@ -33,9 +33,15 @@ define('projectSpace/projectSpace', [
                         $scope.$on(EVENT.VIEWER_READY, function(event, data){
                             if(data.scopeId === $scope.$id){
                                 viewer = data.viewer;
+                                viewer.addEventListener('svfLoaded', function(event){
+
+                                });
+                                viewer.addEventListener('geometryLoaded', function(event){
+                                    
+                                });
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
                                     if(sheet.project === projectId && !sheets[sheet.id]){
-                                        sheets[sheet.id] = true;
+                                        sheets[sheet.id] = {};
                                         viewer.loadSheet(sheet);
                                     }
                                 });
