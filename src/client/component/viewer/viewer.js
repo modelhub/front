@@ -19,7 +19,8 @@ define('viewer/viewer', [
                     restrict: 'E',
                     template: tpl,
                     scope: {
-                        parentScopeId: '@'
+                        parentScopeId: '@',
+                        viewerType: '@'
                     },
                     controller: ['$element', '$scope', '$rootScope', '$window', 'EVENT', 'i18n', 'lmv', function($element, $scope, $rootScope, $window, EVENT, i18n, lmv){
 
@@ -34,7 +35,7 @@ define('viewer/viewer', [
                         });
 
 
-                        lmv($element[0].getElementsByClassName('lmv')[0]).then(function(viewer){
+                        lmv($element[0].getElementsByClassName('lmv')[0], $scope.viewerType).then(function(viewer){
 
                             $scope.viewer = viewer;
                             $scope.state = 'ready';

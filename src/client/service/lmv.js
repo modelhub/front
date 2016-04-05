@@ -6,7 +6,7 @@ define('service/lmv', [
     return function(ngModule){
         ngModule
             .service('lmv', ['$q', '$rootScope', 'lmvLoader', function($q, $rootScope, lmvLoader){
-                return function(el){
+                return function(el, type){
                     return $q(function(resolve, reject){
                         var viewer,
                             firstInitAttemptTime = Date.now(),
@@ -21,7 +21,11 @@ define('service/lmv', [
                                 }
                             }else{
                                 //ready to init now
-                                viewer = new Autodesk.Viewing.Private.GuiViewer3D(el, {});
+                                if(type === 'gui') {
+                                    viewer = new Autodesk.Viewing.Private.GuiViewer3D(el, {});
+                                } else {
+                                    viewer = new Autodesk.Viewing.Viewer3D(el, {});
+                                }
                                 Autodesk.Viewing.Initializer(null, function(){
                                     viewer.initialize();
                                     resolve({
@@ -46,6 +50,7 @@ define('service/lmv', [
                                     });
                                 });
                             }
+
                         };
                         setTimeout(init, 100);
                     });
