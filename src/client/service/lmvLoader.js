@@ -3,13 +3,13 @@ define('service/lmvLoader', [
 ){
     var style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = 'https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css?v=1.2.23';
+    style.href = 'https://autodeskviewer.com/viewers/2.5.34/style.css';
     style.type = 'text/css';
     document.head.appendChild(style);
 
     // Loading this script adds the global Autodesk object
     var script = document.createElement('script');
-    script.src = 'https://viewing.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js?v=1.2.23';
+    script.src = 'https://autodeskviewer.com/viewers/2.5.34/viewer3D.js';
     document.head.appendChild(script);
 
     return function(ngModule){
