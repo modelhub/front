@@ -16,7 +16,7 @@ define('rootLayout/rootLayout', [
                     restrict: 'E',
                     template: tpl,
                     scope: {},
-                    controller: ['$location', '$rootScope', '$scope', 'EVENT', function($location, $rootScope, $scope, EVENT) {
+                    controller: ['$location', '$rootScope', '$scope', '$window', 'EVENT', function($location, $rootScope, $scope, $window, EVENT) {
 
                         $scope.showMainMenu = true;
 
@@ -32,14 +32,17 @@ define('rootLayout/rootLayout', [
                         $scope.$on('$locationChangeSuccess', function(){
                             var pathParts = $location.path().split('/');
                             if(pathParts[1] === 'projectSpace'){
-                                $scope.showProjectSpace = pathParts[2];
-                            } else {
-                                $scope.showProjectSpace = '';
+                                var projectId = pathParts[2];
+                                if($scope.projectSpaces[projectId]){
+                                    $scope.showProjectSpace = projectId;
+                                    return;
+                                }
+                                $location.path('projects');
                             }
+                            $scope.showProjectSpace = '';
                         });
 
                         $scope.projectSpaces = {};
-
                         $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
                             var undefined;
                             if($scope.projectSpaces[sheet.project] === undefined){ //first time a sheet from this project has requested to be loaded into the projectSpace
@@ -55,14 +58,16 @@ define('rootLayout/rootLayout', [
                             }
                         });
 
-                        $scope.$on(EVENT.PROJECT_SPACE_CREATED, function(event, projectId){
-                            $scope.projectSpaces[projectId].ready = true;
-                            for(var sheetId in $scope.projectSpaces[projectId].queuedSheets){
-                                if($scope.projectSpaces[projectId].queuedSheets.hasOwnProperty(sheetId)){
-                                    $rootScope.$broadcast(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, $scope.projectSpaces[projectId].queuedSheets[sheetId]);
+                        $scope.$on(EVENT.PROJECT_SPACE_CREATED, function(event, project){
+                            $window.setTimeout(function(){
+                                $scope.projectSpaces[project.id].ready = true;
+                                for(var sheetId in $scope.projectSpaces[project.id].queuedSheets){
+                                    if($scope.projectSpaces[project.id].queuedSheets.hasOwnProperty(sheetId)){
+                                        $rootScope.$broadcast(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, $scope.projectSpaces[project.id].queuedSheets[sheetId]);
+                                    }
                                 }
-                            }
-                            delete $scope.projectSpaces[projectId].queuedSheets;
+                                delete $scope.projectSpaces[project.id].queuedSheets;
+                            }, 0);
                         });
 
                         $scope.$on(EVENT.DESTROY_PROJECT_SPACE, function(event, projectId){

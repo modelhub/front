@@ -2,29 +2,6 @@
 
 mh-project-space {
   > .root {
-    > * {
-      flex-shrink: 0;
-    }
-    > .header {
-      background: $background1;
-      height: 50px;
-      flex-grow: 0;
-      border-bottom: $border1;
-      > .icon {
-        flex-grow: 0;
-        flex-shrink: 0;
-        @include fill(50px, 50px);
-        background: url("/resource/image/sheet.png") center no-repeat;
-        background-size: 30px 30px;
-      }
-      > mh-breadcrumbs {
-        flex-grow: 1;
-        flex-shrink: 1;
-      }
-    }
-    > mh-viewer{
-      flex-grow: 1;
-      @include fill($height: calc(100% - 51px));
-    }
+
   }
 }

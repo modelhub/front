@@ -45,6 +45,9 @@ require([
             .when('/sheet/:sheetId', {
                 template: '<mh-sheet-route class="mh-def mh-fill" ng-cloak></mh-sheet-route>'
             })
+            .when('/projectSpace/:projectId', {
+                template: '<!--rootlayout will show the projectSpace-->'
+            })
             .otherwise({
                 redirectTo: '/projects'
             });

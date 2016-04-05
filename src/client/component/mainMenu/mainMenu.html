@@ -39,7 +39,7 @@
             <div class="icon"></div>
             <input class="txt" type="text" placeholder="{{txt('search')}}" ng-model="search" onkeypress="angular.element(this).scope().searchInputKeyPress(event)">
         </div>
-        <div class="mh-def mh-row btn project-space" ng-class="{selected: selected === 'aggregation'}" ng-repeat="projectSpace in projectSpaces track by $index" ng-click="projectSpaceBtnClick(projectSpace)">
+        <div class="mh-def mh-row btn project-space" ng-class="{selected: selectedProjectSpaceId === projectSpace.id}" ng-repeat="projectSpace in projectSpaces track by $index" ng-click="projectSpaceBtnClick(projectSpace)">
             <div class="highlight"></div>
             <div class="icon"></div>
             <div class="txt mh-ellip">{{::projectSpace.name}}</div>
