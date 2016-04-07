@@ -33,7 +33,7 @@ mh-project-space {
           align-items: center;
           @include fill($height: 50px);
           > .title {
-            padding-left: 5px;
+            padding-left: 8px;
             font-size: 30px;
             width: calc(100% - 50px);
             flex-grow: 0;
