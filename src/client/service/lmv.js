@@ -30,22 +30,25 @@ define('service/lmv', [
                                     viewer.initialize();
                                     resolve({
                                         addEventListener: function(type, fn){
-                                            viewer.addEventListener(type, fn);
+                                            return viewer.addEventListener(type, fn);
                                         },
                                         removeEventListener: function(event, fn){
-                                            viewer.removeEventListener(event, fn);
+                                            return viewer.removeEventListener(event, fn);
                                         },
                                         loadSheet: function(sheet) {
-                                            viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
+                                            return viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
                                         },
                                         unloadSheet: function(id){
                                             //TODO
                                         },
+                                        setLightPreset: function(idx){
+                                            return viewer.setLightPreset(idx);
+                                        },
                                         resize: function(){
-                                            viewer.resize();
+                                            return viewer.resize();
                                         },
                                         finish: function(){
-                                            viewer.finish();
+                                            return viewer.finish();
                                         }
                                     });
                                 });

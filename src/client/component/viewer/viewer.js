@@ -36,7 +36,7 @@ define('viewer/viewer', [
 
 
                         lmv($element[0].getElementsByClassName('lmv')[0], $scope.viewerType).then(function(viewer){
-
+                            viewer.setLightPreset(2);
                             $scope.viewer = viewer;
                             $scope.state = 'ready';
 
