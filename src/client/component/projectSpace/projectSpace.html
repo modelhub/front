@@ -1,3 +1,14 @@
-<div class="mh-def mh-fill root">
+<div class="mh-def mh-row mh-fill root">
     <mh-viewer parent-scope-id="{{$id}}" viewer-type="plain" class="mh-def mh-fill" ng-cloak></mh-viewer>
+    <div class="mh-def sheets-menu" ng-show="showSheetsMenu">
+        <div class="mh-def sheets-menu-root">
+            <div class="mh-def mh-row header section">
+                <div class="mh-def mh-ellip title">{{::txt('sheets')}}</div>
+            </div>
+            <div class="mh-def sheets">
+
+            </div>
+        </div>
+    </div>
+    <div class="toggle-sheets-menu-btn mh-btn" ng-click="toggleSheetsMenuBtnClick()"></div>
 </div>

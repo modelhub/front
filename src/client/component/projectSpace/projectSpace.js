@@ -2,14 +2,17 @@ define('projectSpace/projectSpace', [
     'ng',
     'styler',
     'text!projectSpace/projectSpace.css',
-    'text!projectSpace/projectSpace.html'
+    'text!projectSpace/projectSpace.html',
+    'text!projectSpace/projectSpace.txt.json'
 ], function(
     ng,
     styler,
     style,
-    tpl
+    tpl,
+    txt
 ){
     styler(style);
+    txt = JSON.parse(txt);
 
     return function(ngModule){
         ngModule
@@ -20,7 +23,8 @@ define('projectSpace/projectSpace', [
                     scope: {
                         projectId: '@'
                     },
-                    controller: ['$rootScope', '$scope', 'api', 'EVENT', function($rootScope, $scope, api, EVENT){
+                    controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', function($rootScope, $scope, $window, api, EVENT, i18n){
+                        i18n($scope, txt);
                         var sheets = {},
                             viewer = null,
                             projectId = $scope.projectId,
@@ -29,6 +33,14 @@ define('projectSpace/projectSpace', [
                                     $rootScope.$broadcast(EVENT.PROJECT_SPACE_CREATED, ng.copy($scope.project));
                                 }
                             };
+
+                        $scope.showSheetsMenu = true;
+                        $scope.toggleSheetsMenuBtnClick = function(){
+                            if(viewer) {
+                                $scope.showSheetsMenu = !$scope.showSheetsMenu;
+                                $window.setTimeout(viewer.resize, 0);
+                            }
+                        };
 
                         $scope.$on(EVENT.VIEWER_READY, function(event, data){
                             if(data.scopeId === $scope.$id){
