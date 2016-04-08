@@ -25,8 +25,7 @@ define('projectSpace/projectSpace', [
                     },
                     controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', function($rootScope, $scope, $window, api, EVENT, i18n){
                         i18n($scope, txt);
-                        var sheets = {},
-                            viewer = null,
+                        var viewer = null,
                             projectId = $scope.projectId,
                             broadcastReadyEvent = function(){
                                 if($scope.project && viewer) {
@@ -34,6 +33,7 @@ define('projectSpace/projectSpace', [
                                 }
                             };
 
+                        var sheets = $scope.sheets = [];
                         $scope.showSheetsMenu = true;
                         $scope.toggleSheetsMenuBtnClick = function(){
                             if(viewer) {
@@ -50,28 +50,36 @@ define('projectSpace/projectSpace', [
                                     if(!sheetId){
                                         throw 'couldnt find sheetId from svf basePath property';
                                     }
-                                    sheets[sheetId].svf = event.svf;
-                                    sheets[sheetId].model = event.model;
+                                    for(var i = 0, l = sheets.length; i < l; i++){
+                                        if(sheets[i].id === sheetId){
+                                            sheets[i].svf = event.svf;
+                                            sheets[i].model = event.model;
+                                            return;
+                                        }
+                                    }
                                 });
                                 viewer.addEventListener('geometryLoaded', function(event){
-                                    for(var sheetId in sheets){
-                                        if(sheets.hasOwnProperty(sheetId) && sheets[sheetId].model === event.model){
-                                            sheets[sheetId].geometryLoaded = true;
+                                    for(var i = 0, l = sheets.length; i < l; i++){
+                                        if(sheets[i].model === event.model){
+                                            sheets[i].geometryLoaded = true;
                                             return;
                                         }
                                     }
                                 });
                                 viewer.addEventListener('propertyDbLoaded', function(event){
-                                    for(var sheetId in sheets){
-                                        if(sheets.hasOwnProperty(sheetId) && sheets[sheetId].model === event.model){
-                                            sheets[sheetId].propertyDbLoaded = true;
+                                    for(var i = 0, l = sheets.length; i < l; i++){
+                                        if(sheets[i].model === event.model){
+                                            sheets[i].propertyDbLoaded = true;
                                             return;
                                         }
                                     }
                                 });
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
                                     if(sheet.project === projectId && !sheets[sheet.id]){
-                                        sheets[sheet.id] = {svf: null, model: null, propertyDbLoaded: false, geometryLoaded: false};
+                                        var sheetCopy = ng.copy(sheet);
+                                        sheetCopy.svf = sheetCopy.model = null;
+                                        sheetCopy.geometryLoaded = sheetCopy.propertyDbLoaded = false;
+                                        sheets.push(sheetCopy);
                                         viewer.loadSheet(sheet);
                                     }
                                 });

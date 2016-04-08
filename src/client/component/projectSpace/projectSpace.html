@@ -6,7 +6,9 @@
                 <div class="mh-def mh-ellip title">{{::txt('sheets')}}</div>
             </div>
             <div class="mh-def sheets">
-
+                <div ng-repeat="sheet in sheets | orderBy: 'name'">
+                    {{::sheet.name}}
+                </div>
             </div>
         </div>
     </div>
