@@ -8,8 +8,6 @@
             <div class="mh-def sheets">
                 <div ng-repeat="sheet in sheets | orderBy: 'name'">
                     {{::sheet.name}}
-                    <input type="checkbox" ng-model="sheet.enableOverrideColor" ng-change="overrideColor(sheet)">
-                    <input type="color" ng-model="sheet.overrideColor" ng-change="overrideColor(sheet)">
                 </div>
             </div>
         </div>

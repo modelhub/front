@@ -41,26 +41,6 @@ define('service/lmv', [
                                         unloadSheet: function(id){
                                             //TODO
                                         },
-                                        colorSheet: function(sheetId, sheetModel, color){
-                                            viewer.impl.createOverlayScene(sheetId, new THREE.MeshBasicMaterial({ color: color }));
-
-                                            sheetModel.getObjectTree(function(objTree) {
-                                                var frags = [];
-                                                objTree.enumNodeFragments(sheetModel.getData().instanceTree.getRootId(), function(fragId) {
-                                                    frags.push(fragId);
-                                                }, true);
-                                                //override color on frags
-                                                for (var i=0; i < frags.length; i++) {
-                                                    var mesh = viewer.impl.getRenderProxy(viewer.impl.model, frags[i]);
-                                                    var myProxy = new THREE.Mesh(mesh.geometry, mesh.material);
-                                                    myProxy.matrix.copy(mesh.matrixWorld);
-                                                    myProxy.matrixAutoUpdate = false;
-                                                    myProxy.matrixWorldNeedsUpdate = true;
-                                                    myProxy.frustumCulled = false;
-                                                    viewer.impl.addOverlay(sheetId, myProxy);
-                                                }
-                                            });
-                                        },
                                         setLightPreset: function(idx){
                                             return viewer.setLightPreset(idx);
                                         },
