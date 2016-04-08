@@ -77,6 +77,7 @@ define('projectSpace/projectSpace', [
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
                                     if(sheet.project === projectId && !sheets[sheet.id]){
                                         var sheetCopy = ng.copy(sheet);
+                                        sheetCopy.overrideColor = '#ffffff';
                                         sheetCopy.svf = sheetCopy.model = null;
                                         sheetCopy.geometryLoaded = sheetCopy.propertyDbLoaded = false;
                                         sheets.push(sheetCopy);
@@ -91,6 +92,12 @@ define('projectSpace/projectSpace', [
                             $scope.project = projects[0];
                             broadcastReadyEvent();
                         });
+
+                        $scope.overrideColor = function(sheet){
+                            if(sheet.propertyDbLoaded && sheet.geometryLoaded && sheet.enableOverrideColor){
+                                viewer.colorSheet(sheet.id, sheet.model, sheet.overrideColor)
+                            }
+                        };
                     }]
                 };
             });
