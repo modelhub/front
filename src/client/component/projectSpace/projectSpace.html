@@ -6,8 +6,8 @@
                 <div class="mh-def mh-ellip title">{{::txt('sheets')}}</div>
             </div>
             <div class="mh-def sheets">
-                <div ng-repeat="sheet in sheets | orderBy: 'name'">
-                    {{::sheet.name}}
+                <div class="mh-def sheet" ng-repeat="sheet in sheets | orderBy: 'name'">
+                    <div class="mh-ellip name" ng-click="::fitToView(sheet)">{{::sheet.name}}</div>
                 </div>
             </div>
         </div>

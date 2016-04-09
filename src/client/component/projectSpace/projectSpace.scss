@@ -44,6 +44,16 @@ mh-project-space {
         > .sheets {
           overflow: auto;
           @include fill($width: 100%, $height: calc(100% - 51px));
+          > .sheet{
+            > .name {
+              width: 100%;
+              padding-left: 8px;
+              cursor: pointer;
+              &:hover{
+                color: $color2;
+              }
+            }
+          }
         }
       }
     }

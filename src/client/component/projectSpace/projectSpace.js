@@ -91,6 +91,12 @@ define('projectSpace/projectSpace', [
                             $scope.project = projects[0];
                             broadcastReadyEvent();
                         });
+
+                        $scope.fitToView = function(sheet){
+                            if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
+                                viewer.fitToView(sheet.model, [1]);
+                            }
+                        };
                     }]
                 };
             });
