@@ -25,7 +25,8 @@ define('projectSpace/projectSpace', [
                     },
                     controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', function($rootScope, $scope, $window, api, EVENT, i18n){
                         i18n($scope, txt);
-                        var viewer = null,
+                        var loadedSheets = {},
+                            viewer = null,
                             projectId = $scope.projectId,
                             broadcastReadyEvent = function(){
                                 if($scope.project && viewer) {
@@ -62,6 +63,9 @@ define('projectSpace/projectSpace', [
                                     for(var i = 0, l = sheets.length; i < l; i++){
                                         if(sheets[i].model === event.model){
                                             sheets[i].geometryLoaded = true;
+                                            if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
+                                                $scope.$evalAsync();
+                                            }
                                             return;
                                         }
                                     }
@@ -70,13 +74,17 @@ define('projectSpace/projectSpace', [
                                     for(var i = 0, l = sheets.length; i < l; i++){
                                         if(sheets[i].model === event.model){
                                             sheets[i].propertyDbLoaded = true;
+                                            if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
+                                                $scope.$evalAsync();
+                                            }
                                             return;
                                         }
                                     }
                                 });
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
-                                    if(sheet.project === projectId && !sheets[sheet.id]){
+                                    if(sheet.project === projectId && !loadedSheets[sheet.id]){
                                         var sheetCopy = ng.copy(sheet);
+                                        loadedSheets[sheet.id] = true;
                                         sheetCopy.svf = sheetCopy.model = null;
                                         sheetCopy.geometryLoaded = sheetCopy.propertyDbLoaded = false;
                                         sheets.push(sheetCopy);

@@ -48,6 +48,14 @@ mh-loader {
       }
     }
   }
+  &.tiny{
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 1em;
+      height: 1em;
+    }
+  }
   /**
    * END BAR-SPINNER
    */
