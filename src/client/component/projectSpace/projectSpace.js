@@ -23,7 +23,7 @@ define('projectSpace/projectSpace', [
                     scope: {
                         projectId: '@'
                     },
-                    controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', function($rootScope, $scope, $window, api, EVENT, i18n){
+                    controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', 'sheetExtender', function($rootScope, $scope, $window, api, EVENT, i18n, sheetExtender){
                         i18n($scope, txt);
                         var loadedSheets = {},
                             viewer = null,
@@ -64,6 +64,7 @@ define('projectSpace/projectSpace', [
                                         if(sheets[i].model === event.model){
                                             sheets[i].geometryLoaded = true;
                                             if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
+                                                sheetExtender(sheets[i]);
                                                 $scope.$evalAsync();
                                             }
                                             return;
@@ -75,6 +76,7 @@ define('projectSpace/projectSpace', [
                                         if(sheets[i].model === event.model){
                                             sheets[i].propertyDbLoaded = true;
                                             if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
+                                                sheetExtender(sheets[i]);
                                                 $scope.$evalAsync();
                                             }
                                             return;
@@ -102,7 +104,7 @@ define('projectSpace/projectSpace', [
 
                         $scope.fitToView = function(sheet){
                             if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
-                                viewer.fitToView(sheet.model, [1]);
+                                viewer.fitToView(false, sheet.getBoundingBox());
                             }
                         };
                     }]

@@ -17,8 +17,14 @@ define('service/lmvLoader', [
             .service('lmvLoader', function(){
                 return {
                     isReady: function(){
-                        return typeof Autodesk !== 'undefined';
-                    }
+                        if(typeof Autodesk !== 'undefined') {
+                            this.Autodesk = Autodesk;
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    },
+                    Autodesk: null
                 };
             });
     };

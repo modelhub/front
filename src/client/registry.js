@@ -11,6 +11,8 @@ define('registry', [
     'service/lmvLoader',
     'service/logout',
     'service/md',
+    'service/sheetExtender',
+    'service/three',
     'service/thumbnail',
     'service/uploader',
     //components
@@ -56,6 +58,8 @@ define('registry', [
     lmvLoader,
     logoutService,
     md,
+    sheetExtender,
+    three,
     thumbnail,
     uploader,
     //components
