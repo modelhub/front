@@ -9,8 +9,8 @@
                 <div class="mh-def sheet" ng-repeat="sheet in sheets | orderBy: 'name'">
                     <div class="mh-ellip name" ng-click="::fitToView(sheet)">{{::sheet.name}}</div>
                     <mh-loader class="mh-def bar-spinner" ng-if="!sheet.propertyDbLoaded || !sheet.geometryLoaded"></mh-loader>
-                    <div class="mh-def controls">
-                        <div class="mh-def mh-row transforms" ng-if="sheet.propertyDbLoaded && sheet.geometryLoaded">
+                    <div class="mh-def controls" ng-if="sheet.propertyDbLoaded && sheet.geometryLoaded">
+                        <div class="mh-def mh-row transforms">
                             <div class="mh-def scale">
                                 <div class="mh-def title">{{::txt('scale')}}</div>
                                 <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.scale">
@@ -41,6 +41,9 @@
                         </div>
                         <div class="mh-def" ng-click="::applyTransforms(sheet)">
                             {{::txt('apply')}}
+                        </div>
+                        <div class="mh-def" ng-click="::removeSheet(sheet)">
+                            {{::txt('remove')}}
                         </div>
                     </div>
                 </div>

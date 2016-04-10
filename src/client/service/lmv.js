@@ -38,8 +38,8 @@ define('service/lmv', [
                                         loadSheet: function(sheet) {
                                             return viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
                                         },
-                                        unloadSheet: function(id){
-                                            //TODO
+                                        unloadSheet: function(sheet){
+                                            viewer.impl.unloadModel(sheet.model);
                                         },
                                         setLightPreset: function(idx){
                                             return viewer.setLightPreset(idx);

@@ -114,6 +114,22 @@ define('projectSpace/projectSpace', [
                                 viewer.sceneUpdated();
                             }
                         };
+
+                        $scope.removeSheet = function(sheet){
+                            if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
+                                viewer.unloadSheet(sheet);
+                                delete loadedSheets[sheet.id];
+                                for(var i = 0, l = sheets.length; i < l; i++){
+                                    if(sheets[i] == sheet){
+                                        sheets.splice(i, 1);
+                                        if(sheets.length === 0){
+                                            viewer.sceneUpdated();
+                                        }
+                                        return;
+                                    }
+                                }
+                            }
+                        };
                     }]
                 };
             });
