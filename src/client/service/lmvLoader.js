@@ -7,7 +7,6 @@ define('service/lmvLoader', [
     style.type = 'text/css';
     document.head.appendChild(style);
 
-    // Loading this script adds the global Autodesk object
     var script = document.createElement('script');
     script.src = 'https://autodeskviewer.com/viewers/2.5.34/viewer3D.js';
     document.head.appendChild(script);

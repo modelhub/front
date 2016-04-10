@@ -47,6 +47,9 @@ define('service/lmv', [
                                         fitToView: function(instant, boundingBox){
                                             viewer.navigation.fitBounds(instant, boundingBox);
                                         },
+                                        sceneUpdated: function() {
+                                            viewer.impl.sceneUpdated(true);
+                                        },
                                         resize: function(){
                                             return viewer.resize();
                                         },

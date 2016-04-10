@@ -8,7 +8,41 @@
             <div class="mh-def sheets">
                 <div class="mh-def sheet" ng-repeat="sheet in sheets | orderBy: 'name'">
                     <div class="mh-ellip name" ng-click="::fitToView(sheet)">{{::sheet.name}}</div>
-                    <mh-loader class="mh-def bar-spinner tiny" ng-if="!sheet.propertyDbLoaded || !sheet.geometryLoaded"></mh-loader>
+                    <mh-loader class="mh-def bar-spinner" ng-if="!sheet.propertyDbLoaded || !sheet.geometryLoaded"></mh-loader>
+                    <div class="mh-def controls">
+                        <div class="mh-def mh-row transforms" ng-if="sheet.propertyDbLoaded && sheet.geometryLoaded">
+                            <div class="mh-def scale">
+                                <div class="mh-def title">{{::txt('scale')}}</div>
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.scale">
+                                    <div class="mh-def label">
+                                        {{::txt(dim)}}:
+                                    </div>
+                                    <input type="number" ng-model="sheet.scale[dim]"/>
+                                </div>
+                            </div>
+                            <div class="mh-def rotation-q">
+                                <div class="mh-def title">{{::txt('rotate')}}</div>
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.rotate">
+                                    <div class="mh-def label">
+                                        {{::txt(dim)}}:
+                                    </div>
+                                    <input type="number" ng-model="sheet.rotate[dim]"/>
+                                </div>
+                            </div>
+                            <div class="mh-def translation">
+                                <div class="mh-def title">{{::txt('translate')}}</div>
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.translate">
+                                    <div class="mh-def label">
+                                        {{::txt(dim)}}:
+                                    </div>
+                                    <input type="number" ng-model="sheet.translate[dim]"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mh-def" ng-click="::applyTransforms(sheet)">
+                            {{::txt('apply')}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -107,6 +107,13 @@ define('projectSpace/projectSpace', [
                                 viewer.fitToView(false, sheet.getBoundingBox());
                             }
                         };
+
+                        $scope.applyTransforms = function(sheet){
+                            if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
+                                sheet.applyTransforms();
+                                viewer.sceneUpdated();
+                            }
+                        };
                     }]
                 };
             });

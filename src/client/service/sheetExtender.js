@@ -17,6 +17,10 @@ define('service/sheetExtender', [
                 return function(sheet){
                     sheet.extended = true;
 
+                    sheet.scale = {x: 1, y: 1, z: 1};
+                    sheet.rotate = {w: 1, x: 0, y: 0, z: 0};
+                    sheet.translate = {x: 0, y: 0, z: 0};
+
                     sheet.getBoundingBox = function(objectIds){
                         //get bounding box for whole sheet if no objectIds specified
                         if(!objectIds){
@@ -37,6 +41,13 @@ define('service/sheetExtender', [
                         }
 
                         return bounds;
+                    };
+
+                    sheet.applyTransforms = function(){
+                        var fragList = sheet.model.getFragmentList();
+                        for (var i= 0, iEnd=fragList.getCount(); i<iEnd; i++) {
+                            fragList.updateAnimTransform(i, sheet.scale, sheet.rotate, sheet.translate);
+                        }
                     };
                 };
             }]);
