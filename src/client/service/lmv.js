@@ -32,8 +32,8 @@ define('service/lmv', [
                                         addEventListener: function(type, fn){
                                             return viewer.addEventListener(type, fn);
                                         },
-                                        removeEventListener: function(event, fn){
-                                            return viewer.removeEventListener(event, fn);
+                                        removeEventListener: function(type, fn){
+                                            return viewer.removeEventListener(type, fn);
                                         },
                                         loadSheet: function(sheet) {
                                             return viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
