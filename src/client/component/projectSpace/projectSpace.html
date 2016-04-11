@@ -7,10 +7,15 @@
             </div>
             <div class="mh-def sheets">
                 <div class="mh-def sheet" ng-repeat="sheet in sheets | orderBy: 'name'">
-                    <div class="mh-ellip name" ng-click="::fitToView(sheet)">{{::sheet.name}}</div>
+                    <div class="mh-def mh-row name" ng-click="::fitToView(sheet)">
+                        <div class="mh-def mh-ellip txt" title="{{::sheet.name}}">
+                            {{::sheet.name}}
+                        </div>
+                        <div class="mh-def remove-icon" ng-click="::$event.stopPropagation(); removeSheet(sheet)"></div>
+                    </div>
                     <mh-loader class="mh-def bar-spinner" ng-if="!sheet.propertyDbLoaded || !sheet.geometryLoaded"></mh-loader>
-                    <div class="mh-def controls" ng-if="sheet.propertyDbLoaded && sheet.geometryLoaded">
-                        <div class="mh-def mh-row transforms">
+                    <div class="mh-def mh-fill controls" ng-if="sheet.propertyDbLoaded && sheet.geometryLoaded">
+                        <div class="mh-def mh-fill mh-row transforms">
                             <div class="mh-def scale">
                                 <div class="mh-def title">{{::txt('scale')}}</div>
                                 <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.scale">
@@ -38,9 +43,6 @@
                                     <input type="number" ng-model="sheet.translate[dim]" ng-change="::applyTransforms(sheet)"/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mh-def" ng-click="::removeSheet(sheet)">
-                            {{::txt('remove')}}
                         </div>
                     </div>
                 </div>

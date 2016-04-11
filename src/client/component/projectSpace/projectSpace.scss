@@ -45,16 +45,52 @@ mh-project-space {
           overflow: auto;
           @include fill($width: 100%, $height: calc(100% - 51px));
           > .sheet{
+            margin: 4px 8px;
             > .name {
               width: 100%;
-              padding-left: 8px;
-              cursor: pointer;
+              align-items: center;
+              > * {
+                flex-grow: 0;
+                flex-shrink: 0;
+                cursor: pointer;
+              }
               &:hover{
-                color: $color2;
+                > .remove-icon{
+                  visibility: visible;
+                }
+              }
+              > .txt{
+                width: calc(100% - 15px);
+                &:hover{
+                  color: $color2;
+                }
+              }
+              > .remove-icon{
+                visibility: hidden;
+                @include fill(15px, 15px);
+                background: url("/resource/image/close.png") no-repeat;
+                background-size: contain;
+                &:hover{
+                  background: url("/resource/image/close-selected.png") no-repeat;
+                  background-size: contain;
+                }
               }
             }
-            input{
-              width: 35px;
+            > .controls {
+              > .transforms {
+                justify-content: space-between;
+                > * {
+                  > .title {
+                    text-align: center;
+                  }
+                  > .dim {
+                    justify-content: space-between;
+                    input {
+                      width: 35px;
+                    }
+                  }
+                }
+              }
             }
           }
         }
