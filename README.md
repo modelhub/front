@@ -3,7 +3,11 @@ front
 
 The front end and **main** repo for modelhub, it is written with [**Angular**](https://angularjs.org/), [**Require**](http://requirejs.org/)
 and [**SASS**](http://sass-lang.com/) on the client side with a [**Go**](http://golang.org/) server and [**MySql**](https://www.mysql.com/) database.
-The project is configured as a single page web app.
+The project is configured as a single page web app. The app enables users to create projects, create folder directory structures within each project
+and upload any files to those folders. If the file is an image/audio/video format supported by the browser, it should be viewable directly within the browser.
+If it is a pdf or open document format file it should be viewable within the browser courtesy of [viewer.js](http://viewerjs.org/) and [pdf.js](https://github.com/mozilla/pdf.js).
+If it is a 3D design file supported by the Autodesk [view and data api](https://developer.autodesk.com/api/view-and-data-api/), then it should be automatically translated into a format which can then be viewed
+in the browser courtesy of Autodesks [viewer3D.js](https://autodeskviewer.com/viewers/2.5.34/viewer3D.js).
 
 ##Setup Checklist
 
