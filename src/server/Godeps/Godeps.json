@@ -1,0 +1,110 @@
+{
+	"ImportPath": "github.com/modelhub/front/src/server",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v62",
+	"Deps": [
+		{
+			"ImportPath": "github.com/daviddengcn/go-colortext",
+			"Rev": "3b18c8575a432453d41fdafb340099fff5bba2f7"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-184-g1fca743",
+			"Rev": "1fca743146605a172a266e1654e01e5cd5669bee"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/csrf",
+			"Comment": "v1.3-2-gc96d74a",
+			"Rev": "c96d74a9893eef5655b34d429ababb7843a0f58d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Rev": "e95799a481bbcc3d01c2ad5178524cb8bec9f370"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "b6bcae186ac3099dba8fafce125dc930393f1e5e"
+		},
+		{
+			"ImportPath": "github.com/modelhub/conf",
+			"Rev": "9b5bf9115c0cb7178bc6e37772c4ad0acf61d4d3"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/documentversion",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/helper",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/project",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/sheet",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/treenode",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/user",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/util",
+			"Rev": "bf5f300b5809f25256005d1dfc17fb0c23f441d4"
+		},
+		{
+			"ImportPath": "github.com/modelhub/rest",
+			"Rev": "c629e80bc4b5468ba17869954a8d0039d73fbb46"
+		},
+		{
+			"ImportPath": "github.com/modelhub/session",
+			"Rev": "f39ffac005f965743661fa911b1c00517e4a2d2d"
+		},
+		{
+			"ImportPath": "github.com/modelhub/vada",
+			"Rev": "c2835bf0a2079c7e4f1f9c0b33de9e3a92e43a67"
+		},
+		{
+			"ImportPath": "github.com/modelhub/wall",
+			"Rev": "c756d4cfb04b3eadfc45f985f0e0170fa84d8013"
+		},
+		{
+			"ImportPath": "github.com/robsix/golog",
+			"Rev": "cfa2edf22e95777152ca7db69ac30844d568f746"
+		},
+		{
+			"ImportPath": "github.com/robsix/json",
+			"Comment": "v0.5.0-18-g81db27a",
+			"Rev": "81db27acc3c2fd756cec392a5bd18701d2aa26d5"
+		},
+		{
+			"ImportPath": "github.com/twinj/uuid",
+			"Rev": "89173bcdda19db0eb88aef1e1cb1cb2505561d31"
+		},
+		{
+			"ImportPath": "github.com/yohcop/openid-go",
+			"Rev": "804fd15d29539e137dd9add94a62c1e2f85b4107"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "db8e4de5b2d6653f66aea53094624468caad15d2"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "db8e4de5b2d6653f66aea53094624468caad15d2"
+		}
+	]
+}

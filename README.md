@@ -11,7 +11,7 @@ The project is configured as a single page web app.
    versions at the time of installation, if they don't work fall back to the specified versions. An effort should be made
    to resolve any build issues with the latest dependencies when they arise so the project does not stagnate and fall behind:
     * [MySql](https://www.mysql.com/) v5.7.10
-    * [Go](https://golang.org/doc/install) v1.5.1
+    * [Go](https://golang.org/doc/install) v1.6.1
     * [Node](https://nodejs.org/) v5.0.0
 
 2. Run the `db.sql` script from `github.com/modelhub/core/sql` on your MySql instance to set up the modelhub db.
@@ -27,15 +27,12 @@ The project is configured as a single page web app.
     ``` 
     Then open another terminal in the same location and run:
     ```sh
-    grunt startDevServer
-    ```
-    Note: To run the server on windows, instead of using the grunt task, just manually enter:
-    ```sh
     cd src\server
-    server.exe
+    ./server.exe
     ```
 
-4. Local request redirection is required, for local development to send `modelhub.autodesk.com` to `127.0.0.1`
+4. Local request redirection is required, for local development to send `modelhub.autodesk.com` to `127.0.0.1`, this is only required
+to enable the openId login flow through the autodesk login portal, modelhub will eventually have its own user accounts and login process. ...eventually.
 
 5. Open a browser and navigate to `modelhub.autodesk.com:8080`, if you're looking at a valid web page congratz, if not, better luck next time.
 
@@ -43,9 +40,9 @@ When pulling latest changes it is not always necessary but probably good practic
 
     1. stop the server
     2. run `npm install` to ensure all npm and bower dependencies are present and up to date
-    4. ensure `watchSass` grunt task is running
-    5. run `buildServer` grunt task in case any server changes have been made
-    6. restart the server
+    3. restart `watchSass` grunt task
+    4. run `buildServer` grunt task in case any server changes have been made
+    5. restart the server
 
 ##Common Tasks
 
@@ -69,8 +66,10 @@ There is a grunt task to cover all the basic requirements of development, run th
 * `cleanSass` will delete all **css** files in `src\client`
 
 
-* `startDevServer` will start the `server.exe` in the `src\server` directory
-* `startBuildServer` will start the `server.exe` in the `build\server` directory
+* `startDevServer` will start the `server.exe` in the `src\server` directory on a unix os
+* `winStartDevServer` will start the `server.exe` in the `src\server` directory on a windows os
+* `startBuildServer` will start the `server.exe` in the `build\server` directory on a unix os
+* `winStartBuildServer` will start the `server.exe` in the `build\server` directory on a windows os
 
 
 * `updateSeleniumServer` will run `webdriver-manager update`

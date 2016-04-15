@@ -56,6 +56,12 @@ module.exports = function(grunt){
             startBuildServer: {
                 cmd: 'cd build/server && ./server.exe'
             },
+            winStartDevServer: {
+                cmd: 'cd src/server && server.exe'
+            },
+            winStartBuildServer: {
+                cmd: 'cd build/server && server.exe'
+            },
             compileDevSass: {
                 cmd: 'node node_modules/node-sass/bin/node-sass --output-style compressed -r -o src/client src/client'
             },
@@ -186,7 +192,9 @@ module.exports = function(grunt){
     grunt.registerTask('cleanSass', ['clean:sass']);
 
     grunt.registerTask('startDevServer', ['exec:startDevServer']);
+    grunt.registerTask('winStartDevServer', ['exec:winStartDevServer']);
     grunt.registerTask('startBuildServer', ['exec:startBuildServer']);
+    grunt.registerTask('winStartBuildServer', ['exec:winStartBuildServer']);
 
     grunt.registerTask('updateSeleniumServer', ['exec:updateSeleniumServer']);
     grunt.registerTask('startSeleniumServer', ['exec:startSeleniumServer']);
