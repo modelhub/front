@@ -21,7 +21,8 @@ define('createForm/createForm', [
                     scope: {
                         newType: '@',
                         fileInputAccept: '@',
-                        parentId: '@'
+                        parentId: '@',
+                        projectId: '@'
                     },
                     controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', 'uploader', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail, uploader){
                         i18n($scope, txt);

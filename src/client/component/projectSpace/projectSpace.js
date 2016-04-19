@@ -95,7 +95,7 @@ define('projectSpace/projectSpace', [
                                 broadcastReadyEvent();
                             }
                         });
-                        
+
                         $scope.$on(EVENT.GET_PROJECT_SPACE, function(event, data){
                             if(data.projectId === projectId){
                                 var sheetTransforms = [];
@@ -126,6 +126,12 @@ define('projectSpace/projectSpace', [
                                 }
                                 //will probably need to add more info here, world units etc.
                                 data.callback({sheetTransforms: sheetTransforms, camera: {/*TODO*/}});
+                            }
+                        });
+
+                        $scope.$on(EVENT.GET_PROJECT_SPACE_THUMBNAIL, function(event, data){
+                            if(data.projectId === projectId){
+                                viewer.getScreenShot(data.size, data.size, data.callback);
                             }
                         });
 

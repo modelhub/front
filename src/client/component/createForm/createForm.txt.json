@@ -17,6 +17,10 @@
     "en": "Upload"
   },
 
+  "projectSpaceAction": {
+    "en": "Create"
+  },
+
   "documentVersionAction": {
     "en": "Upload"
   },

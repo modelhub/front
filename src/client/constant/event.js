@@ -22,7 +22,8 @@ define('constant/event', [
                 VIEWER_READY: 'VIEWER_READY',
                 PROJECT_SPACE_CREATED: 'PROJECT_SPACE_CREATED',
                 DESTROY_PROJECT_SPACE: 'DESTROY_PROJECT_SPACE',
-                GET_PROJECT_SPACE: 'GET_PROJECT_SPACE'
+                GET_PROJECT_SPACE: 'GET_PROJECT_SPACE',
+                GET_PROJECT_SPACE_THUMBNAIL: 'GET_PROJECT_SPACE_THUMBNAIL'
             });
     }
 });

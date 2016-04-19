@@ -30,36 +30,9 @@ define('service/thumbnail', [
 
                 return function(file, max_size){
                     return $q(function(resolve, reject) {
-                        if (file && file.type.match(/(image.*|video.*)/)) {
+                        if (file && (typeof file === 'string' || file.type.match(/(image.*|video.*)/))) {
                             var target, getTargetWidth, getTargetHeight, addOnLoadHandler;
-                            if(file.type.match(/image.*/)) {
-                                target = new $window.Image();
-                                getTargetWidth = function () {
-                                    return target.width;
-                                };
-                                getTargetHeight = function () {
-                                    return target.height;
-                                };
-                                addOnLoadHandler = function (fn) {
-                                    target.addEventListener('load', fn);
-                                };
-                            } else {
-                                target = $document[0].createElement('video');
-                                getTargetWidth = function () {
-                                    return target.videoWidth;
-                                };
-                                getTargetHeight = function () {
-                                    return target.videoHeight;
-                                };
-                                addOnLoadHandler = function (fn) {
-                                    target.addEventListener('loadeddata', fn);
-                                };
-                            }
-                            var reader = new $window.FileReader();
-                            reader.addEventListener('error', function(error) {
-                                reject(error);
-                            });
-                            reader.addEventListener('load', function (readerEvent) {
+                            var loadHandler = function (arg) {
                                 addOnLoadHandler(function () {
                                     var canvas = $document[0].createElement('canvas'),
                                         width = getTargetWidth(),
@@ -84,7 +57,7 @@ define('service/thumbnail', [
                                     canvas.width = size;
                                     canvas.height = size;
                                     canvas.getContext('2d').drawImage(target, srcX, srcY, srcDim, srcDim, 0, 0, size, size);
-                                    var dataUrl = canvas.toDataURL(file.type);
+                                    var dataUrl = canvas.toDataURL('image/png');
                                     var resizedImage = new $window.Image();
                                     resizedImage.src = dataUrl;
                                     resolve({image: resizedImage, blob: dataURLToBlob(dataUrl), type: dataUrl.substring(5, dataUrl.indexOf(';'))});
@@ -92,8 +65,44 @@ define('service/thumbnail', [
                                 target.addEventListener('error', function (error) {
                                     reject(error);
                                 });
-                                target.src = readerEvent.target.result;
+                                if(typeof arg === 'string'){
+                                    target.src = arg;
+                                }else {
+                                    target.src = arg.target.result;
+                                }
+                            };
+                            if(typeof file === 'string' || file.type.match(/image.*/)) {
+                                target = new $window.Image();
+                                getTargetWidth = function () {
+                                    return target.width;
+                                };
+                                getTargetHeight = function () {
+                                    return target.height;
+                                };
+                                addOnLoadHandler = function (fn) {
+                                    target.addEventListener('load', fn);
+                                };
+                                if(typeof file === 'string'){
+                                    loadHandler(file);
+                                    return;
+                                }
+                            } else {
+                                target = $document[0].createElement('video');
+                                getTargetWidth = function () {
+                                    return target.videoWidth;
+                                };
+                                getTargetHeight = function () {
+                                    return target.videoHeight;
+                                };
+                                addOnLoadHandler = function (fn) {
+                                    target.addEventListener('loadeddata', fn);
+                                };
+                            }
+                            var reader = new $window.FileReader();
+                            reader.addEventListener('error', function(error) {
+                                reject(error);
                             });
+                            reader.addEventListener('load', loadHandler);
                             reader.readAsDataURL(file);
                         } else {
                             resolve({image: null, blob: null, name: null});

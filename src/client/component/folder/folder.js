@@ -30,8 +30,8 @@ define('folder/folder', [
 
                         api.v1.treeNode.get([$scope.folderId]).then(function(nodes){
                             $scope.folder = nodes[0];
-                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.folder.project, callback: function(projectSpace){
-                                console.log(projectSpace);
+                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.folder.project, callback: function(){
+                                $scope.projectSpaceExists = true;
                             }});
                         });
 
@@ -54,6 +54,17 @@ define('folder/folder', [
                             } else {
                                 $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
                                 $scope.selectedControl = 'newDocument';
+                            }
+                        };
+
+                        $scope.newProjectSpaceBtnClick = function(){
+                            $scope.newType = 'projectSpace';
+                            if ($scope.selectedControl === 'newProjectSpace') {
+                                $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
+                                $scope.selectedControl = '';
+                            } else {
+                                $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
+                                $scope.selectedControl = 'newProjectSpace';
                             }
                         };
 
