@@ -46,13 +46,18 @@ define('createForm/createForm', [
                             $scope.multiFiles = false;
                             $scope.singleFile = false;
                             $scope.fileExtension = '';
+
                             if($scope.newType.indexOf('projectSpace') === 0) {
-                                getProjectSpaceThumbnail();
+                                getProjectSpaceInfo();
                             }
                             $scope.$evalAsync();
                         }
 
-                        function getProjectSpaceThumbnail(){
+                        function getProjectSpaceInfo(){
+                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.projectId, callback: function(data){
+                                sheetTransforms = data.sheetTransforms;
+                                camera = data.camera;
+                            }});
                             $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE_THUMBNAIL, {
                                 projectId: $scope.projectId,
                                 size: 196,
@@ -94,7 +99,7 @@ define('createForm/createForm', [
                         $scope.$on(EVENT.HIDE_CREATE_FORM, resetForm);
 
                         $scope.newFileInputBtnClick = function(){
-                            if (!processingThumbnail && ($scope.newType === 'document' || $scope.newType === 'documentVersion')) {
+                            if (!processingThumbnail && ($scope.newType !== 'folder' || $scope.newType !== 'projectSpace' || $scope.newType !== 'projectSpaceVersion')) {
                                 currentFileEl().click();
                             }
                         };
@@ -107,7 +112,9 @@ define('createForm/createForm', [
 
                         var processingThumbnail = false,
                             resizedImage = null,
-                            resizedImageType = null;
+                            resizedImageType = null,
+                            sheetTransforms = [],
+                            camera = {};
                         $scope.newFileInputChange = function(){
                             if (!processingThumbnail) {
                                 if (currentFileEl().files.length === 1 || ($scope.newType === 'project' && currentFileEl().files.length >= 1)) {
@@ -189,6 +196,15 @@ define('createForm/createForm', [
                                         }
                                         $scope.sendingCreateApiRequest = false;
                                         $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS);
+                                        break;
+                                    case 'projectSpace':
+                                        api.v1.treeNode.createProjectSpace($scope.parentId, $scope.name, '', sheetTransforms, camera, resizedImageType, resizedImage).then(function(projectSpace){
+                                            $scope.sendingCreateApiRequest = false;
+                                            $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS, projectSpace);
+                                        }, function(errorId){
+                                            //TODO
+                                            $scope.sendingCreateApiRequest = false;
+                                        });
                                         break;
                                     case 'documentVersion':
                                         if(singleFileEl.files.length === 1) {
