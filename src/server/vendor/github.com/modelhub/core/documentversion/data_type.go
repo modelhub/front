@@ -16,6 +16,6 @@ type DocumentVersion struct {
 	FileExtension string    `json:"fileExtension"`
 	Status        string    `json:"status"`
 	ThumbnailType string    `json:"thumbnailType"`
-	SheetCount	  int 		`json:"sheetCount"`
-	Urn string 				`json:"-"`
+	SheetCount    int       `json:"sheetCount"`
+	Urn           string    `json:"-"`
 }

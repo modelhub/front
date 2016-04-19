@@ -2,6 +2,7 @@ package treenode
 
 import (
 	"errors"
+	"github.com/modelhub/core/sheettransform"
 	"github.com/modelhub/core/util"
 	"github.com/modelhub/vada"
 	"github.com/robsix/golog"
@@ -9,40 +10,42 @@ import (
 	"io"
 )
 
-func newTreeNodeStore(createFolder createFolder, createDocument createDocument, createViewerState createViewerState, setName setName, move move, get get, getChildren getChildren, getParents getParents, globalSearch globalSearch, projectSearch projectSearch, getRole util.GetRole, vada vada.VadaClient, ossBucketPrefix string, log golog.Log) TreeNodeStore {
+func newTreeNodeStore(createFolder createFolder, createDocument createDocument, createProjectSpace createProjectSpace, saveSheetTransformsForProjectSpace sheettransform.SaveSheetTransformsForProjectSpace, setName setName, move move, get get, getChildren getChildren, getParents getParents, globalSearch globalSearch, projectSearch projectSearch, getRole util.GetRole, vada vada.VadaClient, ossBucketPrefix string, log golog.Log) TreeNodeStore {
 	return &treeNodeStore{
-		createFolder:      createFolder,
-		createDocument:    createDocument,
-		createViewerState: createViewerState,
-		setName:           setName,
-		move:              move,
-		get:               get,
-		getChildren:       getChildren,
-		getParents:        getParents,
-		globalSearch:      globalSearch,
-		projectSearch:     projectSearch,
-		getRole:           getRole,
-		vada:              vada,
-		ossBucketPrefix:   ossBucketPrefix,
-		log:               log,
+		createFolder:                       createFolder,
+		createDocument:                     createDocument,
+		createProjectSpace:                 createProjectSpace,
+		saveSheetTransformsForProjectSpace: saveSheetTransformsForProjectSpace,
+		setName:         setName,
+		move:            move,
+		get:             get,
+		getChildren:     getChildren,
+		getParents:      getParents,
+		globalSearch:    globalSearch,
+		projectSearch:   projectSearch,
+		getRole:         getRole,
+		vada:            vada,
+		ossBucketPrefix: ossBucketPrefix,
+		log:             log,
 	}
 }
 
 type treeNodeStore struct {
-	createFolder      createFolder
-	createDocument    createDocument
-	createViewerState createViewerState
-	setName           setName
-	move              move
-	get               get
-	getChildren       getChildren
-	getParents        getParents
-	globalSearch      globalSearch
-	projectSearch     projectSearch
-	getRole           util.GetRole
-	vada              vada.VadaClient
-	ossBucketPrefix   string
-	log               golog.Log
+	createFolder                       createFolder
+	createDocument                     createDocument
+	createProjectSpace                 createProjectSpace
+	saveSheetTransformsForProjectSpace sheettransform.SaveSheetTransformsForProjectSpace
+	setName                            setName
+	move                               move
+	get                                get
+	getChildren                        getChildren
+	getParents                         getParents
+	globalSearch                       globalSearch
+	projectSearch                      projectSearch
+	getRole                            util.GetRole
+	vada                               vada.VadaClient
+	ossBucketPrefix                    string
+	log                                golog.Log
 }
 
 func (tns *treeNodeStore) CreateFolder(forUser string, parent string, name string) (*TreeNode, error) {
@@ -96,12 +99,44 @@ func (tns *treeNodeStore) CreateDocument(forUser string, parent string, name str
 	}
 }
 
-func (tns *treeNodeStore) CreateViewerState(forUser string, parent string, name string, createComment string, definition *json.Json) (*TreeNode, error) {
-	if treeNode, err := tns.createViewerState(forUser, parent, name, createComment, definition); err != nil {
-		tns.log.Error("TreeNodeStore.CreateViewerState error: forUser: %q parent: %q name: %q createComment: %q definition: %v error: %v", forUser, parent, name, createComment, definition, err)
+func (tns *treeNodeStore) CreateProjectSpace(forUser string, parent string, name string, createComment string, sheetTransforms []*sheettransform.SheetTransform, camera *json.Json, thumbnailType string, thumbnail io.ReadCloser) (*TreeNode, error) {
+	var projectId string
+
+	if thumbnail != nil {
+		defer thumbnail.Close()
+	}
+
+	if treeNodes, err := tns.get(forUser, []string{parent}); err != nil || treeNodes == nil {
+		tns.log.Error("TreeNodeStore.CreateProjectSpace error: forUser: %q parent: %q name: %q thumbnailType: %q error: %v", forUser, parent, name, thumbnailType, err)
+		return nil, err
+	} else {
+		projectId = treeNodes[0].Project
+		if role, err := tns.getRole(forUser, projectId); err != nil {
+			tns.log.Error("TreeNodeStore.CreateProjectSpace error: forUser: %q parent: %q name: %q thumbnailType: %q error: %v", forUser, parent, name, thumbnailType, err)
+			return nil, err
+		} else if !(role == "owner" || role == "admin" || role == "organiser" || role == "contributor") {
+			err := errors.New("Unauthorized Action: treeNode create projectSpace")
+			tns.log.Error("TreeNodeStore.CreateProjectSpace error: forUser: %q parent: %q name: %q thumbnailType: %q error: %v", forUser, parent, name, thumbnailType, err)
+			return nil, err
+		}
+	}
+
+	sheetTransformIds := make([]string, 0, len(sheetTransforms))
+	if completeSheetTransforms, err := tns.saveSheetTransformsForProjectSpace(forUser, sheetTransforms); err != nil {
+		return nil, err
+	} else {
+		for _, st := range completeSheetTransforms {
+			sheetTransformIds = append(sheetTransformIds, st.Id)
+		}
+	}
+
+	newProjVerId := util.NewId()
+	thumbnailType, _ = util.ThumbnailUploadHelper(newProjVerId, thumbnailType, thumbnail, tns.ossBucketPrefix+projectId, tns.vada)
+	if treeNode, err := tns.createProjectSpace(forUser, parent, name, newProjVerId, createComment, sheetTransformIds, camera, thumbnailType); err != nil {
+		tns.log.Error("TreeNodeStore.CreateProjectSpace error: forUser: %q parent: %q name: %q createComment: %q thumbnailType: %q error: %v", forUser, parent, name, createComment, thumbnailType, err)
 		return treeNode, err
 	} else {
-		tns.log.Info("TreeNodeStore.CreateViewerState success: forUser: %q parent: %q name: %q createComment: %q definition: %v treeNode: %v", forUser, parent, name, createComment, definition, treeNode)
+		tns.log.Info("TreeNodeStore.CreateProjectSpace success: forUser: %q parent: %q name: %q createComment: %q thumbnailType: %q treeNode: %v", forUser, parent, name, createComment, thumbnailType, treeNode)
 		return treeNode, nil
 	}
 }

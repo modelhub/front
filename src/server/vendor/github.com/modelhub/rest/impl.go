@@ -4,19 +4,22 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/modelhub/core"
+	"github.com/modelhub/core/documentversion"
+	"github.com/modelhub/core/helper"
+	"github.com/modelhub/core/project"
+	"github.com/modelhub/core/projectspaceversion"
+	"github.com/modelhub/core/sheet"
+	"github.com/modelhub/core/sheettransform"
+	"github.com/modelhub/core/treenode"
+	"github.com/modelhub/core/user"
 	"github.com/modelhub/session"
 	"github.com/modelhub/vada"
-	"github.com/modelhub/core/user"
-	"github.com/modelhub/core/project"
-	"github.com/modelhub/core/treenode"
-	"github.com/modelhub/core/documentversion"
-	"github.com/modelhub/core/sheet"
 	"github.com/robsix/golog"
+	sj "github.com/robsix/json"
 	"io"
 	"net/http"
-	"strings"
-	"github.com/modelhub/core/helper"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -41,7 +44,7 @@ func NewRestApi(coreApi core.CoreApi, getSession session.SessionGetter, vada vad
 	mux.HandleFunc("/api/v1/project/getRole", handlerWrapper(coreApi, getSession, projectGetRole, log))
 	mux.HandleFunc("/api/v1/project/getMemberships", handlerWrapper(coreApi, getSession, projectGetMemberships, log))
 	mux.HandleFunc("/api/v1/project/getMembershipInvites", handlerWrapper(coreApi, getSession, projectGetMembershipInvites, log))
-	mux.HandleFunc("/api/v1/project/getThumbnail/", handlerWrapper(coreApi, getSession, projectGetThumbnail, log))
+	mux.HandleFunc("/api/v1/project/getThumbnail/", getThumbnailWrapper(coreApi.Project().GetThumbnail, getSession, log))
 	mux.HandleFunc("/api/v1/project/get", handlerWrapper(coreApi, getSession, projectGet, log))
 	mux.HandleFunc("/api/v1/project/getInUserContext", handlerWrapper(coreApi, getSession, projectGetInUserContext, log))
 	mux.HandleFunc("/api/v1/project/getInUserInviteContext", handlerWrapper(coreApi, getSession, projectGetInUserInviteContext, log))
@@ -49,6 +52,7 @@ func NewRestApi(coreApi core.CoreApi, getSession session.SessionGetter, vada vad
 	//treeNode
 	mux.HandleFunc("/api/v1/treeNode/createFolder", handlerWrapper(coreApi, getSession, treeNodeCreateFolder, log))
 	mux.HandleFunc("/api/v1/treeNode/createDocument", handlerWrapper(coreApi, getSession, treeNodeCreateDocument, log))
+	mux.HandleFunc("/api/v1/treeNode/createProjectSpace", handlerWrapper(coreApi, getSession, treeNodeCreateProjectSpace, log))
 	mux.HandleFunc("/api/v1/treeNode/setName", handlerWrapper(coreApi, getSession, treeNodeSetName, log))
 	mux.HandleFunc("/api/v1/treeNode/move", handlerWrapper(coreApi, getSession, treeNodeMove, log))
 	mux.HandleFunc("/api/v1/treeNode/get", handlerWrapper(coreApi, getSession, treeNodeGet, log))
@@ -61,7 +65,12 @@ func NewRestApi(coreApi core.CoreApi, getSession session.SessionGetter, vada vad
 	mux.HandleFunc("/api/v1/documentVersion/get", handlerWrapper(coreApi, getSession, documentVersionGet, log))
 	mux.HandleFunc("/api/v1/documentVersion/getForDocument", handlerWrapper(coreApi, getSession, documentVersionGetForDocument, log))
 	mux.HandleFunc("/api/v1/documentVersion/getSeedFile/", handlerWrapper(coreApi, getSession, documentVersionGetSeedFile, log))
-	mux.HandleFunc("/api/v1/documentVersion/getThumbnail/", handlerWrapper(coreApi, getSession, documentVersionGetThumbnail, log))
+	mux.HandleFunc("/api/v1/documentVersion/getThumbnail/", getThumbnailWrapper(coreApi.DocumentVersion().GetThumbnail, getSession, log))
+	//projectSpaceVersion
+	mux.HandleFunc("/api/v1/projectSpaceVersion/create", handlerWrapper(coreApi, getSession, projectSpaceVersionCreate, log))
+	mux.HandleFunc("/api/v1/projectSpaceVersion/get", handlerWrapper(coreApi, getSession, projectSpaceVersionGet, log))
+	mux.HandleFunc("/api/v1/projectSpaceVersion/getForProjectSpace", handlerWrapper(coreApi, getSession, projectSpaceVersionGetForProjectSpace, log))
+	mux.HandleFunc("/api/v1/projectSpaceVersion/getThumbnail/", getThumbnailWrapper(coreApi.ProjectSpaceVersion().GetThumbnail, getSession, log))
 	//sheet
 	mux.HandleFunc("/api/v1/sheet/setName", handlerWrapper(coreApi, getSession, sheetSetName, log))
 	mux.HandleFunc(sheetGetItemPath, handlerWrapper(coreApi, getSession, sheetGetItem(vada), log))
@@ -69,6 +78,9 @@ func NewRestApi(coreApi core.CoreApi, getSession session.SessionGetter, vada vad
 	mux.HandleFunc("/api/v1/sheet/getForDocumentVersion", handlerWrapper(coreApi, getSession, sheetGetForDocumentVersion, log))
 	mux.HandleFunc("/api/v1/sheet/globalSearch", handlerWrapper(coreApi, getSession, sheetGlobalSearch, log))
 	mux.HandleFunc("/api/v1/sheet/projectSearch", handlerWrapper(coreApi, getSession, sheetProjectSearch, log))
+	//sheetTransform
+	mux.HandleFunc("/api/v1/sheetTransform/get", handlerWrapper(coreApi, getSession, sheetTransformGet, log))
+	mux.HandleFunc("/api/v1/sheetTransform/getForProjectSpaceVersion", handlerWrapper(coreApi, getSession, sheetTransformGetForProjectSpaceVersion, log))
 	//helpers
 	mux.HandleFunc("/api/v1/helper/getChildrenDocumentsWithLatestVersionAndFirstSheetInfo", handlerWrapper(coreApi, getSession, helperGetChildrenDocumentsWithLatestVersionAndFirstSheetInfo, log))
 	mux.HandleFunc("/api/v1/helper/getDocumentVersionsWithFirstSheetInfo", handlerWrapper(coreApi, getSession, helperGetDocumentVersionsWithFirstSheetInfo, log))
@@ -97,7 +109,33 @@ func handlerWrapper(coreApi core.CoreApi, getSession session.SessionGetter, hand
 	}
 }
 
+func getThumbnailWrapper(getThumbnail getThumbnail, getSession session.SessionGetter, log golog.Log) http.HandlerFunc {
+	return handlerWrapper(nil, getSession, func(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+		pathSegments := strings.Split(r.URL.Path, "/")
+		id := pathSegments[len(pathSegments)-3]
+		mimeType := pathSegments[len(pathSegments)-2]
+		mimeSubtype := pathSegments[len(pathSegments)-1]
+		var res *http.Response
+		var err error
+		if res, err = getThumbnail(forUser, id); res != nil && res.Body != nil {
+			defer res.Body.Close()
+		}
+		w.Header().Set("Content-Type", mimeType+"/"+mimeSubtype)
+		if res.ContentLength >= 0 {
+			w.Header().Set("Content-Length", strconv.FormatInt(res.ContentLength, 10))
+		}
+		if err != nil {
+			return err
+		} else if _, err := io.Copy(w, res.Body); err != nil {
+			return err
+		} else {
+			return nil
+		}
+	}, log)
+}
+
 type handler func(core.CoreApi, string, session.Session, http.ResponseWriter, *http.Request, golog.Log) error
+type getThumbnail func(forUser string, id string) (*http.Response, error)
 
 func writeJson(w http.ResponseWriter, src interface{}, log golog.Log) {
 	if b, err := json.Marshal(src); err != nil {
@@ -113,7 +151,7 @@ func writeOffsetJson(w http.ResponseWriter, res interface{}, totalResults int, l
 		res = []interface{}{}
 	}
 	writeJson(w, &struct {
-		TotalResults int `json:"totalResults"`
+		TotalResults int         `json:"totalResults"`
 		Results      interface{} `json:"results"`
 	}{
 		TotalResults: totalResults,
@@ -312,7 +350,7 @@ func projectGetRole(coreApi core.CoreApi, forUser string, session session.Sessio
 
 func projectGetMemberships(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
 	args := &struct {
-		Id   string `json:"id"`
+		Id     string `json:"id"`
 		Role   string `json:"role"`
 		Offset int    `json:"offset"`
 		Limit  int    `json:"limit"`
@@ -330,7 +368,7 @@ func projectGetMemberships(coreApi core.CoreApi, forUser string, session session
 
 func projectGetMembershipInvites(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
 	args := &struct {
-		Id   string `json:"id"`
+		Id     string `json:"id"`
 		Role   string `json:"role"`
 		Offset int    `json:"offset"`
 		Limit  int    `json:"limit"`
@@ -342,29 +380,6 @@ func projectGetMembershipInvites(coreApi core.CoreApi, forUser string, session s
 		return err
 	} else {
 		writeOffsetJson(w, res, totalResults, log)
-		return nil
-	}
-}
-
-func projectGetThumbnail(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
-	pathSegments := strings.Split(r.URL.Path, "/")
-	id := pathSegments[len(pathSegments)-3]
-	mimeType := pathSegments[len(pathSegments)-2]
-	mimeSubtype := pathSegments[len(pathSegments)-1]
-	var res *http.Response
-	var err error
-	if res, err = coreApi.Project().GetThumbnail(forUser, id); res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
-	w.Header().Set("Content-Type", mimeType+"/"+mimeSubtype)
-	if res.ContentLength >= 0 {
-		w.Header().Set("Content-Length", strconv.FormatInt(res.ContentLength, 10))
-	}
-	if err != nil {
-		return err
-	} else if _, err := io.Copy(w, res.Body); err != nil {
-		return err
-	} else {
 		return nil
 	}
 }
@@ -473,6 +488,30 @@ func treeNodeCreateDocument(coreApi core.CoreApi, forUser string, session sessio
 	}
 
 	if res, err := coreApi.TreeNode().CreateDocument(forUser, r.FormValue("parent"), r.FormValue("name"), r.FormValue("uploadComment"), r.FormValue("fileType"), fileName, file, r.FormValue("thumbnailType"), thumbnail); err != nil {
+		return err
+	} else {
+		writeJson(w, res, log)
+		return nil
+	}
+}
+
+func treeNodeCreateProjectSpace(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+	thumbnail, _, err := r.FormFile("thumbnail")
+	if thumbnail != nil {
+		defer thumbnail.Close()
+	}
+	if err != nil && err != http.ErrMissingFile {
+		return err
+	}
+
+	camera, _ := sj.FromString(r.FormValue("camera"))
+
+	sheetTransforms := make([]*sheettransform.SheetTransform, 0, 100)
+	if err := json.Unmarshal([]byte(r.FormValue("sheetTransforms")), &sheetTransforms); err != nil {
+		return err
+	}
+
+	if res, err := coreApi.TreeNode().CreateProjectSpace(forUser, r.FormValue("parent"), r.FormValue("name"), r.FormValue("createComment"), sheetTransforms, camera, r.FormValue("thumbnailType"), thumbnail); err != nil {
 		return err
 	} else {
 		writeJson(w, res, log)
@@ -682,25 +721,57 @@ func documentVersionGetSeedFile(coreApi core.CoreApi, forUser string, session se
 	}
 }
 
-func documentVersionGetThumbnail(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
-	pathSegments := strings.Split(r.URL.Path, "/")
-	id := pathSegments[len(pathSegments)-3]
-	mimeType := pathSegments[len(pathSegments)-2]
-	mimeSubtype := pathSegments[len(pathSegments)-1]
-	var res *http.Response
-	var err error
-	if res, err = coreApi.DocumentVersion().GetThumbnail(forUser, id); res != nil && res.Body != nil {
-		defer res.Body.Close()
+func projectSpaceVersionCreate(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+	thumbnail, _, err := r.FormFile("thumbnail")
+	if thumbnail != nil {
+		defer thumbnail.Close()
 	}
-	w.Header().Set("Content-Type", mimeType+"/"+mimeSubtype)
-	if res.ContentLength >= 0 {
-		w.Header().Set("Content-Length", strconv.FormatInt(res.ContentLength, 10))
-	}
-	if err != nil {
+	if err != nil && err != http.ErrMissingFile {
 		return err
-	} else if _, err := io.Copy(w, res.Body); err != nil {
+	}
+
+	camera, _ := sj.FromString(r.FormValue("camera"))
+
+	sheetTransforms := make([]*sheettransform.SheetTransform, 0, 100)
+	if err := json.Unmarshal([]byte(r.FormValue("sheetTransforms")), &sheetTransforms); err != nil {
+		return err
+	}
+
+	if res, err := coreApi.ProjectSpaceVersion().Create(forUser, r.FormValue("projectSpace"), r.FormValue("createComment"), sheetTransforms, camera, r.FormValue("thumbnailType"), thumbnail); err != nil {
 		return err
 	} else {
+		writeJson(w, res, log)
+		return nil
+	}
+}
+
+func projectSpaceVersionGet(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+	args := &struct {
+		Ids []string `json:"ids"`
+	}{}
+	if err := readJson(r, args); err != nil {
+		return err
+	} else if res, err := coreApi.ProjectSpaceVersion().Get(forUser, args.Ids); err != nil {
+		return err
+	} else {
+		writeJson(w, res, log)
+		return nil
+	}
+}
+
+func projectSpaceVersionGetForProjectSpace(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+	args := &struct {
+		ProjectSpace string `json:"projectSpace"`
+		Offset       int    `json:"offset"`
+		Limit        int    `json:"limit"`
+		SortBy       string `json:"sortBy"`
+	}{}
+	if err := readJson(r, args); err != nil {
+		return err
+	} else if res, totalResults, err := coreApi.ProjectSpaceVersion().GetForProjectSpace(forUser, args.ProjectSpace, args.Offset, args.Limit, projectspaceversion.SortBy(args.SortBy)); err != nil {
+		return err
+	} else {
+		writeOffsetJson(w, res, totalResults, log)
 		return nil
 	}
 }
@@ -824,9 +895,40 @@ func sheetProjectSearch(coreApi core.CoreApi, forUser string, session session.Se
 	}
 }
 
+func sheetTransformGet(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+	args := &struct {
+		Ids []string `json:"ids"`
+	}{}
+	if err := readJson(r, args); err != nil {
+		return err
+	} else if res, err := coreApi.SheetTransform().Get(forUser, args.Ids); err != nil {
+		return err
+	} else {
+		writeJson(w, res, log)
+		return nil
+	}
+}
+
+func sheetTransformGetForProjectSpaceVersion(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
+	args := &struct {
+		DocumentVersion string `json:"projectSpaceVersion"`
+		Offset          int    `json:"offset"`
+		Limit           int    `json:"limit"`
+		SortBy          string `json:"sortBy"`
+	}{}
+	if err := readJson(r, args); err != nil {
+		return err
+	} else if res, totalResults, err := coreApi.Sheet().GetForDocumentVersion(forUser, args.DocumentVersion, args.Offset, args.Limit, sheet.SortBy(args.SortBy)); err != nil {
+		return err
+	} else {
+		writeOffsetJson(w, res, totalResults, log)
+		return nil
+	}
+}
+
 func helperGetChildrenDocumentsWithLatestVersionAndFirstSheetInfo(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
 	args := &struct {
-		Folder     string `json:"folder"`
+		Folder string `json:"folder"`
 		Offset int    `json:"offset"`
 		Limit  int    `json:"limit"`
 		SortBy string `json:"sortBy"`
@@ -843,10 +945,10 @@ func helperGetChildrenDocumentsWithLatestVersionAndFirstSheetInfo(coreApi core.C
 
 func helperGetDocumentVersionsWithFirstSheetInfo(coreApi core.CoreApi, forUser string, session session.Session, w http.ResponseWriter, r *http.Request, log golog.Log) error {
 	args := &struct {
-		Document     string `json:"document"`
-		Offset int    `json:"offset"`
-		Limit  int    `json:"limit"`
-		SortBy string `json:"sortBy"`
+		Document string `json:"document"`
+		Offset   int    `json:"offset"`
+		Limit    int    `json:"limit"`
+		SortBy   string `json:"sortBy"`
 	}{}
 	if err := readJson(r, args); err != nil {
 		return err

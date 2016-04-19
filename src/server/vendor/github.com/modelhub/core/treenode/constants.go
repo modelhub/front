@@ -8,10 +8,10 @@ const (
 	NameAsc  = sortBy("nameAsc")
 	NameDesc = sortBy("nameDesc")
 
-	Any         = nodeType("any") //used for results filtering only
-	Folder      = nodeType("folder")
-	Document    = nodeType("document")
-	ViewerState = nodeType("viewerState")
+	Any          = nodeType("any") //used for results filtering only
+	Folder       = nodeType("folder")
+	Document     = nodeType("document")
+	ProjectSpace = nodeType("projectSpace")
 )
 
 type sortBy string
@@ -32,8 +32,8 @@ func NodeType(nt string) nodeType {
 		return Folder
 	case "document":
 		return Document
-	case "viewerstate":
-		return ViewerState
+	case "projectspace":
+		return ProjectSpace
 	default:
 		return Any
 	}
