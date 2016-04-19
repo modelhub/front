@@ -18,29 +18,29 @@
                         <div class="mh-def mh-fill mh-row transforms">
                             <div class="mh-def scale">
                                 <div class="mh-def title">{{::txt('scale')}}</div>
-                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.scale">
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.transform.scale">
                                     <div class="mh-def label">
                                         {{::txt(dim)}}:
                                     </div>
-                                    <input type="number" ng-model="sheet.scale[dim]" ng-change="::applyTransforms(sheet)"/>
+                                    <input type="number" ng-model="sheet.transform.scale[dim]" ng-change="::applyTransforms(sheet)"/>
                                 </div>
                             </div>
                             <div class="mh-def rotation-q">
                                 <div class="mh-def title">{{::txt('rotate')}}</div>
-                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.rotate">
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.transform.rotate">
                                     <div class="mh-def label">
                                         {{::txt(dim)}}:
                                     </div>
-                                    <input type="number" ng-model="sheet.rotate[dim]" ng-change="::applyTransforms(sheet)"/>
+                                    <input type="number" ng-model="sheet.transform.rotate[dim]" ng-change="::applyTransforms(sheet)"/>
                                 </div>
                             </div>
                             <div class="mh-def translation">
                                 <div class="mh-def title">{{::txt('translate')}}</div>
-                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.translate">
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.transform.translate">
                                     <div class="mh-def label">
                                         {{::txt(dim)}}:
                                     </div>
-                                    <input type="number" ng-model="sheet.translate[dim]" ng-change="::applyTransforms(sheet)"/>
+                                    <input type="number" ng-model="sheet.transform.translate[dim]" ng-change="::applyTransforms(sheet)"/>
                                 </div>
                             </div>
                         </div>

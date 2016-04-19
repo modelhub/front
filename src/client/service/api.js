@@ -247,8 +247,20 @@ define('service/api', [
                                     return doUploadProgressReq('/api/v1/treeNode/createDocument', data);
                                 },
 
-                                createViewerState: function() {
-                                    //TODO
+                                createProjectSpace: function (parent, name, createComment, sheetTransforms, camera, thumbnailType, thumbnail) {
+                                    name = name || "";
+                                    createComment = createComment || "";
+                                    var data = new FormData();
+                                    data.append('parent', parent);
+                                    data.append('name', name);
+                                    data.append('createComment', createComment);
+                                    data.append('sheetTransforms', JSON.stringify(sheetTransforms));
+                                    data.append('camera', JSON.stringify(camera));
+                                    if(thumbnail && thumbnailType) {
+                                        data.append('thumbnail', thumbnail, 'a.a');
+                                        data.append('thumbnailType', thumbnailType);
+                                    }
+                                    return doFormReq('/api/v1/treeNode/createProjectSpace', data);
                                 },
 
                                 setName: function (id, name) {
@@ -321,6 +333,33 @@ define('service/api', [
                                             reject(resp.data);
                                         });
                                     });
+                                }
+
+                            },
+
+                            projectSpaceVersion: {
+
+                                create: function (projectSpace, createComment, sheetTransforms, camera, thumbnailType, thumbnail) {
+                                    name = name || "";
+                                    createComment = createComment || "";
+                                    var data = new FormData();
+                                    data.append('projectSpace', projectSpace);
+                                    data.append('createComment', createComment);
+                                    data.append('sheetTransforms', JSON.stringify(sheetTransforms));
+                                    data.append('camera', JSON.stringify(camera));
+                                    if(thumbnail && thumbnailType) {
+                                        data.append('thumbnail', thumbnail, 'a.a');
+                                        data.append('thumbnailType', thumbnailType);
+                                    }
+                                    return doFormReq('/api/v1/projectSpaceVersion/create', data);
+                                },
+
+                                get: function (ids) {
+                                    return doJsonReq('/api/v1/projectSpaceVersion/get', {ids: ids});
+                                },
+
+                                getForProjectSpace: function (projectSpace, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/projectSpaceVersion/getForProjectSpace', {projectSpace: projectSpace, offset: offset, limit: limit, sortBy: sortBy});
                                 }
 
                             },

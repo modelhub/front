@@ -21,7 +21,8 @@ define('constant/event', [
                 UPLOADS_CHANGED: 'UPLOADS_CHANGED',
                 VIEWER_READY: 'VIEWER_READY',
                 PROJECT_SPACE_CREATED: 'PROJECT_SPACE_CREATED',
-                DESTROY_PROJECT_SPACE: 'DESTROY_PROJECT_SPACE'
+                DESTROY_PROJECT_SPACE: 'DESTROY_PROJECT_SPACE',
+                GET_PROJECT_SPACE: 'GET_PROJECT_SPACE'
             });
     }
 });

@@ -17,9 +17,18 @@ define('service/sheetExtender', [
                 return function(sheet){
                     sheet.extended = true;
 
-                    sheet.scale = {x: 1, y: 1, z: 1};
-                    sheet.rotate = {w: 1, x: 0, y: 0, z: 0};
-                    sheet.translate = {x: 0, y: 0, z: 0};
+                    if(!sheet.transform){
+                        sheet.transform = {};
+                    }
+                    if(!sheet.transform.scale) {
+                        sheet.transform.scale = {x: 1, y: 1, z: 1};
+                    }
+                    if(!sheet.transform.rotate){
+                        sheet.transform.rotate = {w: 1, x: 0, y: 0, z: 0};
+                    }
+                    if(!sheet.transform.translate){
+                        sheet.transform.translate = {x: 0, y: 0, z: 0};
+                    }
 
                     sheet.getBoundingBox = function(objectIds){
                         //get bounding box for whole sheet if no objectIds specified
@@ -46,7 +55,7 @@ define('service/sheetExtender', [
                     sheet.applyTransforms = function(){
                         var fragList = sheet.model.getFragmentList();
                         for (var i= 0, iEnd=fragList.getCount(); i<iEnd; i++) {
-                            fragList.updateAnimTransform(i, sheet.scale, sheet.rotate, sheet.translate);
+                            fragList.updateAnimTransform(i, sheet.transform.scale, sheet.transform.rotate, sheet.transform.translate);
                         }
                     };
                 };

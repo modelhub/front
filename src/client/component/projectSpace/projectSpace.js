@@ -96,6 +96,39 @@ define('projectSpace/projectSpace', [
                                 broadcastReadyEvent();
                             }
                         });
+                        
+                        $scope.$on(EVENT.GET_PROJECT_SPACE, function(event, data){
+                            if(data.projectId === projectId){
+                                var sheetTransforms = [];
+                                for(var sheetId in loadedSheets){
+                                    if(loadedSheets.hasOwnProperty(sheetId)){
+                                        sheetTransforms.push({
+                                            sheet: sheetId,
+                                            transform: {
+                                                scale: {
+                                                    x: loadedSheets[sheetId].transform.scale.x,
+                                                    y: loadedSheets[sheetId].transform.scale.y,
+                                                    z: loadedSheets[sheetId].transform.scale.z
+                                                },
+                                                rotate: {
+                                                    w: loadedSheets[sheetId].transform.rotate.w,
+                                                    x: loadedSheets[sheetId].transform.rotate.x,
+                                                    y: loadedSheets[sheetId].transform.rotate.y,
+                                                    z: loadedSheets[sheetId].transform.rotate.z
+                                                },
+                                                translate: {
+                                                    x: loadedSheets[sheetId].transform.translate.x,
+                                                    y: loadedSheets[sheetId].transform.translate.y,
+                                                    z: loadedSheets[sheetId].transform.translate.z
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                //will probably need to add more info here, world units etc.
+                                data.callback({sheetTransforms: sheetTransforms, camera: {/*TODO*/}});
+                            }
+                        });
 
                         api.v1.project.get([projectId]).then(function(projects){
                             $scope.project = projects[0];
