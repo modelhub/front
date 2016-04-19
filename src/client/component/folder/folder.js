@@ -71,8 +71,10 @@ define('folder/folder', [
                         $scope.$on(EVENT.CREATE_FORM_CANCEL, function(){
                             if ($scope.newType === 'folder') {
                                 $scope.newFolderBtnClick();
-                            } else {
+                            } else if ($scope.newType === 'document') {
                                 $scope.newDocumentBtnClick();
+                            } else if ($scope.newType === 'projectSpace') {
+                                $scope.newProjectSpaceBtnClick();
                             }
                         });
 
@@ -80,8 +82,10 @@ define('folder/folder', [
                             if ($scope.newType === 'folder') {
                                 $scope.newFolderBtnClick();
                                 $location.path('/folder/'+node.id);
-                            } else {
+                            } else if ($scope.newType === 'document') {
                                 $scope.newDocumentBtnClick();
+                            } else if ($scope.newType === 'projectSpace') {
+                                $scope.newProjectSpaceBtnClick();
                             }
                         });
 

@@ -24,7 +24,7 @@ define('createForm/createForm', [
                         parentId: '@',
                         projectId: '@'
                     },
-                    controller: ['$element', '$rootScope', '$scope', 'api', 'EVENT', 'i18n', 'thumbnail', 'uploader', function($element, $rootScope, $scope, api, EVENT, i18n, thumbnail, uploader){
+                    controller: ['$element', '$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', 'thumbnail', 'uploader', function($element, $rootScope, $scope, $window, api, EVENT, i18n, thumbnail, uploader){
                         i18n($scope, txt);
 
                         var multiFilesEl = $element[0].getElementsByClassName('multi-files')[0],
@@ -46,16 +46,55 @@ define('createForm/createForm', [
                             $scope.multiFiles = false;
                             $scope.singleFile = false;
                             $scope.fileExtension = '';
+                            if($scope.newType.indexOf('projectSpace') === 0) {
+                                getProjectSpaceThumbnail();
+                            }
+                            $scope.$evalAsync();
+                        }
+
+                        function getProjectSpaceThumbnail(){
+                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE_THUMBNAIL, {
+                                projectId: $scope.projectId,
+                                size: 196,
+                                callback: function (blobUrl) {
+                                    processingThumbnail = true;
+                                    thumbnail(blobUrl, 196).then(function (data) {
+                                        resizedImage = data.blob;
+                                        resizedImageType = data.type;
+                                        if (data.image) {
+                                            $scope.imgSrc = data.image.src;
+                                        } else {
+                                            $scope.imgSrc = '';
+                                        }
+                                        processingThumbnail = false;
+                                    }, function (error) {
+                                        processingThumbnail = false;
+                                        $scope.imgSrc = '';
+                                    });
+                                }
+                            });
                         }
 
                         resetForm();
 
-                        $scope.$on(EVENT.SHOW_CREATE_FORM, resetForm);
+                        $scope.action = function(){
+                            switch($scope.newType){
+                                case 'document':
+                                case 'documentVersion':
+                                    return 'upload';
+                                default:
+                                    return 'create';
+                            }
+                        };
+
+                        $scope.$on(EVENT.SHOW_CREATE_FORM, function(){
+                            $window.setTimeout(resetForm);
+                        });
 
                         $scope.$on(EVENT.HIDE_CREATE_FORM, resetForm);
 
                         $scope.newFileInputBtnClick = function(){
-                            if (!processingThumbnail && $scope.newType !== 'folder') {
+                            if (!processingThumbnail && ($scope.newType === 'document' || $scope.newType === 'documentVersion')) {
                                 currentFileEl().click();
                             }
                         };

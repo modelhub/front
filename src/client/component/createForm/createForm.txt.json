@@ -5,23 +5,11 @@
     "en": "Name"
   },
 
-  "projectAction": {
+  "create": {
     "en": "Create"
   },
 
-  "folderAction": {
-    "en": "Create"
-  },
-
-  "documentAction": {
-    "en": "Upload"
-  },
-
-  "projectSpaceAction": {
-    "en": "Create"
-  },
-
-  "documentVersionAction": {
+  "upload": {
     "en": "Upload"
   },
 

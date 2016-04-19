@@ -22,6 +22,10 @@ mh-create-form {
         cursor: default;
         background: url("/resource/image/folder.png") center no-repeat;
       }
+      &.projectSpace, &.projectSpaceVersion{
+        cursor: default;
+        background: url("/resource/image/multi-sheet.png") center no-repeat;
+      }
       &.document, &.documentVersion{
         background: url("/resource/image/upload.png") center no-repeat;
         &:hover{
