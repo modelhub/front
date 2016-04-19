@@ -64,7 +64,6 @@ define('projectSpace/projectSpace', [
                                         if(sheets[i].model === event.model){
                                             sheets[i].geometryLoaded = true;
                                             if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
-                                                sheetExtender(sheets[i]);
                                                 $scope.$evalAsync();
                                             }
                                             return;
@@ -76,7 +75,6 @@ define('projectSpace/projectSpace', [
                                         if(sheets[i].model === event.model){
                                             sheets[i].propertyDbLoaded = true;
                                             if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
-                                                sheetExtender(sheets[i]);
                                                 $scope.$evalAsync();
                                             }
                                             return;
@@ -86,9 +84,10 @@ define('projectSpace/projectSpace', [
                                 $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
                                     if(sheet.project === projectId && !loadedSheets[sheet.id]){
                                         var sheetCopy = ng.copy(sheet);
-                                        loadedSheets[sheet.id] = true;
+                                        loadedSheets[sheet.id] = sheetCopy;
                                         sheetCopy.svf = sheetCopy.model = null;
                                         sheetCopy.geometryLoaded = sheetCopy.propertyDbLoaded = false;
+                                        sheetExtender(sheetCopy);
                                         sheets.push(sheetCopy);
                                         viewer.loadSheet(sheet);
                                     }

@@ -17,12 +17,16 @@
     "en": "New Document"
   },
 
+  "newProjectSpace": {
+    "en": "New Project Space"
+  },
+
   "folder": {
     "en": "folder"
   },
 
-  "viewerState": {
-    "en": "viewer state"
+  "projectSpace": {
+    "en": "project space"
   },
 
   "image": {

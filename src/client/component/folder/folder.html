@@ -11,6 +11,10 @@
                     <div class="name">{{::txt('newDocument')}}</div>
                     <div class="highlight"></div>
                 </div>
+                <div class="mh-def control" ng-class="{selected: selectedControl === 'newProjectSpace'}" ng-show="projectSpaceExists" ng-click="newProjectSpaceBtnClick()">
+                    <div class="name">{{::txt('newProjectSpace')}}</div>
+                    <div class="highlight"></div>
+                </div>
             </div>
         </div>
         <div class="mh-def breadcrumbs">

@@ -50,6 +50,9 @@ define('service/lmv', [
                                         sceneUpdated: function() {
                                             viewer.impl.sceneUpdated(true);
                                         },
+                                        getScreenShot: function(width, height, callback){
+                                            viewer.getScreenShot(width, height, callback);
+                                        },
                                         resize: function(){
                                             return viewer.resize();
                                         },

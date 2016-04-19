@@ -30,6 +30,9 @@ define('folder/folder', [
 
                         api.v1.treeNode.get([$scope.folderId]).then(function(nodes){
                             $scope.folder = nodes[0];
+                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.folder.project, callback: function(projectSpace){
+                                console.log(projectSpace);
+                            }});
                         });
 
                         $scope.newFolderBtnClick = function(){
@@ -108,7 +111,7 @@ define('folder/folder', [
 
                         var loadNextTreeNodeBatch,
                             filter = 'folder',
-                            folderCount = 0,
+                            segmentedOffsetCount = 0,
                             offset = 0,
                             defaultLimit = 20,
                             limit = defaultLimit,
@@ -135,16 +138,20 @@ define('folder/folder', [
                                     if (filter === 'folder') {
                                         offset = $scope.children.length;
                                     } else {
-                                        offset = $scope.children.length - folderCount;
+                                        offset = $scope.children.length - segmentedOffsetCount;
                                     }
                                     loadingNextTreeNodeBatch = false;
                                     if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                         loadNextTreeNodeBatch();
-                                    } else if (filter === 'folder' ){
-                                        filter = 'document';
+                                    } else if (filter === 'folder' || filter === 'projectSpace' ){
+                                        if(filter === 'folder') {
+                                            filter = 'projectSpace';
+                                        } else {
+                                            filter = 'document';
+                                        }
                                         limit = defaultLimit - (offset % defaultLimit);
                                         offset = 0;
-                                        folderCount = $scope.children.length;
+                                        segmentedOffsetCount = $scope.children.length;
                                         if (limit <= defaultLimit || scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
                                             loadNextTreeNodeBatch();
                                         } else {
@@ -162,9 +169,11 @@ define('folder/folder', [
                                     $scope.loadingChildren = false;
                                     loadingNextTreeNodeBatch = false;
                                 };
-                                if (filter !== 'document') {
+                                if (filter === 'folder') {
                                     api.v1.treeNode.getChildren($scope.folderId, filter, offset, limit, 'nameAsc').then(successCallback, errorCallback);
-                                } else {
+                                } else if (filter === 'projectSpace') {
+                                    api.v1.helper.getChildrenProjectSpacesWithLatestVersion($scope.folderId, offset, limit, 'nameAsc').then(successCallback, errorCallback);
+                                } else if (filter === 'document') {
                                     api.v1.helper.getChildrenDocumentsWithLatestVersionAndFirstSheetInfo($scope.folderId, offset, limit, 'nameAsc').then(successCallback, errorCallback);
                                 }
                             }
