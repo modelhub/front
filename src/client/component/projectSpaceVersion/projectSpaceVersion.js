@@ -1,8 +1,8 @@
-define('projectSpace/projectSpace', [
+define('projectSpaceVersion/projectSpaceVersion', [
     'styler',
-    'text!projectSpace/projectSpace.css',
-    'text!projectSpace/projectSpace.html',
-    'text!projectSpace/projectSpace.txt.json'
+    'text!projectSpaceVersion/projectSpaceVersion.css',
+    'text!projectSpaceVersion/projectSpaceVersion.html',
+    'text!projectSpaceVersion/projectSpaceVersion.txt.json'
 ], function(
     styler,
     style,
@@ -14,12 +14,12 @@ define('projectSpace/projectSpace', [
 
     return function(ngModule){
         ngModule
-            .directive('mhProjectSpace', function(){
+            .directive('mhProjectSpaceVersion', function(){
                 return {
                     restrict: 'E',
                     template: tpl,
                     scope: {
-                        projectSpaceId: '@'
+                        projectSpaceVersionId: '@'
                     },
                     controller: ['$element', '$location', '$rootScope', '$scope', '$window', 'api', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $scope, $window, api, currentUser, EVENT, i18n){
                         i18n($scope, txt);
@@ -28,13 +28,8 @@ define('projectSpace/projectSpace', [
 
                         $scope.my = currentUser();
 
-                        api.v1.treeNode.get([$scope.projectSpaceId]).then(function(nodes){
-                            $scope.projectSpace = nodes[0];
-                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.projectSpace.project, callback: function(data){
-                                if(data.sheetTransforms.length > 1) {
-                                    $scope.projectSpaceExists = true;
-                                }
-                            }});
+                        api.v1.projectSpaceVersion.get([$scope.projectSpaceVersionId]).then(function(versions){
+                            $scope.projectSpaceVersion = versions[0];
                         });
 
                         $scope.newVersionBtnClick = function(){

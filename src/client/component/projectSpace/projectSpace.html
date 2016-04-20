@@ -25,7 +25,7 @@
                 <div class="mh-def info">
                     <div class="name mh-ellip">{{::txt('v', version.version)}}</div>
                     <div class="created mh-ellip">{{::dt(version.created, 'L')}}</div>
-                    <div class="sheet-count mh-ellip" ng-if="version.sheetTransformCount > 0" ng-click="::sheetsClick(version)">{{::txt('sheets', version.sheetTransformCount)}}</div>
+                    <div class="sheet-count mh-ellip" ng-if="version.sheetTransformCount > 0">{{::txt('sheets', version.sheetTransformCount)}}</div>
                 </div>
             </div>
         </div>

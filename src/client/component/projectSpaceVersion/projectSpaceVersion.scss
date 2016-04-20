@@ -1,0 +1,45 @@
+@import "../../global";
+
+mh-project-space-version {
+  * {
+    flex-shrink: 0;
+  }
+  > div.root {
+    @include IEScrollbars();
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    > div.content{
+      width: 100%;
+      min-height: 100%;
+      > .header {
+        height: 50px;
+        border-bottom: 1px solid $background1;
+        align-items: flex-end;
+        > .icon {
+          @include fill(50px, 50px);
+          background: url("/resource/image/multi-sheet.png") center no-repeat;
+          background-size: 30px 30px;
+        }
+        > .controls{
+
+        }
+      }
+      > .breadcrumbs{
+        > mh-breadcrumbs{
+          margin-left: 8px;
+          width: calc(100% - 8px);
+        }
+      }
+      > mh-loader{
+        flex-grow: 1;
+      }
+      > .sheets-loading-error {
+        flex-grow: 1;
+        > div{
+          margin: auto;
+        }
+      }
+    }
+  }
+}

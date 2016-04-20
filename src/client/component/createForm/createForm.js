@@ -206,6 +206,15 @@ define('createForm/createForm', [
                                             $scope.sendingCreateApiRequest = false;
                                         });
                                         break;
+                                    case 'projectSpaceVersion':
+                                        api.v1.projectSpaceVersion.create($scope.parentId, '', sheetTransforms, camera, resizedImageType, resizedImage).then(function(projectSpaceVersion){
+                                            $scope.sendingCreateApiRequest = false;
+                                            $rootScope.$broadcast(EVENT.CREATE_FORM_SUCCESS, projectSpaceVersion);
+                                        }, function(errorId){
+                                            //TODO
+                                            $scope.sendingCreateApiRequest = false;
+                                        });
+                                        break;
                                     case 'documentVersion':
                                         if(singleFileEl.files.length === 1) {
                                             uploader.start('documentVersion', $scope.parentId, singleFileEl.files[0].name, singleFileEl.files[0]);
