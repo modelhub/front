@@ -57,14 +57,6 @@ define('projectSpace/projectSpace', [
                             $scope.newVersionBtnClick();
                         });
 
-                        $scope.$on('$destroy', function(){
-                            for (var timeout in timeouts) {
-                                if (timeouts.hasOwnProperty(timeout)) {
-                                    $window.clearTimeout(timeouts[timeout]);
-                                }
-                            }
-                        });
-
                         var loadNextVersionBatch,
                             offset = 0,
                             limit = 20,
