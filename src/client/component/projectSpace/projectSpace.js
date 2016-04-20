@@ -29,9 +29,11 @@ define('projectSpace/projectSpace', [
                         $scope.my = currentUser();
 
                         api.v1.treeNode.get([$scope.projectSpaceId]).then(function(nodes){
-                            $scope.projectSpace = nodes[0]
-                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.projectSpace.project, callback: function(){
-                                $scope.projectSpaceExists = true;
+                            $scope.projectSpace = nodes[0];
+                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.projectSpace.project, callback: function(data){
+                                if(data.sheetTransforms.length > 1) {
+                                    $scope.projectSpaceExists = true;
+                                }
                             }});
                         });
 
