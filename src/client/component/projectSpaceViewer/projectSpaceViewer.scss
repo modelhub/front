@@ -1,0 +1,118 @@
+@import "../../global";
+
+mh-project-space-viewer {
+  > .root {
+
+    > mh-viewer{
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+
+    > .sheets-menu{
+      @include fill($width: 200px);
+      max-height: 100%;
+      max-width: 100%;
+      flex-shrink: 0;
+      flex-grow: 0;
+      background: $background1;
+
+      > .sheets-menu-root {
+        @include fill($width: calc(100% - 1px));
+        border-left: $border1;
+
+        * {
+          flex-shrink: 0;
+        }
+
+        > .section {
+          border-bottom: $border1;
+        }
+
+        > .header {
+          justify-content: flex-start;
+          align-items: center;
+          @include fill($height: 50px);
+          > .title {
+            padding-left: 8px;
+            font-size: 30px;
+            width: calc(100% - 50px);
+            flex-grow: 0;
+            flex-shrink: 0;
+          }
+        }
+
+        > .sheets {
+          overflow: auto;
+          @include fill($width: 100%, $height: calc(100% - 51px));
+          > .sheet{
+            margin: 4px 8px;
+            > .name {
+              width: 100%;
+              align-items: center;
+              > * {
+                flex-grow: 0;
+                flex-shrink: 0;
+                cursor: pointer;
+              }
+              &:hover{
+                > .remove-icon{
+                  visibility: visible;
+                }
+              }
+              > .txt{
+                width: calc(100% - 15px);
+                &:hover{
+                  color: $color2;
+                }
+              }
+              > .remove-icon{
+                visibility: hidden;
+                @include fill(15px, 15px);
+                background: url("/resource/image/close.png") no-repeat;
+                background-size: contain;
+                &:hover{
+                  background: url("/resource/image/close-selected.png") no-repeat;
+                  background-size: contain;
+                }
+              }
+            }
+            > .controls {
+              > .transforms {
+                justify-content: space-between;
+                > * {
+                  > .title {
+                    text-align: center;
+                  }
+                  > .dim {
+                    justify-content: space-between;
+                    input {
+                      width: 35px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    > .toggle-sheets-menu-btn{
+      top: 0;
+      right: 0;
+      position: absolute;
+      z-index: 2;
+      background: $background1 url("/resource/image/multi-sheet.png") no-repeat center;
+      background-size: 30px;
+      @include fill(50px, 50px);
+      &:hover{
+        background: $backgroundSelected url("/resource/image/multi-sheet-selected.png") no-repeat center;
+        background-size: 30px;
+      }
+      &:active{
+        background: $background1 url("/resource/image/multi-sheet.png") no-repeat center;
+        background-size: 30px;
+      }
+    }
+  }
+}

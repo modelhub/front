@@ -17,8 +17,8 @@
         <div class="mh-def breadcrumbs">
             <mh-breadcrumbs entity-type="document" entity-id="{{documentId}}" ng-cloak></mh-breadcrumbs>
         </div>
-        <div class="mh-def versions-loading-error" ng-show="versionsLoadingError">
-            <div>{{txt('loadingError', versionsLoadingError)}}</div>
+        <div class="mh-def versions-loading-error" ng-if="versionsLoadingError">
+            <div>{{::txt('loadingError', versionsLoadingError)}}</div>
         </div>
         <div class="mh-def mh-row versions" ng-show="versions && !versionsLoadingError">
             <mh-create-form ng-if="!versions[0].fileType.match('^(image|video|audio)/').length" file-input-accept=".{{::versions[0].fileExtension}}" new-type="documentVersion" parent-id="{{::documentId}}" ng-show="selectedControl"></mh-create-form>

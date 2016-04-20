@@ -31,7 +31,7 @@ define('rootLayout/rootLayout', [
 
                         var handleLocationChange = function(){
                             var pathParts = $location.path().split('/');
-                            if(pathParts[1] === 'projectSpace'){
+                            if(pathParts[1] === 'projectSpaceViewer'){
                                 var projectId = pathParts[2];
                                 if($scope.projectSpaces[projectId]){
                                     $scope.showProjectSpace = projectId;

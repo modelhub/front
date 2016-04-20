@@ -38,7 +38,7 @@ mh-root-layout {
           @include fill();
         }
 
-        > mh-project-space {
+        > mh-project-space-viewer {
           position: absolute;
           z-index: 1;
           top: 0;

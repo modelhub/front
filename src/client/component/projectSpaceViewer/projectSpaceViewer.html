@@ -1,0 +1,53 @@
+<div class="mh-def mh-row mh-fill root">
+    <mh-viewer parent-scope-id="{{$id}}" viewer-type="plain" class="mh-def mh-fill" ng-cloak></mh-viewer>
+    <div class="mh-def sheets-menu" ng-show="showSheetsMenu">
+        <div class="mh-def sheets-menu-root">
+            <div class="mh-def mh-row header section">
+                <div class="mh-def mh-ellip title">{{::txt('sheets')}}</div>
+            </div>
+            <div class="mh-def sheets">
+                <div class="mh-def sheet" ng-repeat="sheet in sheets | orderBy: 'name'">
+                    <div class="mh-def mh-row name" ng-click="::fitToView(sheet)">
+                        <div class="mh-def mh-ellip txt" title="{{::sheet.name}}">
+                            {{::sheet.name}}
+                        </div>
+                        <div class="mh-def remove-icon" ng-click="::$event.stopPropagation(); removeSheet(sheet)"></div>
+                    </div>
+                    <mh-loader class="mh-def bar-spinner" ng-if="!sheet.propertyDbLoaded || !sheet.geometryLoaded"></mh-loader>
+                    <div class="mh-def mh-fill controls" ng-if="sheet.propertyDbLoaded && sheet.geometryLoaded">
+                        <div class="mh-def mh-fill mh-row transforms">
+                            <div class="mh-def scale">
+                                <div class="mh-def title">{{::txt('scale')}}</div>
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.transform.scale">
+                                    <div class="mh-def label">
+                                        {{::txt(dim)}}:
+                                    </div>
+                                    <input type="number" ng-model="sheet.transform.scale[dim]" ng-change="::applyTransforms(sheet)"/>
+                                </div>
+                            </div>
+                            <div class="mh-def rotation-q">
+                                <div class="mh-def title">{{::txt('rotate')}}</div>
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.transform.rotate">
+                                    <div class="mh-def label">
+                                        {{::txt(dim)}}:
+                                    </div>
+                                    <input type="number" ng-model="sheet.transform.rotate[dim]" ng-change="::applyTransforms(sheet)"/>
+                                </div>
+                            </div>
+                            <div class="mh-def translation">
+                                <div class="mh-def title">{{::txt('translate')}}</div>
+                                <div class="mh-def mh-row dim" ng-repeat="(dim, _) in sheet.transform.translate">
+                                    <div class="mh-def label">
+                                        {{::txt(dim)}}:
+                                    </div>
+                                    <input type="number" ng-model="sheet.transform.translate[dim]" ng-change="::applyTransforms(sheet)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toggle-sheets-menu-btn mh-btn" ng-click="toggleSheetsMenuBtnClick()"></div>
+</div>

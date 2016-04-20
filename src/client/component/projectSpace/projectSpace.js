@@ -1,11 +1,9 @@
 define('projectSpace/projectSpace', [
-    'ng',
     'styler',
     'text!projectSpace/projectSpace.css',
     'text!projectSpace/projectSpace.html',
     'text!projectSpace/projectSpace.txt.json'
 ], function(
-    ng,
     styler,
     style,
     tpl,
@@ -21,153 +19,123 @@ define('projectSpace/projectSpace', [
                     restrict: 'E',
                     template: tpl,
                     scope: {
-                        projectId: '@'
+                        projectSpaceId: '@'
                     },
-                    controller: ['$rootScope', '$scope', '$window', 'api', 'EVENT', 'i18n', 'sheetExtender', function($rootScope, $scope, $window, api, EVENT, i18n, sheetExtender){
+                    controller: ['$element', '$location', '$rootScope', '$scope', '$window', 'api', 'currentUser', 'EVENT', 'i18n', function($element, $location, $rootScope, $scope, $window, api, currentUser, EVENT, i18n){
                         i18n($scope, txt);
-                        var loadedSheets = {},
-                            viewer = null,
-                            projectId = $scope.projectId,
-                            broadcastReadyEvent = function(){
-                                if($scope.project && viewer) {
-                                    $rootScope.$broadcast(EVENT.PROJECT_SPACE_CREATED, ng.copy($scope.project));
-                                }
-                            };
 
-                        var sheets = $scope.sheets = [];
-                        $scope.showSheetsMenu = true;
-                        $scope.toggleSheetsMenuBtnClick = function(){
-                            if(viewer) {
-                                $scope.showSheetsMenu = !$scope.showSheetsMenu;
-                                $window.setTimeout(viewer.resize, 0);
+                        var scrollEl = $element[0].getElementsByClassName('root')[0];
+
+                        $scope.my = currentUser();
+
+                        api.v1.treeNode.get([$scope.projectSpaceId]).then(function(nodes){
+                            $scope.projectSpace = nodes[0]
+                            $rootScope.$broadcast(EVENT.GET_PROJECT_SPACE, {projectId: $scope.projectSpace.project, callback: function(){
+                                $scope.projectSpaceExists = true;
+                            }});
+                        });
+
+                        $scope.newVersionBtnClick = function(){
+                            if ($scope.selectedControl === 'newVersion') {
+                                $rootScope.$broadcast(EVENT.HIDE_CREATE_FORM);
+                                $scope.selectedControl = '';
+                            } else {
+                                $rootScope.$broadcast(EVENT.SHOW_CREATE_FORM);
+                                $scope.selectedControl = 'newVersion';
                             }
                         };
 
-                        $scope.$on(EVENT.VIEWER_READY, function(event, data){
-                            if(data.scopeId === $scope.$id){
-                                viewer = data.viewer;
-                                viewer.addEventListener('svfLoaded', function(event){
-                                    var sheetId = event.svf.basePath.split('/')[5];
-                                    if(!sheetId){
-                                        throw 'couldnt find sheetId from svf basePath property';
-                                    }
-                                    for(var i = 0, l = sheets.length; i < l; i++){
-                                        if(sheets[i].id === sheetId){
-                                            sheets[i].svf = event.svf;
-                                            sheets[i].model = event.model;
-                                            return;
-                                        }
-                                    }
-                                });
-                                viewer.addEventListener('geometryLoaded', function(event){
-                                    for(var i = 0, l = sheets.length; i < l; i++){
-                                        if(sheets[i].model === event.model){
-                                            sheets[i].geometryLoaded = true;
-                                            if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
-                                                $scope.$evalAsync();
-                                            }
-                                            return;
-                                        }
-                                    }
-                                });
-                                viewer.addEventListener('propertyDbLoaded', function(event){
-                                    for(var i = 0, l = sheets.length; i < l; i++){
-                                        if(sheets[i].model === event.model){
-                                            sheets[i].propertyDbLoaded = true;
-                                            if(sheets[i].geometryLoaded && sheets[i].propertyDbLoaded){
-                                                $scope.$evalAsync();
-                                            }
-                                            return;
-                                        }
-                                    }
-                                });
-                                $scope.$on(EVENT.LOAD_SHEET_IN_PROJECT_SPACE, function(event, sheet){
-                                    if(sheet.project === projectId && !loadedSheets[sheet.id]){
-                                        var sheetCopy = ng.copy(sheet);
-                                        loadedSheets[sheet.id] = sheetCopy;
-                                        sheetCopy.svf = sheetCopy.model = null;
-                                        sheetCopy.geometryLoaded = sheetCopy.propertyDbLoaded = false;
-                                        sheetExtender(sheetCopy);
-                                        sheets.push(sheetCopy);
-                                        viewer.loadSheet(sheet);
-                                    }
-                                });
-                                broadcastReadyEvent();
+                        $scope.$on(EVENT.CREATE_FORM_CANCEL, function(){
+                            if ($scope.newType === 'projectSpaceVersion') {
+                                $scope.newVersionBtnClick();
+                            } else {
+                                $scope.newVersionBtnClick();
                             }
                         });
 
-                        $scope.$on(EVENT.GET_PROJECT_SPACE, function(event, data){
-                            if(data.projectId === projectId){
-                                var sheetTransforms = [];
-                                for(var sheetId in loadedSheets){
-                                    if(loadedSheets.hasOwnProperty(sheetId)){
-                                        sheetTransforms.push({
-                                            sheet: sheetId,
-                                            transform: {
-                                                scale: {
-                                                    x: loadedSheets[sheetId].transform.scale.x,
-                                                    y: loadedSheets[sheetId].transform.scale.y,
-                                                    z: loadedSheets[sheetId].transform.scale.z
-                                                },
-                                                rotate: {
-                                                    w: loadedSheets[sheetId].transform.rotate.w,
-                                                    x: loadedSheets[sheetId].transform.rotate.x,
-                                                    y: loadedSheets[sheetId].transform.rotate.y,
-                                                    z: loadedSheets[sheetId].transform.rotate.z
-                                                },
-                                                translate: {
-                                                    x: loadedSheets[sheetId].transform.translate.x,
-                                                    y: loadedSheets[sheetId].transform.translate.y,
-                                                    z: loadedSheets[sheetId].transform.translate.z
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                                //will probably need to add more info here, world units etc.
-                                data.callback({sheetTransforms: sheetTransforms, camera: {/*TODO*/}});
-                            }
+                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(){
+                            $scope.newVersionBtnClick();
                         });
 
-                        $scope.$on(EVENT.GET_PROJECT_SPACE_THUMBNAIL, function(event, data){
-                            if(data.projectId === projectId){
-                                viewer.getScreenShot(data.size, data.size, data.callback);
-                            }
-                        });
-
-                        api.v1.project.get([projectId]).then(function(projects){
-                            $scope.project = projects[0];
-                            broadcastReadyEvent();
-                        });
-
-                        $scope.fitToView = function(sheet){
-                            if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
-                                viewer.fitToView(false, sheet.getBoundingBox());
-                            }
-                        };
-
-                        $scope.applyTransforms = function(sheet){
-                            if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
-                                sheet.applyTransforms();
-                                viewer.sceneUpdated();
-                            }
-                        };
-
-                        $scope.removeSheet = function(sheet){
-                            if(sheet.propertyDbLoaded && sheet.geometryLoaded) {
-                                viewer.unloadSheet(sheet);
-                                delete loadedSheets[sheet.id];
-                                for(var i = 0, l = sheets.length; i < l; i++){
-                                    if(sheets[i] == sheet){
-                                        sheets.splice(i, 1);
-                                        if(sheets.length === 0){
-                                            viewer.sceneUpdated();
-                                        }
-                                        return;
-                                    }
+                        $scope.$on('$destroy', function(){
+                            for (var timeout in timeouts) {
+                                if (timeouts.hasOwnProperty(timeout)) {
+                                    $window.clearTimeout(timeouts[timeout]);
                                 }
                             }
+                        });
+
+                        var loadNextVersionBatch,
+                            offset = 0,
+                            limit = 20,
+                            totalResults = null,
+                            loadingNextVersionBatch = false;
+                        $scope.loadingVersions = true;
+                        loadNextVersionBatch = function(){
+                            if(!loadingNextVersionBatch && !$scope.versions || totalResults === null || offset < totalResults) {
+                                loadingNextVersionBatch = true;
+                                $scope.loadingVersions = true;
+                                api.v1.projectSpaceVersion.getForProjectSpace($scope.projectSpaceId, offset, limit, 'versionDesc').then(function (result) {
+                                    totalResults = result.totalResults;
+                                    if (!$scope.versions){
+                                        $scope.versions = result.results;
+                                    } else {
+                                        $scope.versions.push.apply($scope.versions, result.results);
+                                    }
+                                    offset = $scope.versions.length;
+                                    loadingNextVersionBatch = false;
+                                    if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                        loadNextVersionBatch();
+                                    } else {
+                                        $scope.loadingVersions = false;
+                                    }
+                                }, function (errorId) {
+                                    $scope.versionsLoadingError = errorId;
+                                    $scope.loadingVersions = false;
+                                    loadingNextVersionBatch = false;
+                                });
+                            }
                         };
+
+                        var lastScrollTop = 0;
+                        scrollEl.addEventListener('scroll', function(){
+                            if (lastScrollTop < scrollEl.scrollTop && scrollEl.scrollHeight - (scrollEl.scrollTop + scrollEl.clientHeight) < 10){
+                                loadNextVersionBatch();
+                            }
+                            lastScrollTop = scrollEl.scrollTop;
+                        });
+
+                        $scope.$on(EVENT.HIDE_MAIN_MENU, function(){
+                            $window.setTimeout(function(){
+                                if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                    loadNextVersionBatch();
+                                }
+                            }, 100);
+                        });
+
+                        function windowResizeHandler(){
+                            if (offset < totalResults && scrollEl.scrollHeight <= scrollEl.clientHeight + 150) {
+                                loadNextVersionBatch();
+                            }
+                        }
+                        $window.addEventListener('resize', windowResizeHandler);
+                        $scope.$on('$destroy', function(){
+                            $window.removeEventListener('resize', windowResizeHandler);
+                        });
+
+                        $scope.versionClick = function(version) {
+                            if (version.sheetTransformCount === 1) {
+                                $location.path('/sheet/' + version.firstSheet.id);
+                            } else {
+                                $location.path('/documentVersion/' + version.id);
+                            }
+                        };
+
+                        $scope.sheetsClick = function(version) {
+                            $location.path('/documentVersion/' + version.id);
+                        };
+
+                        loadNextVersionBatch();
                     }]
                 };
             });

@@ -1,117 +1,99 @@
 @import "../../global";
 
 mh-project-space {
-  > .root {
-
-    > mh-viewer{
-      flex-grow: 1;
-      flex-shrink: 1;
-    }
-
-    > .sheets-menu{
-      @include fill($width: 200px);
-      max-height: 100%;
-      max-width: 100%;
-      flex-shrink: 0;
-      flex-grow: 0;
-      background: $background1;
-
-      > .sheets-menu-root {
-        @include fill($width: calc(100% - 1px));
-        border-left: $border1;
-
-        * {
-          flex-shrink: 0;
+  * {
+    flex-shrink: 0;
+  }
+  > div.root {
+    @include IEScrollbars();
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    > div.content{
+      width: 100%;
+      min-height: 100%;
+      > * {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+      > .header {
+        height: 50px;
+        border-bottom: 1px solid $background1;
+        align-items: flex-end;
+        > .icon {
+          @include fill($width: 30px, $height: 30px);
+          margin-right: 10px;
+          margin-bottom: 10px;
+          background: url("/resource/image/multi-sheet.png") center no-repeat;
+          background-size: 30px 30px;
         }
-
-        > .section {
-          border-bottom: $border1;
-        }
-
-        > .header {
-          justify-content: flex-start;
-          align-items: center;
-          @include fill($height: 50px);
-          > .title {
-            padding-left: 8px;
-            font-size: 30px;
-            width: calc(100% - 50px);
-            flex-grow: 0;
-            flex-shrink: 0;
-          }
-        }
-
-        > .sheets {
-          overflow: auto;
-          @include fill($width: 100%, $height: calc(100% - 51px));
-          > .sheet{
-            margin: 4px 8px;
+        > .controls{
+          > .control {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            color: $color1;
+            margin-right: 16px;
             > .name {
-              width: 100%;
-              align-items: center;
-              > * {
-                flex-grow: 0;
-                flex-shrink: 0;
-                cursor: pointer;
-              }
-              &:hover{
-                > .remove-icon{
-                  visibility: visible;
-                }
-              }
-              > .txt{
-                width: calc(100% - 15px);
-                &:hover{
-                  color: $color2;
-                }
-              }
-              > .remove-icon{
-                visibility: hidden;
-                @include fill(15px, 15px);
-                background: url("/resource/image/close.png") no-repeat;
-                background-size: contain;
-                &:hover{
-                  background: url("/resource/image/close-selected.png") no-repeat;
-                  background-size: contain;
-                }
+              margin-bottom: 5px;
+            }
+            &:hover, &.selected {
+              color: $color2;
+            }
+            &.selected {
+              .highlight {
+                background: $highlight1;
               }
             }
-            > .controls {
-              > .transforms {
-                justify-content: space-between;
-                > * {
-                  > .title {
-                    text-align: center;
-                  }
-                  > .dim {
-                    justify-content: space-between;
-                    input {
-                      width: 35px;
-                    }
-                  }
-                }
-              }
+            .highlight {
+              @include fill($height: 5px);
             }
           }
         }
       }
-    }
-
-    > .toggle-sheets-menu-btn{
-      top: 0;
-      right: 0;
-      position: absolute;
-      z-index: 2;
-      background: $background1 url("/resource/image/multi-sheet.png") no-repeat center;
-      background-size: 30px;
-      @include fill(50px, 50px);
-      &:hover{
-        background: $backgroundSelected url("/resource/image/multi-sheet-selected.png") no-repeat center;
-        background-size: 30px;
+      > mh-loader{
+        flex-grow: 1;
       }
-      &:active{
-        background: $background1 url("/resource/image/multi-sheet.png") no-repeat center;
-        background-size: 30px;
+      > .versions-loading-error{
+        flex-grow: 1;
+        > div{
+          margin: auto;
+        }
+      }
+      > .versions{
+        margin: 0px 8px 8px 8px;
+        flex-wrap: wrap;
+        > * {
+          @include fill($width: $thumbnailWidth, $height: 285px);
+          background: $background1;
+          margin: 8px;
+        }
+        > .version{
+          cursor: pointer;
+          > .thumbnail{
+            background: url("/resource/image/multi-sheet.png") center no-repeat;
+            @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+            border-bottom: $border1;
+            img{
+              @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
+              background-color: $background1;
+            }
+          }
+          > .info{
+            flex-grow: 1;
+            > * {
+              margin-left: 8px;
+              margin-right: 8px;
+              margin-top: 8px;
+            }
+            > .name, > .sheet-count {
+              color: $color2;
+            }
+            > .sheet-count:hover {
+              color: $highlight1;
+            }
+          }
+        }
       }
     }
   }

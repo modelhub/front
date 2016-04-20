@@ -60,7 +60,7 @@ define('mainMenu/mainMenu', [
                         };
 
                         $scope.projectSpaceBtnClick = function(projectSpace){
-                            $location.path('/projectSpace/'+projectSpace.id);
+                            $location.path('/projectSpaceViewer/'+projectSpace.id);
                         };
 
                         $scope.$on('$locationChangeSuccess', function(){

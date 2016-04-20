@@ -48,26 +48,35 @@ define('breadcrumbs/breadcrumbs', [
                                     }, errorHandler);
                                 }, errorHandler);
                             },
-                            versionGetter = function(versionId){
-                                api.v1.documentVersion.get([versionId]).then(function(entities){
+                            versionGetter = function(versionId, type){
+                                var fn = api.v1.documentVersion.get;
+                                if(type === 'projectSpaceVersion') fn = api.v1.projectSpaceVersion.get;
+                                fn([versionId]).then(function(entities){
                                     $scope.versionEntity = entities[0];
-                                    nodeGetters(entities[0].document);
+                                    if(type === 'documentVersion'){
+                                        nodeGetters(entities[0].document);
+                                    }
+                                    if(type === 'projectSpaceVersion'){
+                                        nodeGetters(entities[0].projectSpace);
+                                    }
                                 }, errorHandler);
                             },
                             sheetGetter = function(sheetId){
                                 api.v1.sheet.get([$scope.entityId]).then(function(sheets){
                                     $scope.sheetEntity = sheets[0];
-                                    versionGetter(sheets[0].documentVersion);
+                                    versionGetter(sheets[0].documentVersion, 'documentVersion');
                                 }, errorHandler);
                             };
 
                         switch ($scope.entityType) {
                             case 'folder':
                             case 'document':
+                            case 'projectSpace':
                                 nodeGetters($scope.entityId);
                                 break;
                             case 'documentVersion':
-                                versionGetter($scope.entityId);
+                            case 'projectSpaceVersion':
+                                versionGetter($scope.entityId, $scope.entityType);
                                 break;
                             case 'sheet':
                                 sheetGetter($scope.entityId);

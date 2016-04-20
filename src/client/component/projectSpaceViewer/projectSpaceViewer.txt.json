@@ -1,0 +1,44 @@
+{
+  "langs": ["en"],
+
+  "sheets": {
+    "en": "Sheets"
+  },
+
+  "scale": {
+    "en": "S"
+  },
+
+  "rotate": {
+    "en": "R"
+  },
+
+  "translate": {
+    "en": "T"
+  },
+
+  "w": {
+    "en": "W"
+  },
+
+  "x": {
+    "en": "X"
+  },
+
+  "y": {
+    "en": "Y"
+  },
+
+  "z": {
+    "en": "Z"
+  },
+
+  "apply": {
+    "en": "Apply"
+  },
+
+  "remove": {
+    "en": "Remove"
+  }
+
+}

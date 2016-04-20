@@ -140,7 +140,7 @@ define('folder/folder', [
                                 var successCallback = function (result) {
                                     limit = defaultLimit;
                                     totalResults = result.totalResults;
-                                    if(result && result.results) {
+                                    if(result && result.results && filter === 'document') {
                                         for (var i = 0; i < result.results.length; i++) {
                                             runStatusCheck(result.results[i]);
                                         }
@@ -235,7 +235,7 @@ define('folder/folder', [
                         };
 
                         $scope.childVersionsClick = function(child){
-                            $location.path('/document/'+child.id);
+                            $location.path('/'+child.nodeType+'/'+child.id);
                         };
 
                         loadNextTreeNodeBatch();

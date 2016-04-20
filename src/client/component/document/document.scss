@@ -59,7 +59,7 @@ mh-document {
       > mh-loader{
         flex-grow: 1;
       }
-      > .children-loading-error{
+      > .versions-loading-error{
         flex-grow: 1;
         > div{
           margin: auto;
@@ -76,6 +76,7 @@ mh-document {
         > .version{
           cursor: pointer;
           > .thumbnail{
+            background: url("/resource/image/document.png") center no-repeat;
             @include fill($width: $thumbnailWidth, $height: $thumbnailWidth);
             border-bottom: $border1;
             img{
@@ -123,9 +124,6 @@ mh-document {
             > .sheet-count:hover {
               color: $highlight1;
             }
-          }
-          > .thumbnail{
-            background: url("/resource/image/document.png") center no-repeat;
           }
         }
       }

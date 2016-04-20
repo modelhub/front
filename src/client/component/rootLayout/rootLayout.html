@@ -3,7 +3,7 @@
         <mh-main-menu class="mh-def" ng-show="showMainMenu" ng-cloak></mh-main-menu>
         <div class="mh-def mh-fill">
             <ng-view ng-cloak></ng-view>
-            <mh-project-space project-id="{{projectId}}" ng-class="{show: showProjectSpace === projectId}" class ="mh-fill" ng-repeat="(projectId, _) in projectSpaces" ng-cloak></mh-project-space>
+            <mh-project-space-viewer project-id="{{projectId}}" ng-class="{show: showProjectSpace === projectId}" class ="mh-fill" ng-repeat="(projectId, _) in projectSpaces" ng-cloak></mh-project-space-viewer>
         </div>
     </div>
     <div class="show-main-menu-btn mh-btn" ng-show="!showMainMenu" ng-click="showMainMenuBtnClick()"></div>

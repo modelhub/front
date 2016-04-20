@@ -36,14 +36,20 @@ require([
             .when('/document/:documentId', {
                 template: '<mh-document-route class="mh-def mh-fill" ng-cloak></mh-document-route>'
             })
+            .when('/projectSpace/:projectSpaceId', {
+                template: '<mh-project-space-route class="mh-def mh-fill" ng-cloak></mh-project-space-route>'
+            })
             .when('/documentVersion/:documentVersionId', {
                 template: '<mh-document-version-route class="mh-def mh-fill" ng-cloak></mh-document-version-route>'
+            })
+            .when('/projectSpaceVersion/:projectSpaceVersionId', {
+                template: '<mh-project-space-version-route class="mh-def mh-fill" ng-cloak></mh-project-space-version-route>'
             })
             .when('/sheet/:sheetId', {
                 template: '<mh-sheet-route class="mh-def mh-fill" ng-cloak></mh-sheet-route>'
             })
-            .when('/projectSpace/:projectId', {
-                template: '<!--rootlayout will show the projectSpace-->'
+            .when('/projectSpaceViewer/:projectId', {
+                template: '<!--rootlayout will show the projectSpaceViewer-->'
             })
             .otherwise({
                 redirectTo: '/projects'

@@ -1,44 +1,32 @@
-{
+﻿{
   "langs": ["en"],
 
+  "loadingError": {
+    "en": "An error occured: {0}"
+  },
+
+  "newVersion": {
+    "en": "New Version"
+  },
+
+  "image": {
+    "en": "image"
+  },
+
+  "video": {
+    "en": "video"
+  },
+
+  "audio": {
+    "en": "audio"
+  },
+
+  "v": {
+    "en": "V{0}"
+  },
+
   "sheets": {
-    "en": "Sheets"
-  },
-
-  "scale": {
-    "en": "S"
-  },
-
-  "rotate": {
-    "en": "R"
-  },
-
-  "translate": {
-    "en": "T"
-  },
-
-  "w": {
-    "en": "W"
-  },
-
-  "x": {
-    "en": "X"
-  },
-
-  "y": {
-    "en": "Y"
-  },
-
-  "z": {
-    "en": "Z"
-  },
-
-  "apply": {
-    "en": "Apply"
-  },
-
-  "remove": {
-    "en": "Remove"
+    "en": "Sheets: {0}"
   }
 
 }
