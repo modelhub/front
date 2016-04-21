@@ -55,8 +55,9 @@ define('projectSpace/projectSpace', [
                             }
                         });
 
-                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(){
+                        $scope.$on(EVENT.CREATE_FORM_SUCCESS, function(event, projectSpaceVersion){
                             $scope.newVersionBtnClick();
+                            $location.path('/projectSpaceVersion/'+projectSpaceVersion.id);
                         });
 
                         var loadNextVersionBatch,
