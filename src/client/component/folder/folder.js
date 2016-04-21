@@ -88,6 +88,7 @@ define('folder/folder', [
                                 $scope.newDocumentBtnClick();
                             } else if ($scope.newType === 'projectSpace') {
                                 $scope.newProjectSpaceBtnClick();
+                                $location.path('/projectSpace/'+node.id);
                             }
                         });
 
