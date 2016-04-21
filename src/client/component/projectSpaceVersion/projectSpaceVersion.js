@@ -31,7 +31,7 @@ define('projectSpaceVersion/projectSpaceVersion', [
                         api.v1.projectSpaceVersion.get([$scope.projectSpaceVersionId]).then(function(projectSpaceVersions){
                             projectSpaceVersion = projectSpaceVersions[0];
                             api.v1.sheetTransform.getForProjectSpaceVersion($scope.projectSpaceVersionId, 0, 100, 'nameAsc').then(function(sheetTransforms){
-                                console.log(sheetTransforms);
+                                $scope.sheetTransforms = sheetTransforms;
                             }, function(errorId){
                                 $scope.loadingError = errorId;
                             });

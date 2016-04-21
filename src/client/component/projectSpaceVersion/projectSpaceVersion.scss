@@ -22,9 +22,49 @@ mh-project-space-version {
         flex-shrink: 1;
       }
     }
-    > mh-viewer{
-      flex-grow: 1;
+    > .clash-viewer {
       @include fill($height: calc(100% - 51px));
+
+      > mh-viewer {
+        flex-grow: 1;
+        @include fill($width: calc(100% - 200px));
+      }
+
+      > .clash-menu {
+        @include fill($width: 200px);
+        max-height: 100%;
+        max-width: 100%;
+        flex-shrink: 0;
+        flex-grow: 0;
+        background: $background1;
+
+        > .clash-menu-root {
+          @include fill($width: calc(100% - 1px));
+          border-left: $border1;
+
+          * {
+            flex-shrink: 0;
+          }
+
+          > .section {
+            border-bottom: $border1;
+          }
+
+          > .header {
+            justify-content: flex-start;
+            align-items: center;
+            @include fill($height: 50px);
+          }
+
+          > .clashes {
+            overflow: auto;
+            @include fill($width: 100%, $height: calc(100% - 51px));
+            > .clash {
+              margin: 4px 8px;
+            }
+          }
+        }
+      }
     }
   }
 }
