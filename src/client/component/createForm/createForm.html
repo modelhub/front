@@ -8,7 +8,7 @@
     </div>
         <input type="file" class="multi-files file-input" accept="{{fileInputAccept}}" onchange="angular.element(this).scope().newFileInputChange()" multiple/>
         <input type="file" class="single-file file-input" accept="{{fileInputAccept}}" onchange="angular.element(this).scope().newFileInputChange()"/>
-    <input type="text" ng-attr-placeholder="{{!multiFiles && txt('name') || txt('multiFiles')}}" ng-model="name" ng-disabled="multiFiles" ng-show="newType !== 'documentVersion' || newType !== 'projectSpaceVersion'" onkeypress="angular.element(this).scope().nameInputKeyPress(event)"/>
+    <input type="text" ng-attr-placeholder="{{!multiFiles && txt('name') || txt('multiFiles')}}" ng-model="name" ng-disabled="multiFiles" ng-show="newType !== 'documentVersion' && newType !== 'projectSpaceVersion'" onkeypress="angular.element(this).scope().nameInputKeyPress(event)"/>
     <div class="create" ng-click="createBtnClick()" ng-if="newType">{{txt(action())}}</div>
     <div class="cancel" ng-click="cancelBtnClick()">{{::txt('cancel')}}</div>
 </div>
