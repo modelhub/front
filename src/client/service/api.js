@@ -388,6 +388,18 @@ define('service/api', [
 
                             },
 
+                            sheetTransform: {
+
+                                get: function (ids) {
+                                    return doJsonReq('/api/v1/sheetTransform/get', {ids: ids});
+                                },
+
+                                getForProjectSpaceVersion: function (projectSpaceVersion, offset, limit, sortBy) {
+                                    return doJsonReq('/api/v1/sheetTransform/getForProjectSpaceVersion', {projectSpaceVersion: projectSpaceVersion, offset: offset, limit: limit, sortBy: sortBy});
+                                }
+
+                            },
+
                             helper: {
 
                                 getChildrenDocumentsWithLatestVersionAndFirstSheetInfo: function (folder, offset, limit, sortBy) {

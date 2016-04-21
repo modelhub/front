@@ -1,18 +1,7 @@
 <div class="mh-def mh-fill root">
-    <div class="mh-def content">
-        <div class="mh-def mh-row header">
-            <div class="icon">
-            </div>
-            <div class="mh-def mh-row controls" ng-show="sheetTransforms">
-            </div>
-        </div>
-        <div class="mh-def breadcrumbs">
-            <mh-breadcrumbs entity-type="projectSpaceVersion" entity-id="{{projectSpaceVersionId}}" ng-cloak></mh-breadcrumbs>
-        </div>
-        <div class="mh-def sheets-loading-error" ng-if="sheetsLoadingError">
-            <div>{{::txt('loadingError', sheetsLoadingError)}}</div>
-        </div>
-        <!--TODO-->
-        <mh-loader class="mh-def bar-spinner" ng-show="loadingSheets"></mh-loader>
+    <div class="mh-def mh-row header">
+        <div class="mh-def icon"></div>
+        <mh-breadcrumbs class="mh-def mh-fill" entity-type="projectSpaceVersion" entity-id="{{::projectSpaceVersionId}}" ng-cloak></mh-breadcrumbs>
     </div>
+    <mh-viewer parent-scope-id="{{$id}}" viewer-type="plain" class="mh-def" ng-cloak></mh-viewer>
 </div>
