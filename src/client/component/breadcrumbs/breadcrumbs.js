@@ -90,7 +90,11 @@ define('breadcrumbs/breadcrumbs', [
                         };
 
                         $scope.versionEntityClick = function(){
-                            $location.path('/documentVersion/'+$scope.versionEntity.id);
+                            if($scope.entityType === 'projectSpaceVersion'){
+                                $location.path('/projectSpaceVersion/'+$scope.versionEntity.id);
+                            } else if($scope.entityType === 'documentVersion' || $scope.entityType === 'sheet'){
+                                $location.path('/documentVersion/'+$scope.versionEntity.id);
+                            }
                         };
 
                         $scope.sheetEntityClick = function(){
