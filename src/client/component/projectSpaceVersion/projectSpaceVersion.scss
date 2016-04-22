@@ -54,6 +54,9 @@ mh-project-space-version {
             justify-content: flex-start;
             align-items: center;
             @include fill($height: 50px);
+            > .sheet-selectors{
+              justify-content: space-between;
+            }
           }
 
           > .clashes {

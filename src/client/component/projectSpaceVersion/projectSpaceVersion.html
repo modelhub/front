@@ -8,6 +8,10 @@
         <div class="mh-def clash-menu">
             <div class="mh-def clash-menu-root">
                 <div class="mh-def header section">
+                    <div class="mh-def mh-fill sheet-selectors" ng-show="!loadingSheetTransforms && viewer">
+                        <select ng-options="sheetTransform as sheetTransform.name for sheetTransform in sheetTransformList(0)" ng-model="selections[0]" ng-change="sheetSelectionChange()"></select>
+                        <select ng-options="sheetTransform as sheetTransform.name for sheetTransform in sheetTransformList(1)" ng-model="selections[1]" ng-change="sheetSelectionChange()"></select>
+                    </div>
                 </div>
                 <div class="mh-def clashes">
                     <div class="mh-def clash" ng-repeat="clash in clashes | orderBy: 'distance'">
