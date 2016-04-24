@@ -119,6 +119,18 @@ define('projectSpaceVersion/projectSpaceVersion', [
                         };
 
                         var overridenFragIds = {};
+                        function clearAnyExistingColorOverrides(){
+                            for (var prop in overridenFragIds) {
+                                if(overridenFragIds.hasOwnProperty(prop)) {
+                                    var mesh = overridenFragIds[prop];
+                                    if (mesh) {
+                                        viewer.removeMeshFromOverlayScene('mh-green', mesh);
+                                        viewer.removeMeshFromOverlayScene('mh-red', mesh);
+                                    }
+                                }
+                            }
+                            overridenFragIds = {};
+                        }
                         function isolate(sheetIdx, objId){
                             loadedSheets[sheetIdx].model.visibilityManager.isolate(objId);
                         }
@@ -143,19 +155,9 @@ define('projectSpaceVersion/projectSpaceVersion', [
                         }
 
                         $scope.clashClick = function(clash){
-
                             // remove existing overriden color on frags
-                            for (var prop in overridenFragIds) {
-                                if(overridenFragIds.hasOwnProperty(prop)) {
-                                    var mesh = overridenFragIds[prop];
-                                    if (mesh) {
-                                        viewer.removeMeshFromOverlayScene('mh-green', mesh);
-                                        viewer.removeMeshFromOverlayScene('mh-red', mesh);
-                                    }
-                                }
-                            }
-                            overridenFragIds = {};
-                            
+                            clearAnyExistingColorOverrides();
+
                             if(clash === highlightedClash){
                                 highlightedClash = null;
                                 isolate(0);
@@ -176,6 +178,7 @@ define('projectSpaceVersion/projectSpaceVersion', [
                         };
 
                         $scope.sheetSelectionChange = function(){
+                            clearAnyExistingColorOverrides();
                             for(var i = 0; i < 2; i++){
                                 if ($scope.selections[i] !== loadedSheets[i]) {
                                     if(loadedSheets[i]) {
@@ -188,6 +191,8 @@ define('projectSpaceVersion/projectSpaceVersion', [
                                         $scope.loadingModel[i] = true;
                                         $scope.viewer.loadSheet({id: loadedSheets[i].sheet, manifest: loadedSheets[i].manifest});
                                     }
+                                } else {
+                                    isolate(i);
                                 }
                             }
                             getClashTest();
