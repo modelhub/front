@@ -39,47 +39,47 @@
 		},
 		{
 			"ImportPath": "github.com/modelhub/core",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/clashtest",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/documentversion",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/helper",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/project",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/projectspaceversion",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/sheet",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/sheettransform",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/treenode",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/user",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/util",
-			"Rev": "4339266f7418ce2a6f3b7980a7dff70de573bcaa"
+			"Rev": "3f83cd432ff2d3325c3e8c4fc38f6df5bf555f48"
 		},
 		{
 			"ImportPath": "github.com/modelhub/rest",
