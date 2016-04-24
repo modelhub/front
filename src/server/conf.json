@@ -12,12 +12,16 @@
     "secret": "Xc900b546fdb941f"
   },
 
+  "caca": {
+    "host": "http://shflinux03:4000"
+  },
+
   "sql": {
     "mySqlConnection": "modelhub-api:M0d-3l-Hu8-@p1@tcp(localhost:3306)/modelhub?parseTime=true&loc=UTC&multiStatements=true"
   },
 
   "coreApi": {
-    "statusCheckTimeout": "4s",
+    "subtaskTimeout": "4s",
     "batchGetTimeOut": "5s",
     "ossBucketPrefix": "modelhub_01",
     "ossBucketPolicy": "temporary"

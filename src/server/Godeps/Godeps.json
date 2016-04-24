@@ -30,52 +30,60 @@
 			"Rev": "b6bcae186ac3099dba8fafce125dc930393f1e5e"
 		},
 		{
+			"ImportPath": "github.com/modelhub/caca",
+			"Rev": "2056c1e4ab503383a0972021f039c6528587e4e6"
+		},
+		{
 			"ImportPath": "github.com/modelhub/conf",
-			"Rev": "9b5bf9115c0cb7178bc6e37772c4ad0acf61d4d3"
+			"Rev": "2eab0cab97b7d009033e6ef0fb66a3c5ca3f6af4"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
+		},
+		{
+			"ImportPath": "github.com/modelhub/core/clashtest",
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/documentversion",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/helper",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/project",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/projectspaceversion",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/sheet",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/sheettransform",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/treenode",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/user",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/core/util",
-			"Rev": "f7b71869bf13ab6ff6bb334d44c0c340ff8eee63"
+			"Rev": "1d694dfd69b69f57a487c7fa34ebe06f76d00d60"
 		},
 		{
 			"ImportPath": "github.com/modelhub/rest",
-			"Rev": "19ec1991dbebcc172f600614bddfaea0d4a25093"
+			"Rev": "df269c028dd6f0cd588a70989884e9a6aea4172e"
 		},
 		{
 			"ImportPath": "github.com/modelhub/session",

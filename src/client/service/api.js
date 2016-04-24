@@ -400,6 +400,14 @@ define('service/api', [
 
                             },
 
+                            clashTest: {
+
+                                getForSheetTransforms: function (leftSheetTransform, rightSheetTransform) {
+                                    return doJsonReq('/api/v1/clashTest/getForSheetTransforms', {leftSheetTransform: leftSheetTransform, rightSheetTransform: rightSheetTransform});
+                                }
+
+                            },
+
                             helper: {
 
                                 getChildrenDocumentsWithLatestVersionAndFirstSheetInfo: function (folder, offset, limit, sortBy) {

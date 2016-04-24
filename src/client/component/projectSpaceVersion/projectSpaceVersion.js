@@ -124,6 +124,12 @@ define('projectSpaceVersion/projectSpaceVersion', [
                             }
                             if($scope.selections[0] && $scope.selections[1]){
                                 //TODO GET SOME CLASH RESULTS!! Ha-a-a-llelujah! Ha-a-a-llelujah! Hallelujah! Hallelujah! Ha-a-lle-e-luja-a-h!
+                                api.v1.clashTest.getForSheetTransforms($scope.selections[0].id, $scope.selections[1].id).then(function(result){
+                                    console.log(result);
+                                }, function(errorId){
+                                    //TODO
+                                    $scope.clashError = errorId
+                                });
                             }
                         };
                     }]
