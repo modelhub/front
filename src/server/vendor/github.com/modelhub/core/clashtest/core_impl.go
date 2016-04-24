@@ -4,7 +4,6 @@ import (
 	"github.com/modelhub/caca"
 	"github.com/robsix/golog"
 	"github.com/robsix/json"
-	"github.com/modelhub/core/util"
 )
 
 func newClashTestStore(getForSheetTransforms getForSheetTransforms, caca caca.CacaClient, log golog.Log) ClashTestStore {
@@ -26,7 +25,8 @@ func (cts *clashTestStore) GetForSheetTransforms(forUser string, leftSheetTransf
 		cts.log.Error("ClashTestStore.GetForSheetTransforms error: forUser: %q leftSheetTransform: %q rightSheetTransform: %q error: %v", forUser, leftSheetTransform, rightSheetTransform, err)
 		return nil, exists, err
 	} else if exists {
-		if js, err := cts.caca.GetClashTest(util.IdToUuidFormat(clashTestId)); err != nil {
+		clashTestId = "65adf44b-f725-45f1-95e8-98885782a86b"
+		if js, err := cts.caca.GetClashTest(clashTestId); err != nil {
 			cts.log.Error("ClashTestStore.GetForSheetTransforms error: forUser: %q leftSheetTransform: %q rightSheetTransform: %q error: %v", forUser, leftSheetTransform, rightSheetTransform, err)
 			return nil, exists, err
 		} else {
