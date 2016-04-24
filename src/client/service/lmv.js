@@ -39,7 +39,7 @@ define('service/lmv', [
                                             return viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
                                         },
                                         unloadSheet: function(sheet){
-                                            viewer.impl.unloadModel(sheet.model);
+                                            return viewer.impl.unloadModel(sheet.model);
                                         },
                                         setLightPreset: function(idx){
                                             return viewer.setLightPreset(idx);
@@ -48,10 +48,25 @@ define('service/lmv', [
                                             viewer.navigation.fitBounds(instant, boundingBox);
                                         },
                                         sceneUpdated: function() {
-                                            viewer.impl.sceneUpdated(true);
+                                            return viewer.impl.sceneUpdated(true);
                                         },
                                         getScreenShot: function(width, height, callback){
-                                            viewer.getScreenShot(width, height, callback);
+                                            return viewer.getScreenShot(width, height, callback);
+                                        },
+                                        getRenderProxy: function(model, fragId){
+                                            return viewer.impl.getRenderProxy(model, fragId);
+                                        },
+                                        createOverlayScene: function(name, color){
+                                            return viewer.impl.createOverlayScene(name, new THREE.MeshBasicMaterial({ color: color }));
+                                        },
+                                        addMeshToOverlayScene: function(overlaySceneName, mesh){
+                                            return viewer.impl.addOverlay(overlaySceneName, mesh);
+                                        },
+                                        removeMeshFromOverlayScene: function(overlaySceneName, mesh){
+                                            return viewer.impl.removeOverlay(overlaySceneName, mesh);
+                                        },
+                                        isolate: function(dbIds){
+                                            viewer.isolate(dbIds);
                                         },
                                         resize: function(){
                                             return viewer.resize();

@@ -30,6 +30,14 @@ mh-project-space-version {
         @include fill($width: calc(100% - 200px));
       }
 
+      > .model-loading {
+        position: absolute;
+        @include fill($width: calc(100% - 200px));
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
       > .clash-menu {
         @include fill($width: 200px);
         max-height: 100%;
@@ -63,7 +71,14 @@ mh-project-space-version {
             overflow: auto;
             @include fill($width: 100%, $height: calc(100% - 51px));
             > .clash {
-              margin: 4px 8px;
+              cursor: pointer;
+              &:hover{
+                background: $backgroundSelected;
+              }
+              border-bottom: $border1;
+              > .info{
+                margin: 4px 8px;
+              }
             }
           }
         }

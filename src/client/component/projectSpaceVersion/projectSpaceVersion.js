@@ -18,17 +18,24 @@ define('projectSpaceVersion/projectSpaceVersion', [
                     scope: {
                         projectSpaceVersionId: '@'
                     },
-                    controller: ['$scope', 'api', 'EVENT', 'sheetExtender', function($scope, api, EVENT, sheetExtender){
+                    controller: ['$scope', '$window', 'api', 'EVENT', 'sheetExtender', function($scope, $window, api, EVENT, sheetExtender){
                         var viewer,
                             projectSpaceVersion,
                             sheetTransforms = [],
-                            loadedSheets = [null, null];
+                            highlightedClash = null,
+                            loadedSheets;
 
+                        $scope.loadedSheets = loadedSheets = [null, null];
+                        $scope.loadingModel = [false, false];
                         $scope.selections = [null, null];
 
                         $scope.$on(EVENT.VIEWER_READY, function(event, data){
                             if(data.scopeId === $scope.$id){
                                 $scope.viewer = viewer = data.viewer;
+
+                                viewer.createOverlayScene('mh-green', 'green');
+                                viewer.createOverlayScene('mh-red', 'red');
+
                                 viewer.addEventListener('svfLoaded', function(event){
                                     var sheetId = event.svf.basePath.split('/')[5];
                                     if(!sheetId){
@@ -47,6 +54,7 @@ define('projectSpaceVersion/projectSpaceVersion', [
                                         if(loadedSheets[i].model === event.model){
                                             loadedSheets[i].geometryLoaded = true;
                                             if(loadedSheets[i].geometryLoaded && loadedSheets[i].propertyDbLoaded){
+                                                $scope.loadingModel[i] = false;
                                                 $scope.$evalAsync();
                                             }
                                             return;
@@ -58,6 +66,7 @@ define('projectSpaceVersion/projectSpaceVersion', [
                                         if(loadedSheets[i].model === event.model){
                                             loadedSheets[i].propertyDbLoaded = true;
                                             if(loadedSheets[i].geometryLoaded && loadedSheets[i].propertyDbLoaded){
+                                                $scope.loadingModel[i] = false;
                                                 $scope.$evalAsync();
                                             }
                                             return;
@@ -109,29 +118,104 @@ define('projectSpaceVersion/projectSpaceVersion', [
                             return list;
                         };
 
+                        var overridenFragIds = {};
+                        function isolate(sheetIdx, objId){
+                            loadedSheets[sheetIdx].model.visibilityManager.isolate(objId);
+                        }
+                        function overrideColor(sheetIdx, objId, overlaySceneName){
+                            var instanceTree = loadedSheets[sheetIdx].model.getData().instanceTree;
+                            var frags = [];
+
+                            instanceTree.enumNodeFragments(objId, function(fragId) {
+                                frags.push(fragId);
+                            });
+
+                            for (var j=0; j<frags.length; j++) {
+                                var mesh = viewer.getRenderProxy(loadedSheets[sheetIdx].model, frags[j]);
+                                var proxy = new THREE.Mesh(mesh.geometry, mesh.material); //TODO get rid of global THREE dependency
+                                proxy.matrix.copy(mesh.matrixWorld);
+                                proxy.matrixAutoUpdate = false;
+                                proxy.matrixWorldNeedsUpdate = true;
+                                proxy.frustumCulled = false;
+                                viewer.addMeshToOverlayScene(overlaySceneName, proxy);
+                                overridenFragIds[frags[j]] = proxy;
+                            }
+                        }
+
+                        $scope.clashClick = function(clash){
+
+                            // remove existing overriden color on frags
+                            for (var prop in overridenFragIds) {
+                                if(overridenFragIds.hasOwnProperty(prop)) {
+                                    var mesh = overridenFragIds[prop];
+                                    if (mesh) {
+                                        viewer.removeMeshFromOverlayScene('mh-green', mesh);
+                                        viewer.removeMeshFromOverlayScene('mh-red', mesh);
+                                    }
+                                }
+                            }
+                            overridenFragIds = {};
+                            
+                            if(clash === highlightedClash){
+                                highlightedClash = null;
+                                isolate(0);
+                                isolate(1);
+                            } else {
+                                highlightedClash = clash;
+                                //isolate
+                                isolate(currentLeftSheetIdx, clash.left);
+                                isolate(currentRightSheetIdx, clash.right);
+                                //fitToView
+                                var bb = loadedSheets[currentLeftSheetIdx].getBoundingBox([clash.left]);
+                                bb.union(loadedSheets[currentRightSheetIdx].getBoundingBox([clash.right]));
+                                viewer.fitToView(true, bb);
+                                //color overrides
+                                overrideColor(currentLeftSheetIdx, clash.left, 'mh-green');
+                                overrideColor(currentRightSheetIdx, clash.right, 'mh-red');
+                            }
+                        };
+
                         $scope.sheetSelectionChange = function(){
                             for(var i = 0; i < 2; i++){
                                 if ($scope.selections[i] !== loadedSheets[i]) {
                                     if(loadedSheets[i]) {
                                         $scope.viewer.unloadSheet(loadedSheets[i]);
+                                        $scope.loadingModel[i] = false;
                                         loadedSheets[i] = null;
                                     }
                                     if ($scope.selections[i]) {
                                         loadedSheets[i] = $scope.selections[i];
+                                        $scope.loadingModel[i] = true;
                                         $scope.viewer.loadSheet({id: loadedSheets[i].sheet, manifest: loadedSheets[i].manifest});
                                     }
                                 }
                             }
+                            getClashTest();
+                        };
+
+                        var getClashTest,
+                            currentLeftSheetIdx,
+                            currentRightSheetIdx;
+                        getClashTest = function(){
+                            currentLeftSheetIdx = currentRightSheetIdx = $scope.clashes = null;
+                            $scope.loadingClashTestData = true;
                             if($scope.selections[0] && $scope.selections[1]){
-                                //TODO GET SOME CLASH RESULTS!! Ha-a-a-llelujah! Ha-a-a-llelujah! Hallelujah! Hallelujah! Ha-a-lle-e-luja-a-h!
-                                api.v1.clashTest.getForSheetTransforms($scope.selections[0].id, $scope.selections[1].id).then(function(result){
-                                    console.log(result);
+                                api.v1.clashTest.getForSheetTransforms($scope.selections[0].id, $scope.selections[1].id).then(function(clashTest){
+                                    $scope.clashes = clashTest.data.result;
+                                    if(clashTest.data.left.id === loadedSheets[0].clashChangeRegId){
+                                        currentLeftSheetIdx = 0;
+                                        currentRightSheetIdx = 1;
+                                    }else{
+                                        currentLeftSheetIdx = 1;
+                                        currentRightSheetIdx = 0;
+                                    }
+                                    $scope.loadingClashTestData = false;
                                 }, function(errorId){
-                                    //TODO
+                                    $window.setTimeout(getClashTest, 10000);//prototype clash service returns an error when it is processing a clash result so we cant tell if its an error or just still processing, therefore assume it is still working and ping the service again, baller.
                                     $scope.clashError = errorId
                                 });
                             }
-                        };
+                        }
                     }]
                 };
             });
