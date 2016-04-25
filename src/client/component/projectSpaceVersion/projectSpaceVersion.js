@@ -191,7 +191,7 @@ define('projectSpaceVersion/projectSpaceVersion', [
                                         $scope.loadingModel[i] = true;
                                         $scope.viewer.loadSheet({id: loadedSheets[i].sheet, manifest: loadedSheets[i].manifest});
                                     }
-                                } else {
+                                } else if (loadedSheets[i]) {
                                     isolate(i);
                                 }
                             }
@@ -199,24 +199,29 @@ define('projectSpaceVersion/projectSpaceVersion', [
                         };
 
                         var getClashTest,
+                            getClashTestDataTimeout,
                             currentLeftSheetIdx,
                             currentRightSheetIdx;
                         getClashTest = function(){
                             currentLeftSheetIdx = currentRightSheetIdx = $scope.clashes = null;
+                            $window.clearTimeout(getClashTestDataTimeout);
                             $scope.loadingClashTestData = true;
                             if($scope.selections[0] && $scope.selections[1]){
                                 api.v1.clashTest.getForSheetTransforms($scope.selections[0].id, $scope.selections[1].id).then(function(clashTest){
-                                    $scope.clashes = clashTest.data.result;
-                                    if(clashTest.data.left.id === loadedSheets[0].clashChangeRegId){
-                                        currentLeftSheetIdx = 0;
-                                        currentRightSheetIdx = 1;
+                                    if(clashTest.data.status === "success"){
+                                        $scope.clashes = clashTest.data.result;
+                                        if(clashTest.data.left.id === loadedSheets[0].clashChangeRegId){
+                                            currentLeftSheetIdx = 0;
+                                            currentRightSheetIdx = 1;
+                                        }else{
+                                            currentLeftSheetIdx = 1;
+                                            currentRightSheetIdx = 0;
+                                        }
+                                        $scope.loadingClashTestData = false;
                                     }else{
-                                        currentLeftSheetIdx = 1;
-                                        currentRightSheetIdx = 0;
+                                        getClashTestDataTimeout = $window.setTimeout(getClashTest, 10000);
                                     }
-                                    $scope.loadingClashTestData = false;
                                 }, function(errorId){
-                                    $window.setTimeout(getClashTest, 10000);//prototype clash service returns an error when it is processing a clash result so we cant tell if its an error or just still processing, therefore assume it is still working and ping the service again, baller.
                                     $scope.clashError = errorId
                                 });
                             }
