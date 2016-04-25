@@ -205,8 +205,8 @@ define('projectSpaceVersion/projectSpaceVersion', [
                         getClashTest = function(){
                             currentLeftSheetIdx = currentRightSheetIdx = $scope.clashes = null;
                             $window.clearTimeout(getClashTestDataTimeout);
-                            $scope.loadingClashTestData = true;
                             if($scope.selections[0] && $scope.selections[1]){
+                                $scope.loadingClashTestData = true;
                                 api.v1.clashTest.getForSheetTransforms($scope.selections[0].id, $scope.selections[1].id).then(function(clashTest){
                                     if(clashTest.data.status === "success"){
                                         $scope.clashes = clashTest.data.result;
@@ -222,7 +222,8 @@ define('projectSpaceVersion/projectSpaceVersion', [
                                         getClashTestDataTimeout = $window.setTimeout(getClashTest, 10000);
                                     }
                                 }, function(errorId){
-                                    $scope.clashError = errorId
+                                    $scope.clashError = errorId;
+                                    $scope.loadingClashTestData = false;
                                 });
                             }
                         }

@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <mh-loader class="mh-def mh-fill model-loading bar-spinner" ng-show="loadingModel[0] || loadingModel[1] || loadingClashTestData"></mh-loader>
-                <div class="mh-def clashes" ng-show="!loadingModel[0] && !loadingModel[1] && clashes">
+                <div class="mh-def clashes" ng-show="!loadingModel[0] && !loadingModel[1] && !loadingClashTestData">
                     <div class="mh-def clash" ng-repeat="clash in clashes | orderBy: 'distance'" ng-click="clashClick(clash)">
                         <div class="mh-def info">
                             {{::clash.distance}}
