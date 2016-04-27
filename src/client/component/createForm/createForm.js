@@ -99,7 +99,7 @@ define('createForm/createForm', [
                         $scope.$on(EVENT.HIDE_CREATE_FORM, resetForm);
 
                         $scope.newFileInputBtnClick = function(){
-                            if (!processingThumbnail && ($scope.newType !== 'folder' || $scope.newType !== 'projectSpace' || $scope.newType !== 'projectSpaceVersion')) {
+                            if (!processingThumbnail && ($scope.newType !== 'folder' && $scope.newType !== 'projectSpace' && $scope.newType !== 'projectSpaceVersion')) {
                                 currentFileEl().click();
                             }
                         };
