@@ -18,7 +18,7 @@ in the browser courtesy of Autodesks [viewer3D.js](https://autodeskviewer.com/vi
     * [Go](https://golang.org/doc/install) v1.6.1
     * [Node](https://nodejs.org/) v5.0.0
 
-2. Run the `db.sql` script from [`$GOPATH/src/github.com/modelhub/core/sql`](https://github.com/modelhub/core/blob/master/sql/db.sql) on your MySql instance to set up the modelhub db.
+2. Run the `db.sql` script from `src/sql/db.sql` on your MySql instance to set up the modelhub db.
 
 3. Run:
     ```sh

@@ -22,11 +22,14 @@ define('service/lmv', [
                             }else{
                                 //ready to init now
                                 if(type === 'gui') {
-                                    viewer = new lmvLoader.Autodesk.Viewing.Private.GuiViewer3D(el, {});
+                                    viewer = new lmvLoader.Autodesk.Viewing.GuiViewer3D(el, {});
                                 } else {
                                     viewer = new lmvLoader.Autodesk.Viewing.Viewer3D(el, {});
                                 }
-                                Autodesk.Viewing.Initializer(null, function(){
+                                Autodesk.Viewing.Initializer({
+                                    env: 'AutodeskProduction',
+                                    api: 'derivativeV2',  // for models uploaded to EMEA change this option to 'derivativeV2_EU'
+                                }, function(){
                                     viewer.initialize();
                                     resolve({
                                         addEventListener: function(type, fn){
@@ -36,7 +39,7 @@ define('service/lmv', [
                                             return viewer.removeEventListener(type, fn);
                                         },
                                         loadSheet: function(sheet) {
-                                            return viewer.load('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
+                                            return viewer.start('/api/v1/sheet/getItem/' + sheet.id + sheet.manifest);
                                         },
                                         unloadSheet: function(sheet){
                                             return viewer.impl.unloadModel(sheet.model);

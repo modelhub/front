@@ -18,7 +18,14 @@ type accessToken struct {
 }
 
 func getAccessToken(host string, key string, secret string) (*accessToken, error) {
-	form := url.Values{"client_id": {key}, "client_secret": {secret}, "grant_type": {"client_credentials"}}
+	form := url.Values{
+		"client_id":     {key},
+		"client_secret": {secret},
+		"grant_type":    {"client_credentials"},
+		"scope": {
+			"user-profile:read user:read user:write viewables:read data:read data:write data:create data:search bucket:create bucket:read bucket:update bucket:delete code:all account:read account:write",
+		},
+	}
 	req, err := newRequest("POST", host+"/authentication/v1/authenticate", strings.NewReader(form.Encode()), "", "application/x-www-form-urlencoded")
 	if err != nil {
 		return nil, err

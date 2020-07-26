@@ -5,7 +5,28 @@ import (
 )
 
 func registerFile(host string, b64Urn string, accessToken string) (ret *sj.Json, err error) {
-	data, err := sj.FromString(`{"urn":"` + b64Urn + `"}`)
+	data, err := sj.FromString(`{
+		"input": {
+			"urn": "` + b64Urn + `"
+		},
+		"output": {
+			"destination": {
+				"region": "us"
+			},
+			"formats": [
+				{
+					"type": "svf",
+					"views": [
+						"2d",
+						"3d"
+					],
+				   "advanced": {
+					 "generateMasterViews": true
+				   }
+				}
+			]
+		}
+	}`)
 	if err != nil {
 		return nil, err
 	}
@@ -15,10 +36,11 @@ func registerFile(host string, b64Urn string, accessToken string) (ret *sj.Json,
 		return nil, err
 	}
 
-	req, err := newRequest("POST", host+"/viewingservice/v1/register", reader, accessToken, "application/json")
+	req, err := newRequest("POST", host+"/modelderivative/v2/designdata/job", reader, accessToken, "application/json")
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Add("x-ads-force", "true")
 
 	ret, err = doAdhocJsonRequest(req)
 	return

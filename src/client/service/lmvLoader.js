@@ -3,12 +3,12 @@ define('service/lmvLoader', [
 ){
     var style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = 'https://autodeskviewer.com/viewers/2.5.34/style.css';
+    style.href = 'https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css';
     style.type = 'text/css';
     document.head.appendChild(style);
 
     var script = document.createElement('script');
-    script.src = 'https://autodeskviewer.com/viewers/2.5.34/viewer3D.js';
+    script.src = 'https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js';
     document.head.appendChild(script);
 
     return function(ngModule){
